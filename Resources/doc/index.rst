@@ -41,8 +41,17 @@ Make sure that you also register the namespaces with the autoloader::
         // ...
     ));
 
+And add the bundle to your routing.yml file::
+
+    // app/config/routing.yml
+    WarrantyLifeApiExampleBundle:
+        resource: "@WarrantyLifeApiExampleBundle/Controller/"
+        type:     annotation
+        prefix:   /apitest
+
 Now use the ``vendors`` script to clone the newly added repositories 
 into your project::
 
     php bin/vendors install
 
+You should now be able to go to /apitest to start testing the API.

@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class CategoryController extends BaseController
 {
     /**
-     * @Route("/categories")
+     * @Route("/categories", name="apiexample_category")
      * @Method("GET")
      * @Template()
      */

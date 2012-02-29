@@ -1,0 +1,13 @@
+{% extends 'WarrantyLifeApiExampleBundle::layout.html.twig' %}
+
+{% block body %}
+<h1>Warranty Life API Examples</h1>
+<ul>
+	<li><a href="{{ path('apiexample_category') }}">Categories</a></li>
+	<li><a href="{{ path('apiexample_warranty_plans') }}">Warranty Plans</a></li>
+	<li><a href="{{ path('apiexample_customer') }}">Customers</a></li>
+	<li><a href="{{ path('apiexample_item') }}">Items</a></li>
+	<li><a href="{{ path('apiexample_warranty') }}">Warranties</a></li>
+	<li><a href="{{ path('apiexample_bulk_warranty') }}">Bulk Warranties</a></li>
+</ul>
+{% endblock %}

@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class CustomerController extends BaseController
 {
     /**
-     * @Route("/customers")
+     * @Route("/customers", name="apiexample_customer")
      * @Method("GET")
      * @Template()
      */

@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class ItemController extends BaseController
 {
     /**
-     * @Route("/items")
+     * @Route("/items", name="apiexample_item")
      * @Method("GET")
      * @Template()
      */

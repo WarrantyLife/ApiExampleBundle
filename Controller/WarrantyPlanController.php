@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class WarrantyPlanController extends BaseController
 {
     /**
-     * @Route("/warranty-plans")
+     * @Route("/warranty-plans", name="apiexample_warranty_plans")
      * @Method("GET")
      * @Template()
      */

@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class BulkWarrantyController extends BaseController
 {
     /**
-     * @Route("/bulk/warranties")
+     * @Route("/bulk/warranties", name="apiexample_bulk_warranty")
      * @Method("GET")
      * @Template()
      */
