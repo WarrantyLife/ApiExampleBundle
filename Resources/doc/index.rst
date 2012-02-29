@@ -12,7 +12,7 @@ First, checkout a copy of the code.  Just add the following  to the ``deps``
 file of your Symfony Standard Distribution::
 
     [ApiExampleBundle]
-        git=https://bitbucket.org/WarrantyLife/apiexamplebundle.git
+        git=git://github.com/WarrantyLife/ApiExampleBundle.git
         target=bundles/WarrantyLife/ApiExampleBundle
 
 Then register the bundle with your kernel::
