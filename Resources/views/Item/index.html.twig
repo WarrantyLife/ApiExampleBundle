@@ -1,0 +1,53 @@
+{% extends 'WarrantyLifeApiExampleBundle::layout.html.twig' %}
+
+{% block queries %}
+<form id="byId" method="POST" target="results">
+<input type="hidden" id="byId_username" name="username" />
+<input type="hidden" id="byId_password" name="password" />
+<input type="hidden" name="action" value="get" />
+{{ endpoint }}/items/<input type="text" id="itemId" name="itemId" placeholder="itemId"/>
+<br />
+<input type="submit" />
+</form>
+
+<form id="byRefId" method="POST" target="results">
+<input type="hidden" id="byRefId_username" name="username" />
+<input type="hidden" id="byRefId_password" name="password" />
+<input type="hidden" name="action" value="get" />
+{{ endpoint }}/items?rerfId=<input type="text" id="refId" name="refId" placeholder="refId"/>
+<br />
+<input type="submit" />
+</form>
+
+<form id="byOrderRefId" method="POST" target="results">
+<input type="hidden" id="byOrderRefId_username" name="username" />
+<input type="hidden" id="byOrderRefId_password" name="password" />
+<input type="hidden" name="action" value="get" />
+{{ endpoint }}/items?orderRefId=<input type="text" id="orderRefId" name="orderRefId" placeholder="orderRefId"/>
+<br />
+<input type="submit" />
+</form>
+
+
+<form id="add" method="POST" target="results">
+<input type="hidden" id="add_username" name="username" />
+<input type="hidden" id="add_password" name="password" />
+<input type="hidden" name="action" value="post" />
+POST {{ endpoint }}/items <br />
+<textarea name="json" placeholder="{ item data here }"></textarea>
+<br />
+<input type="submit" />
+</form>
+{% endblock %}
+
+{% block endjavascripts %}
+<script>
+$(function(){
+	$('form').submit(function(){
+		var id = $(this).attr('id');
+		$('#'+id+'_username').val($('#username').val());
+		$('#'+id+'_password').val($('#password').val());
+	});
+});
+</script>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'WarrantyLifeApiExampleBundle::layout.html.twig' %}
+
+{% block queries %}
+<form id="add" method="POST" target="results">
+<input type="hidden" id="add_username" name="username" />
+<input type="hidden" id="add_password" name="password" />
+<input type="hidden" name="action" value="post" />
+POST {{ endpoint }}/bulk/warranties <br />
+<textarea name="json" placeholder="{ bulk warranty data here }"></textarea>
+<br />
+<input type="submit" />
+</form>
+{% endblock %}
+
+{% block endjavascripts %}
+<script>
+$(function(){
+	$('form').submit(function(){
+		var id = $(this).attr('id');
+		$('#'+id+'_username').val($('#username').val());
+		$('#'+id+'_password').val($('#password').val());
+	});
+});
+</script>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'WarrantyLifeApiExampleBundle::layout.html.twig' %}
+
+{% block queries %}
+<form id="all" method="POST" target="results">
+<input type="hidden" id="all_username" name="username" />
+<input type="hidden" id="all_password" name="password" />
+{{ endpoint }}/categories
+<br />
+<input type="submit" />
+</form>
+
+<form id="byId" method="POST" target="results">
+<input type="hidden" id="byId_username" name="username" />
+<input type="hidden" id="byId_password" name="password" />
+{{ endpoint }}/categories/<input type="text" id="categoryId" name="categoryId" placeholder="categoryId"/>
+<br />
+<input type="submit" />
+</form>
+{% endblock %}
+
+{% block endjavascripts %}
+<script>
+$(function(){
+	$('form').submit(function(){
+		var id = $(this).attr('id');
+		$('#'+id+'_username').val($('#username').val());
+		$('#'+id+'_password').val($('#password').val());
+	});
+});
+</script>
+{% endblock %}

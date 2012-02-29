@@ -1,0 +1,39 @@
+{% extends 'WarrantyLifeApiExampleBundle::layout.html.twig' %}
+
+{% block queries %}
+<form id="all" method="POST" target="results">
+<input type="hidden" id="all_username" name="username" />
+<input type="hidden" id="all_password" name="password" />
+{{ endpoint }}/warranty-plans
+<br />
+<input type="submit" />
+</form>
+
+<form id="byWarrantyPlanId" method="POST" target="results">
+<input type="hidden" id="byWarrantyPlanId_username" name="username" />
+<input type="hidden" id="byWarrantyPlanId_password" name="password" />
+{{ endpoint }}/warranty-plans/<input type="text" id="warrantyPlanId" name="warrantyPlanId" placeholder="warrantyPlanId"/>
+<br />
+<input type="submit" />
+</form>
+
+<form id="byCategoryId" method="POST" target="results">
+<input type="hidden" id="byCategoryId_username" name="username" />
+<input type="hidden" id="byCategoryId_password" name="password" />
+{{ endpoint }}/warranty-plans?categoryId=<input type="text" id="categoryId" name="categoryId" placeholder="categoryId"/>
+<br />
+<input type="submit" />
+</form>
+{% endblock %}
+
+{% block endjavascripts %}
+<script>
+$(function(){
+	$('form').submit(function(){
+		var id = $(this).attr('id');
+		$('#'+id+'_username').val($('#username').val());
+		$('#'+id+'_password').val($('#password').val());
+	});
+});
+</script>
+{% endblock %}

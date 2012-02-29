@@ -1,0 +1,18 @@
+body {
+}
+
+form {
+    border: #000099 1px solid;
+    margin: 10px;
+    padding: 10px;
+}
+
+textarea {
+    width: 400px;
+    height: 200px;
+}
+
+iframe {
+    width: 80%;
+    height: 400px;
+}
