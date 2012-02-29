@@ -8,7 +8,7 @@ This bundle is an example of the Warranty Life API can be used.
 Installation
 ------------
 
-First, checkout a copy of hte code.  Just add the following  to the ``deps`` 
+First, checkout a copy of the code.  Just add the following  to the ``deps`` 
 file of your Symfony Standard Distribution::
 
     [ApiExampleBundle]
