@@ -22,7 +22,11 @@ class BaseController extends Controller
     	$apiKey = $this->getRequest()->request->get('username', null);
     	$apiSecret = $this->getRequest()->request->get('password', null);
 
-    	$endpoint = $this->container->getParameter('api_endpoint', 'https://sandbox.warrantylife.com/api/201201');
+    	if ($this->container->hasParameter('api_endpoint')) {
+    	    $endpoint = $this->container->getParameter('api_endpoint', 'https://sandbox.warrantylife.com/api/201201');
+    	} else {
+    	    $endpoint = 'https://sandbox.warrantylife.com/api/201201';
+    	}
     	if (is_null($apiKey)) {
     		if ($this->container->hasParameter('api_key')) {
 		    	$apiKey = $this->container->getParameter('api_key');
