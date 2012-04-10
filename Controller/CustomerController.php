@@ -9,12 +9,19 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
+/**
+ * Controller for handling customers
+ */
 class CustomerController extends BaseController
 {
     /**
+     * Display page that allows for interacting with the API
+     * 
      * @Route("/customers", name="apiexample_customer")
      * @Method("GET")
      * @Template()
+     * 
+     * @return array Data used in the twig template
      */
 	public function indexAction()
 	{
@@ -24,9 +31,13 @@ class CustomerController extends BaseController
     }
 
     /**
+     * Perform API request
+     * 
      * @Route("/customers")
      * @Method("POST")
      * @Template()
+     * 
+     * @return array Data used in the twig template
      */
     public function postAction()
     {

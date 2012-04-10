@@ -9,12 +9,19 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
+/**
+ * Controller for handling service plans
+ */
 class WarrantyPlanController extends BaseController
 {
     /**
+     * Display page that allows for interacting with the API
+     * 
      * @Route("/warranty-plans", name="apiexample_warranty_plans")
      * @Method("GET")
      * @Template()
+     * 
+     * @return array Data used in the twig template
      */
 	public function indexAction()
 	{
@@ -24,9 +31,13 @@ class WarrantyPlanController extends BaseController
     }
 
     /**
+     * Perform API request
+     * 
      * @Route("/warranty-plans")
      * @Method("POST")
      * @Template()
+     * 
+     * @return array Data used in the twig template
      */
     public function postAction()
     {

@@ -8,11 +8,23 @@ use Guzzle\Http\Client;
 use Guzzle\Common\Log\ZendLogAdapter;
 use Guzzle\Http\Plugin\LogPlugin;
 use Guzzle\Http\Plugin\BasicAuthPlugin;
+use Guzzle\Http\Message\RequestInterface;
 
+/**
+ * Base controller to provide commonly used methods
+ */
 class BaseController extends Controller
 {
+    /**
+     * @var resource File stream resource for capturing Http Client output
+     */
 	protected $_stream;
 
+	/**
+	 * Create an Http Client
+	 * 
+	 * @return Client A client instance
+	 */
     protected function createClient()
     {
     	$stream = $this->createStream();
@@ -51,17 +63,34 @@ class BaseController extends Controller
     	return $client;
     }
 
+    /**
+     * Set the stream used to capture client output
+     * 
+     * @return resource A file stream resource
+     */
     protected function createStream()
     {
     	return ($this->_stream = fopen('php://temp', 'r+'));
     }
 
+    /**
+     * Get the stream used to capture client output
+     * 
+     * @return resource A file stream resource
+     */
     protected function getStream()
     {
     	return $this->_stream;
     }
 
-    protected function getResponse($request)
+    /**
+     * Get the full response from the http client
+     * 
+     * @param RequestInterface The Http Client request
+     * 
+     * @return string Full response from the Http Client
+     */
+    protected function getResponse(RequestInterface $request)
     {
     	try {
 	    	$response = $request->send();
