@@ -1,53 +1,110 @@
 {% extends 'WarrantyLifeApiExampleBundle::layout.html.twig' %}
 
 {% block queries %}
-<form id="byId" method="POST" target="results">
-<input type="hidden" id="byId_username" name="username" />
-<input type="hidden" id="byId_password" name="password" />
-<input type="hidden" name="action" value="get" />
-{{ endpoint }}/items/<input type="text" id="itemId" name="itemId" placeholder="itemId"/>
-<br />
-<input type="submit" />
-</form>
+<div class="section">
+    <form id="byId" method="POST" target="results">
+        <input type="hidden" id="byId_username" name="username" />
+        <input type="hidden" id="byId_password" name="password" />
+        <input type="hidden" name="action" value="get" />
+        {{ endpoint }}/items/<input type="text" name="itemId" placeholder="itemId"/>
+        <br />
+        <input type="submit" />
+    </form>
+</div>
 
-<form id="byRefId" method="POST" target="results">
-<input type="hidden" id="byRefId_username" name="username" />
-<input type="hidden" id="byRefId_password" name="password" />
-<input type="hidden" name="action" value="get" />
-{{ endpoint }}/items?rerfId=<input type="text" id="refId" name="refId" placeholder="refId"/>
-<br />
-<input type="submit" />
-</form>
+<div class="section">
+    <form id="byRefId" method="POST" target="results">
+        <input type="hidden" id="byRefId_username" name="username" />
+        <input type="hidden" id="byRefId_password" name="password" />
+        <input type="hidden" name="action" value="get" />
+        {{ endpoint }}/items?rerfId=<input type="text" name="refId" placeholder="refId"/>
+        <br />
+        <input type="submit" />
+    </form>
+</div>
 
-<form id="byOrderRefId" method="POST" target="results">
-<input type="hidden" id="byOrderRefId_username" name="username" />
-<input type="hidden" id="byOrderRefId_password" name="password" />
-<input type="hidden" name="action" value="get" />
-{{ endpoint }}/items?orderRefId=<input type="text" id="orderRefId" name="orderRefId" placeholder="orderRefId"/>
-<br />
-<input type="submit" />
-</form>
+<div class="section">
+    <form id="byOrderRefId" method="POST" target="results">
+        <input type="hidden" id="byOrderRefId_username" name="username" />
+        <input type="hidden" id="byOrderRefId_password" name="password" />
+        <input type="hidden" name="action" value="get" />
+        {{ endpoint }}/items?orderRefId=<input type="text" name="orderRefId" placeholder="orderRefId"/>
+        <br />
+        <input type="submit" />
+    </form>
+</div>
 
 
-<form id="add" method="POST" target="results">
-<input type="hidden" id="add_username" name="username" />
-<input type="hidden" id="add_password" name="password" />
-<input type="hidden" name="action" value="post" />
-POST {{ endpoint }}/items <br />
-<textarea name="json" placeholder="{ item data here }"></textarea>
-<br />
-<input type="submit" />
-</form>
-{% endblock %}
+<div class="section">
+    <div class="submission">
+        <form id="add" method="POST" target="results">
+            <input type="hidden" id="add_username" name="username" />
+            <input type="hidden" id="add_password" name="password" />
+            <input type="hidden" name="action" value="post" />
+            POST {{ endpoint }}/items <br />
+            <textarea name="json" placeholder="{ item data here }"></textarea>
+            <br />
+            <input type="submit" />
+        </form>
+    </div>
+    <div class="generation">
+        <form id="gen_add" method="POST" target="results">
+            <a href="" id="gen_add_link" >Generate JSON</a>
+            <script>
+                $(function(){
+                    $('#gen_add_link').click(function(){
+                        var
+                            fields = ['refId', 'orderRefId', 'customerId', 'dateOfPurchase', 'productSku', 'model', 'manufacturer', 'purchasedCondition', 'categoryId', 'pricePaid', 'pricePaidCurrencyCode', 'taxPaid', 'shippingPaid', 'serialNumber', 'isRepaired', 'hasDamage']
+                            ,result = []
+                        ;
+                        
+                        $.each(fields, function(idx, val){
+                            var
+                                input = $('#gen_add input[name=gen_'+val+']')
+                                ,quotes = true
+                            ;
+                            if (input.data('quotes') === false) {
+                                quotes = input.data('quotes');
+                            }
+                            
+                            if (input.val().length > 0) {
+                                var txt = '"'+val+'":';
+                                if (quotes) {
+                                    txt += '"'+input.val()+'"';
+                                } else {
+                                    txt += input.val();
+                                }
+                                result.push(txt);
+                            };
+                        });
 
-{% block endjavascripts %}
-<script>
-$(function(){
-	$('form').submit(function(){
-		var id = $(this).attr('id');
-		$('#'+id+'_username').val($('#username').val());
-		$('#'+id+'_password').val($('#password').val());
-	});
-});
-</script>
+                        $('#add textarea[name=json]').val("{"+result+"}");
+                        
+                        return false;
+                    });
+                });
+            </script>
+            <pre>
+{
+    "refId":                 "<input type="text" name="gen_refId" placeholder="refId"/>",
+    "orderRefId":            "<input type="text" name="gen_orderRefId" placeholder="orderRefId"/>",
+    "<strong>customerId</strong>":            "<input type="text" name="gen_customerId" placeholder="customerId"/>",   <strong>// Required</strong>
+    "<strong>dateOfPurchase</strong>":        "<input type="text" name="gen_dateOfPurchase" placeholder="yyyy-MM-ddTHH:mm:ssZ"/>",   <strong>// Required</strong>
+    "<strong>productSku</strong>":            "<input type="text" name="gen_productSku" placeholder="productSku"/>",   <strong>// Required</strong>
+    "<strong>model</strong>":                 "<input type="text" name="gen_model" placeholder="model"/>",   <strong>// Required</strong>
+    "<strong>manufacturer</strong>":          "<input type="text" name="gen_manufacturer" placeholder="manufacturer"/>",   <strong>// Required</strong>
+    "<strong>purchasedCondition</strong>":    "<input type="text" name="gen_purchasedCondition" placeholder="NEW, USED, or REFURBISHED"/>",   <strong>// Required</strong>
+    "<strong>categoryId</strong>":            "<input type="text" name="gen_categoryId" placeholder="categoryId"/>",   <strong>// Required</strong>
+    "<strong>pricePaid</strong>":              <input type="text" name="gen_pricePaid" placeholder="0.00" data-quotes=false />,    <strong>// Required</strong>
+    "<strong>pricePaidCurrencyCode</strong>": "<input type="text" name="gen_pricePaidCurrencyCode" placeholder="USD or CAD"/>",   <strong>// Required</strong>
+    "taxPaid":                <input type="text" name="gen_taxPaid" placeholder="0.00" data-quotes=false />,
+    "shippingPaid":           <input type="text" name="gen_shippingPaid" placeholder="0.00" data-quotes=false />,
+    "serialNumber":          "<input type="text" name="gen_serialNumber" placeholder="serialNumber"/>",
+    "<strong>isRepaired</strong>":             <input type="text" name="gen_isRepaired" placeholder="false" data-quotes=false />,    <strong>// Required</strong>
+    "<strong>hasDamage</strong>":              <input type="text" name="gen_hasDamage" placeholder="false" data-quotes=false />     <strong>// Required</strong>
+}
+            </pre>
+        </form>
+    </div>
+</div>
 {% endblock %}

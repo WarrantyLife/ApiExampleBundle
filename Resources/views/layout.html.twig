@@ -30,10 +30,12 @@
 		    <div id="contentArea">
 			    {% block content %}
 					{% block auth %}
-						<form id="auth">
-						<label for="username">API Key:</label><input type="text" id="username" name="username" placeholder="API Key"/><br />
-						<label for="password">API Secret:</label><input type="password" id="password" name="password" placeholder="API Secret"/><br />
-						</form>
+					    <div class="section">
+    						<form id="auth">
+        						<label for="username">API Key:</label><input type="text" id="username" name="username" placeholder="API Key"/><br />
+        						<label for="password">API Secret:</label><input type="password" id="password" name="password" placeholder="API Secret"/><br />
+    						</form>
+					    </div>
 					{% endblock %}
 
 					{% block queries '' %}
@@ -44,7 +46,17 @@
 		        <iframe name="results"></iframe>
 		    {% endblock %}
 
-		    {% block endjavascripts '' %}
+            {% block endjavascripts %}
+                <script>
+                $(function(){
+                	$('form').submit(function(){
+                		var id = $(this).attr('id');
+                		$('#'+id+'_username').val($('#username').val());
+                		$('#'+id+'_password').val($('#password').val());
+                	});
+                });
+                </script>
+            {% endblock %}
 		{% endblock %}
     </body>
 </html>

@@ -1,10 +1,14 @@
 body {
 }
 
-form {
+div.section {
     border: #000099 1px solid;
     margin: 10px;
     padding: 10px;
+}
+
+input[type=text] {
+	width: 200px;
 }
 
 textarea {
@@ -15,4 +19,16 @@ textarea {
 iframe {
     width: 80%;
     height: 400px;
+}
+
+div.submission {
+	vertical-align: top;
+	display: inline-block;
+}
+
+div.generation {
+	vertical-align: top;
+	display: inline-block;
+	border-left: #000099 1px solid;
+	padding-left: 10px;
 }

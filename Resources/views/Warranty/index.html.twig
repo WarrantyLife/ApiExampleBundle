@@ -1,92 +1,207 @@
 {% extends 'WarrantyLifeApiExampleBundle::layout.html.twig' %}
 
 {% block queries %}
-<form id="byId" method="POST" target="results">
-<input type="hidden" id="byId_username" name="username" />
-<input type="hidden" id="byId_password" name="password" />
-<input type="hidden" name="action" value="get" />
-{{ endpoint }}/warranties/<input type="text" id="warrantyId" name="warrantyId" placeholder="warrantyId"/>
-<br />
-<input type="submit" />
-</form>
+<div class="section">
+    <form id="byId" method="POST" target="results">
+        <input type="hidden" id="byId_username" name="username" />
+        <input type="hidden" id="byId_password" name="password" />
+        <input type="hidden" name="action" value="get" />
+        {{ endpoint }}/warranties/<input type="text" name="warrantyId" placeholder="warrantyId"/>
+        <br />
+        <input type="submit" />
+    </form>
+</div>
 
-<form id="byRefId" method="POST" target="results">
-<input type="hidden" id="byRefId_username" name="username" />
-<input type="hidden" id="byRefId_password" name="password" />
-<input type="hidden" name="action" value="get" />
-{{ endpoint }}/warranties?rerfId=<input type="text" id="refId" name="refId" placeholder="refId"/>
-<br />
-<input type="submit" />
-</form>
+<div class="section">
+    <form id="byRefId" method="POST" target="results">
+        <input type="hidden" id="byRefId_username" name="username" />
+        <input type="hidden" id="byRefId_password" name="password" />
+        <input type="hidden" name="action" value="get" />
+        {{ endpoint }}/warranties?rerfId=<input type="text" name="refId" placeholder="refId"/>
+        <br />
+        <input type="submit" />
+    </form>
+</div>
 
-<form id="byOrderRefId" method="POST" target="results">
-<input type="hidden" id="byOrderRefId_username" name="username" />
-<input type="hidden" id="byOrderRefId_password" name="password" />
-<input type="hidden" name="action" value="get" />
-{{ endpoint }}/warranties?orderRefId=<input type="text" id="orderRefId" name="orderRefId" placeholder="orderRefId"/>
-<br />
-<input type="submit" />
-</form>
+<div class="section">
+    <form id="byOrderRefId" method="POST" target="results">
+        <input type="hidden" id="byOrderRefId_username" name="username" />
+        <input type="hidden" id="byOrderRefId_password" name="password" />
+        <input type="hidden" name="action" value="get" />
+        {{ endpoint }}/warranties?orderRefId=<input type="text" name="orderRefId" placeholder="orderRefId"/>
+        <br />
+        <input type="submit" />
+    </form>
+</div>
 
-<form id="byItemId" method="POST" target="results">
-<input type="hidden" id="byItemId_username" name="username" />
-<input type="hidden" id="byItemId_password" name="password" />
-<input type="hidden" name="action" value="get" />
-{{ endpoint }}/items/<input type="text" id="itemId" name="itemId" placeholder="itemId"/>/warranties
-<br />
-<input type="submit" />
-</form>
-
-
-<form id="add" method="POST" target="results">
-<input type="hidden" id="add_username" name="username" />
-<input type="hidden" id="add_password" name="password" />
-<input type="hidden" name="action" value="post" />
-POST {{ endpoint }}/warranties <br />
-<textarea name="json" placeholder="{ warranty data here }"></textarea>
-<br />
-<input type="submit" />
-</form>
-
-<form id="add2" method="POST" target="results">
-<input type="hidden" id="add2_username" name="username" />
-<input type="hidden" id="add2_password" name="password" />
-<input type="hidden" name="action" value="post" />
-POST {{ endpoint }}/items/<input type="text" id="itemId" name="itemId" placeholder="itemId"/>/warranties <br />
-<textarea name="json" placeholder="{ warranty data here }"></textarea>
-<br />
-<input type="submit" />
-</form>
+<div class="section">
+    <form id="byItemId" method="POST" target="results">
+        <input type="hidden" id="byItemId_username" name="username" />
+        <input type="hidden" id="byItemId_password" name="password" />
+        <input type="hidden" name="action" value="get" />
+        {{ endpoint }}/items/<input type="text" name="itemId" placeholder="itemId"/>/warranties
+        <br />
+        <input type="submit" />
+    </form>
+</div>
 
 
-<form id="update" method="POST" target="results">
-<input type="hidden" id="update_username" name="username" />
-<input type="hidden" id="update_password" name="password" />
-<input type="hidden" name="action" value="put" />
-PUT {{ endpoint }}/warranties/<input type="text" id="warrantyId" name="warrantyId" placeholder="warrantyId"/> <br />
-<textarea name="json" placeholder="{ warranty data here }"></textarea>
-<br />
-<input type="submit" />
-</form>
+<div class="section">
+    <div class="submission">
+        <form id="add" method="POST" target="results">
+            <input type="hidden" id="add_username" name="username" />
+            <input type="hidden" id="add_password" name="password" />
+            <input type="hidden" name="action" value="post" />
+            POST {{ endpoint }}/warranties <br />
+            <textarea name="json" placeholder="{ warranty data here }"></textarea>
+            <br />
+            <input type="submit" />
+        </form>
+    </div>
+    <div class="generation">
+        <form id="gen_add" method="POST" target="results">
+            <a href="" id="gen_add_link" >Generate JSON</a>
+            <script>
+                $(function(){
+                    $('#gen_add_link').click(function(){
+                        var
+                            fields = ['refId', 'orderRefId', 'registrationCode', 'warrantyPlanId', 'itemId', 'customerId', 'dateOfPurchase', 'pricePaid', 'pricePaidCurrencyCode', 'taxPaid']
+                            ,result = []
+                        ;
+                        
+                        $.each(fields, function(idx, val){
+                            var
+                                input = $('#gen_add input[name=gen_'+val+']')
+                                ,quotes = true
+                            ;
+                            if (input.data('quotes') === false) {
+                                quotes = input.data('quotes');
+                            }
+                            
+                            if (input.val().length > 0) {
+                                var txt = '"'+val+'":';
+                                if (quotes) {
+                                    txt += '"'+input.val()+'"';
+                                } else {
+                                    txt += input.val();
+                                }
+                                result.push(txt);
+                            };
+                        });
 
-<form id="delete" method="POST" target="results">
-<input type="hidden" id="delete_username" name="username" />
-<input type="hidden" id="delete_password" name="password" />
-<input type="hidden" name="action" value="delete" />
-DELETE {{ endpoint }}/warranties/<input type="text" id="warrantyId" name="warrantyId" placeholder="warrantyId"/>
-<br />
-<input type="submit" />
-</form>
-{% endblock %}
+                        $('#add textarea[name=json]').val("{"+result+"}");
+                        
+                        return false;
+                    });
+                });
+            </script>
+            <pre>
+{
+    "refId":                 "<input type="text" name="gen_refId" placeholder="refId"/>",
+    "orderRefId":            "<input type="text" name="gen_orderRefId" placeholder="orderRefId"/>",
+    "registrationCode":      "<input type="text" name="gen_registrationCode" placeholder="registrationCode"/>",
+    "<strong>warrantyPlanId</strong>":        "<input type="text" name="gen_warrantyPlanId" placeholder="warrantyPlanId"/>",   <strong>// Required</strong>
+    "<strong>itemId</strong>":                "<input type="text" name="gen_itemId" placeholder="itemId"/>",   <strong>// Required</strong>
+    "<strong>customerId</strong>":            "<input type="text" name="gen_customerId" placeholder="customerId"/>",   <strong>// Required</strong>
+    "<strong>dateOfPurchase</strong>":        "<input type="text" name="gen_dateOfPurchase" placeholder="yyyy-MM-ddTHH:mm:ssZ"/>",   <strong>// Required</strong>
+    "<strong>pricePaid</strong>":              <input type="text" name="gen_pricePaid" placeholder="0.00" data-quotes=false />,    <strong>// Required</strong>
+    "<strong>pricePaidCurrencyCode</strong>": "<input type="text" name="gen_pricePaidCurrencyCode" placeholder="USD or CAD"/>",   <strong>// Required</strong>
+    "taxPaid":                <input type="text" name="gen_taxPaid" placeholder="0.00" data-quotes=false />
+}
+            </pre>
+        </form>
+    </div>
+</div>
 
-{% block endjavascripts %}
-<script>
-$(function(){
-	$('form').submit(function(){
-		var id = $(this).attr('id');
-		$('#'+id+'_username').val($('#username').val());
-		$('#'+id+'_password').val($('#password').val());
-	});
-});
-</script>
+<div class="section">
+    <div class="submission">
+        <form id="add2" method="POST" target="results">
+            <input type="hidden" id="add2_username" name="username" />
+            <input type="hidden" id="add2_password" name="password" />
+            <input type="hidden" name="action" value="post" />
+            POST {{ endpoint }}/items/<input type="text" name="itemId" placeholder="itemId"/>/warranties <br />
+            <textarea name="json" placeholder="{ warranty data here }"></textarea>
+            <br />
+            <input type="submit" />
+        </form>
+    </div>
+    <div class="generation">
+        <form id="gen_add2" method="POST" target="results">
+            <a href="" id="gen_add2_link" >Generate JSON</a>
+            <script>
+                $(function(){
+                    $('#gen_add2_link').click(function(){
+                        var
+                            fields = ['refId', 'orderRefId', 'registrationCode', 'warrantyPlanId', 'customerId', 'dateOfPurchase', 'pricePaid', 'pricePaidCurrencyCode', 'taxPaid']
+                            ,result = []
+                        ;
+                        
+                        $.each(fields, function(idx, val){
+                            var
+                                input = $('#gen_add2 input[name=gen_'+val+']')
+                                ,quotes = true
+                            ;
+                            if (input.data('quotes') === false) {
+                                quotes = input.data('quotes');
+                            }
+                            
+                            if (input.val().length > 0) {
+                                var txt = '"'+val+'":';
+                                if (quotes) {
+                                    txt += '"'+input.val()+'"';
+                                } else {
+                                    txt += input.val();
+                                }
+                                result.push(txt);
+                            };
+                        });
+
+                        $('#add2 textarea[name=json]').val("{"+result+"}");
+                        
+                        return false;
+                    });
+                });
+            </script>
+            <pre>
+{
+    "refId":                 "<input type="text" name="gen_refId" placeholder="refId"/>",
+    "orderRefId":            "<input type="text" name="gen_orderRefId" placeholder="orderRefId"/>",
+    "registrationCode":      "<input type="text" name="gen_registrationCode" placeholder="registrationCode"/>",
+    "<strong>warrantyPlanId</strong>":        "<input type="text" name="gen_warrantyPlanId" placeholder="warrantyPlanId"/>",   <strong>// Required</strong>
+    "<strong>customerId</strong>":            "<input type="text" name="gen_customerId" placeholder="customerId"/>",   <strong>// Required</strong>
+    "<strong>dateOfPurchase</strong>":        "<input type="text" name="gen_dateOfPurchase" placeholder="yyyy-MM-ddTHH:mm:ssZ"/>",   <strong>// Required</strong>
+    "<strong>pricePaid</strong>":              <input type="text" name="gen_pricePaid" placeholder="0.00" data-quotes=false />,    <strong>// Required</strong>
+    "<strong>pricePaidCurrencyCode</strong>": "<input type="text" name="gen_pricePaidCurrencyCode" placeholder="USD or CAD"/>",   <strong>// Required</strong>
+    "taxPaid":                <input type="text" name="gen_taxPaid" placeholder="0.00" data-quotes=false />
+}
+            </pre>
+        </form>
+    </div>
+</div>
+
+
+{#
+<div class="section">
+    <form id="update" method="POST" target="results">
+        <input type="hidden" id="update_username" name="username" />
+        <input type="hidden" id="update_password" name="password" />
+        <input type="hidden" name="action" value="put" />
+        PUT {{ endpoint }}/warranties/<input type="text" id="warrantyId" name="warrantyId" placeholder="warrantyId"/> <br />
+        <textarea name="json" placeholder="{ warranty data here }"></textarea>
+        <br />
+        <input type="submit" />
+    </form>
+</div>
+#}
+
+<div class="section">
+    <form id="delete" method="POST" target="results">
+        <input type="hidden" id="delete_username" name="username" />
+        <input type="hidden" id="delete_password" name="password" />
+        <input type="hidden" name="action" value="delete" />
+        DELETE {{ endpoint }}/warranties/<input type="text" name="warrantyId" placeholder="warrantyId"/>
+        <br />
+        <input type="submit" />
+    </form>
+</div>
 {% endblock %}
