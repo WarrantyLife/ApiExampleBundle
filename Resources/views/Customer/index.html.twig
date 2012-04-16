@@ -70,9 +70,9 @@
                             if (input.val().length > 0) {
                                 var txt = '"'+val+'":';
                                 if (quotes) {
-                                    txt += '"'+input.val()+'"';
+                                    txt += '"'+$.trim(input.val())+'"';
                                 } else {
-                                    txt += input.val();
+                                    txt += $.trim(input.val());
                                 }
                                 result.push(txt);
                             };
@@ -140,9 +140,9 @@
                             if (input.val().length > 0) {
                                 var txt = '"'+val+'":';
                                 if (quotes) {
-                                    txt += '"'+input.val()+'"';
+                                    txt += '"'+$.trim(input.val())+'"';
                                 } else {
-                                    txt += input.val();
+                                    txt += $.trim(input.val());
                                 }
                                 result.push(txt);
                             };
