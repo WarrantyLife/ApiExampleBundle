@@ -1,4 +1,5 @@
 {% set wildcardTags = ' class="wildcarded" title="Wildcards may be used in this field; See Wildcards section for more info" ' %}<html>
+{% set pagingTags = ' class="paged" title="Used for paging the results; See Paging section for more info" ' %}<html>
 <head>
 <title>Warranty Life API Documentation - Version {{ version }}</title>
 <style type="text/css">
@@ -21,6 +22,12 @@ code {
 code.wildcarded {
     border-color: #00aa00;
     background-color: #aacd4e;
+    cursor: help;
+}
+
+code.paged {
+    color: #000033;
+    background-color: #ddddff;
     cursor: help;
 }
 
@@ -156,6 +163,29 @@ pre hr {
         "<code>Apple</code>", "<code>Appleton</code>", "<code>Applewood</code>", etc.  Without the wildcard character used
         in this example, only "<code>Apple</code>" would match.</p>
 
+
+    <h4>Paging</h4>
+
+    <p>For some API calls, the results are paged, meaning only a subset of all possible results are returned.
+        For these calls, the parameters <code {{ pagingTags | raw }}>startAt</code> and <code {{ pagingTags | raw }}>limit</code> are used to specify which page of the results should be returned.
+        If these terms are not included, the default of returning the first page of results (<code {{ pagingTags | raw }}>startAt</code>=0) will be used with
+        the default number of results.</p>
+    <ul>
+        <li><code {{ pagingTags | raw }}>startAt</code> - Specifies the offset to start results</li>
+        <li><code {{ pagingTags | raw }}>limit</code> - Specifies the maximum number of results to return</li>
+    </ul>
+
+    <h5>Example:</h5>
+
+    <p>If you wanted pages of 50 results each, you might make the following calls to get the first three pages of results:</p>
+
+    <ol>
+        <li><code {{ pagingTags | raw }}>startAt</code>=0&<code {{ pagingTags | raw }}>limit</code>=50 - Returns the first page of 50 results</li>
+        <li><code {{ pagingTags | raw }}>startAt</code>=50&<code {{ pagingTags | raw }}>limit</code>=50 - Returns the second page of 50 results</li>
+        <li><code {{ pagingTags | raw }}>startAt</code>=100&<code {{ pagingTags | raw }}>limit</code>=50 - Returns the third page of 50 results</li>
+    </ol>
+
+
     <hr style="page-break-before: always; display: none;">
 
 	<h2>API Endpoints</h2>
@@ -274,22 +304,23 @@ pre hr {
   "id": "<em>customerId</em>",                                     // Return value only
   "refId": "<em>your unique store reference for user</em>",        // OPTIONAL
   "orderRefId": "<em>your unique store reference for order</em>",  // OPTIONAL
-  "customerUrl": "<em>http://www.example.com/reg/EXAMPLE123</em>", // URL that may be given to the customer allowing them to claim/access their account details, Return value only
+  "customerUrl": "<em>http://www.example.com/reg/EXAMPLE123</em>", // Return value only
   "emailAddress": "",                                     // OPTIONAL
-  "firstName": "",                                        // REQUIRED¹
-  "lastName": "",                                         // REQUIRED¹
+  "firstName": "",                                        // <strong>REQUIRED¹</strong>
+  "lastName": "",                                         // <strong>REQUIRED¹</strong>
   "companyName": "",                                      // OPTIONAL
-  "streetAddress": "",                                    // REQUIRED¹
-  "city": "",                                             // REQUIRED¹
-  "state": "<em>{valid 2 letter postal abbreviation}</em>",        // REQUIRED¹
-  "postalCode": "",                                       // REQUIRED¹
-  "phone": "",                                            // REQUIRED¹
-  "country": "<strong>[US|CA]</strong>",                                   // REQUIRED
-  "isWalkIn": <strong>false</strong>                                       // defaults to false
+  "streetAddress": "",                                    // <strong>REQUIRED¹</strong>
+  "city": "",                                             // <strong>REQUIRED¹</strong>
+  "state": "<em>{valid 2 letter postal abbreviation}</em>",        // <strong>REQUIRED¹</strong>
+  "postalCode": "",                                       // <strong>REQUIRED¹</strong>
+  "phone": "",                                            // <strong>REQUIRED¹</strong>
+  "country": "<strong>[US|CA]</strong>",                                   // <strong>REQUIRED</strong>
+  "isWalkIn": <strong>false</strong>                                       // OPTIONAL: defaults to false
 }</pre>
             <p>Notes:</p>
             <ul>
                 <li><strong>¹</strong> The customer name, address, and phone number is optional until a warranty is purchased; if not supplied then an attempt to purchase a warranty will fail.</li>
+                <li><strong>customerUrl</strong>URL that may be given to the customer allowing them to claim/access their account details</li>
             </ul>
     </li>
   </ul>
@@ -334,8 +365,8 @@ Location: {{ prefix }}/customers/<code>customerId</code>
     </ul>
     <h4>List / Search for Manufacturers (paged array of results)</h4>
     <ul>
-        <li>GET {{ prefix }}/manufacturers/?startAt=<code>startAt</code>&limit=<code>limit</code> - all manufacturers</li>
-        <li>GET {{ prefix }}/manufacturers/?name=<code {{ wildcardTags | raw }}>name</code>&startAt=<code>startAt</code>&limit=<code>limit</code> - search on name
+        <li>GET {{ prefix }}/manufacturers/?startAt=<code {{ pagingTags | raw }}>startAt</code>&limit=<code {{ pagingTags | raw }}>limit</code> - all manufacturers</li>
+        <li>GET {{ prefix }}/manufacturers/?name=<code {{ wildcardTags | raw }}>name</code>&startAt=<code {{ pagingTags | raw }}>startAt</code>&limit=<code {{ pagingTags | raw }}>limit</code> - search on name
 <pre>&larr; 200
 [
     {
@@ -351,7 +382,7 @@ Location: {{ prefix }}/customers/<code>customerId</code>
     <ul>
         <li>POST {{ prefix }}/manufacturers
 <pre>&rarr; POST {{ prefix }}/manufacturers
-  "name": "<em>manufacturer name</em>"
+  "name": "<em>manufacturer name</em>"              // <strong>REQUIRED</strong>
 <hr>&larr; 201
 Location: {{ prefix }}/manufacturers/<code>manufacturerId</code>
 </pre>
@@ -388,9 +419,10 @@ Location: {{ prefix }}/manufacturers/<code>manufacturerId</code>
     <ul>
         <li>GET {{ prefix }}/products?sku=<code>sku</code> - by your sku code for the product</li>
         <li>GET {{ prefix }}/products?q=<code>query</code> - by general search query or barcode
-        <p>The query parameter is a string used for a general search such as "Apple iPhone" or "123456789012" </p>
+        <p>The query parameter is a string used for a general search such as "Nexus S3" or a barcode such as "123456789012".</p>
         <li>GET {{ prefix }}/products?model=<code {{ wildcardTags | raw }}>model</code>&mpn=<code {{ wildcardTags | raw }}>mpn</code>&upc=<code>UPC code</code>&ean=<code>EAN Barcode</code>&categoryId=<code>categoryId</code>&manufacturerId=<code>manufacturerId</code>&manufacturerName=<code
-            {{ wildcardTags | raw}}>manufacturerName</code>&startAt=<code>startAt</code>&limit=<code>limit</code> - by specifying specific search terms to search on
+            {{ wildcardTags | raw}}>manufacturerName</code>&startAt=<code {{ pagingTags | raw }}>startAt</code>&limit=<code {{ pagingTags | raw }}>limit</code> - by specifying specific search terms to search on
+        <p>All parameters here are optional, the only limitation is that you must specify at least one of the search parameters.</p>
 <pre>&larr; 200
 [
     {
@@ -418,14 +450,14 @@ Location: {{ prefix }}/manufacturers/<code>manufacturerId</code>
         <li>POST {{ prefix }}/products
 <pre>&larr; 200
 {
-    "categoryId":  "<em>categoryId</em>",         <strong>// Required</strong>
-    "manufacturerId":  "<em>manufacturerId</em>", <strong>// Required</strong>
-    "model": "<em>Product Model Name</em>",       <strong>// Required</strong>
-    "mpn": "<em>Manufacturer Part Number</em>",
-    "msrp" : <strong>0.00</strong>
-    "msrpCurrency": "<strong>[CAD|USD]</strong>",  <strong>// Required if msrp is set</strong>
-    "upc": "<strong>123456789012</strong>"
-    "ean": "<strong>1234567890123</strong>"
+    "categoryId":  "<em>categoryId</em>",         // <strong>REQUIRED</strong>
+    "manufacturerId":  "<em>manufacturerId</em>", // <strong>REQUIRED</strong>
+    "model": "<em>Product Model Name</em>",       // <strong>REQUIRED</strong>
+    "mpn": "<em>Manufacturer Part Number</em>",   // OPTIONAL
+    "msrp" : <strong>0.00</strong>                        // OPTIONAL
+    "msrpCurrency": "<strong>[CAD|USD]</strong>",         // REQUIRED only when msrp is set
+    "upc": "<strong>123456789012</strong>"                // OPTIONAL
+    "ean": "<strong>1234567890123</strong>"               // OPTIONAL
 }
 </pre>
 <pre>&rarr; POST {{ prefix }}/products
@@ -447,29 +479,32 @@ Location: {{ prefix }}/products/<code>productId</code>
     <li>GET {{ prefix }}/items?orderRefId=<code>orderRefId</code>
 <pre>&larr; 200
 {
-  "id": "<em>itemId</em>",                                // Return value only
-  "refId": "<em>your unique reference id for line item of sale of the product</em>", // OPTIONAL
-  "orderRefId": "<em>your unique store reference for order</em>",                    // OPTIONAL
-  "customerId": "<em>customerId</em>",                     // REQUIRED
-  "dateOfPurchase": "<strong>yyyy-MM-ddTHH:mm:ssZ</strong>",       // REQUIRED; This is used to determine the start of duration of coverage on any associated warranties
-  "productId": "<em>Product ID for the item</em>",          // *
-  "productSku": "<em>store SKU for product</em>",          // *
-  "purchasedCondition": "<strong>[NEW|USED|REFURBISHED]</strong>", // REQUIRED
-  "pricePaid": <strong>0.00</strong>,                              // REQUIRED
-  "pricePaidCurrencyCode": "<strong>[USD|CAD]</strong>",           // REQUIRED
+  "id": "<em>itemId</em>",                                 // Return value only
+  "refId": "<em>UniqueLineItemID</em>",                    // OPTIONAL
+  "orderRefId": "<em>UniqueOrderID</em>",                  // OPTIONAL
+  "customerId": "<em>customerId</em>",                     // <strong>REQUIRED</strong>
+  "dateOfPurchase": "<strong>yyyy-MM-ddTHH:mm:ssZ</strong>",       // <strong>REQUIRED</strong>
+  "productId": "<em>Product ID for the item</em>",         // <strong>REQUIRED</strong> *See below
+  "productSku": "<em>store SKU for product</em>",          // <strong>REQUIRED</strong> *See below
+  "purchasedCondition": "<strong>[NEW|USED|REFURBISHED]</strong>", // <strong>REQUIRED</strong>
+  "pricePaid": <strong>0.00</strong>,                              // <strong>REQUIRED</strong>
+  "pricePaidCurrencyCode": "<strong>[USD|CAD]</strong>",           // <strong>REQUIRED</strong>
   "taxPaid": <strong>0.00</strong>,                                // OPTIONAL
   "shippingPaid": <strong>0.00</strong>,                           // OPTIONAL
   "serialNumber": "",                             // OPTIONAL
   "serialNumberType": "<strong>{{ sntTypesDescriptor }}</strong>",          // OPTIONAL
-  "isRepaired": <strong>false</strong>,                            // REQUIRED
-  "hasDamage": <strong>false</strong>                              // REQUIRED
+  "isRepaired": <strong>false</strong>,                            // <strong>REQUIRED</strong>
+  "hasDamage": <strong>false</strong>                              // <strong>REQUIRED</strong>
 }</pre>
         <p>Notes:</p>
         <ul>
+            <li><strong>refId</strong>: Your unique reference id for line item of sale of the product</li>
+            <li><strong>orderRefId</strong>: Your unique store reference for order</li>
+            <li><strong>dateOfPurchase</strong>: This is used to determine the start of duration of coverage on any associated warranties</li>
             <li><strong>*productId / productSku</strong>: It is required that at least one of these fields is included to identify the product.
-                If both are given, the system will save your productSku for the given productId for use in subsequent calls.
-                productSkus should be your code that is unique to the product.  If you do not have a productSku for the product, exclude this field.
-            <li><strong>serialNumberType</strong>: Include this field only when the serialNumber's type is known - for example when dealing with IMEI numbers from cell phones.
+            If both are given, the system will save your productSku for the given productId for use in subsequent calls.
+            productSkus should be your code that is unique to the product.  If you do not have a productSku for the product, exclude this field.</li>
+            <li><strong>serialNumberType</strong>: Include this field only when the serialNumber's type is known - for example when dealing with IMEI numbers from cell phones.</li>
         </ul>
 
 
@@ -505,12 +540,12 @@ Location: {{ prefix }}/items/<code>itemId</code>
   "registrationCode": "<em>generated registration code</em>",      // OPTIONAL
   "warrantyUrl": "<em>http://www.example.com/plan/XYZ123</em>",    // Return value only
   "orderRefId": "<em>your unique store reference for order</em>",  // OPTIONAL
-  "warrantyPlanId": "<em>warrantyPlanId</em>",                     // REQUIRED
-  "itemId": "<em>itemId</em>",                                     // REQUIRED
-  "customerId": "<em>customerId</em>",                             // REQUIRED
-  "dateOfPurchase": "<strong>yyyy-MM-ddTHH:mm:ssZ</strong>",               // REQUIRED
-  "pricePaid": <strong>0.00</strong>,                                      // REQUIRED
-  "pricePaidCurrencyCode": "<strong>[USD|CAD]</strong>",                   // REQUIRED
+  "warrantyPlanId": "<em>warrantyPlanId</em>",                     // <strong>REQUIRED</strong>
+  "itemId": "<em>itemId</em>",                                     // <strong>REQUIRED</strong>
+  "customerId": "<em>customerId</em>",                             // <strong>REQUIRED</strong>
+  "dateOfPurchase": "<strong>yyyy-MM-ddTHH:mm:ssZ</strong>",               // <strong>REQUIRED</strong>
+  "pricePaid": <strong>0.00</strong>,                                      // <strong>REQUIRED</strong>
+  "pricePaidCurrencyCode": "<strong>[USD|CAD]</strong>",                   // <strong>REQUIRED</strong>
   "taxPaid": <strong>0.00</strong>                                         // OPTIONAL
 }</pre>
             <p>Notes:</p>
