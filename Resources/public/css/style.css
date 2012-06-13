@@ -1,6 +1,10 @@
 body {
 }
 
+h4 {
+    margin-top: 0;
+}
+
 div.section {
     border: #000099 1px solid;
     margin: 10px;
@@ -9,6 +13,9 @@ div.section {
 
 input[type=text] {
 	width: 200px;
+}
+input[type=text].short {
+    width: 40px;
 }
 
 textarea {

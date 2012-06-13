@@ -25,8 +25,7 @@ class CategoryController extends BaseController
      */
 	public function indexAction()
 	{
-    	$endpoint = $this->container->getParameter('api_endpoint', 'https://sandbox.warrantylife.com/api/201201');
-
+    	$endpoint = $this->getApiEndpoint();
     	return array('endpoint'=>$endpoint);
     }
 

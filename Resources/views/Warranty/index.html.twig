@@ -17,7 +17,7 @@
         <input type="hidden" id="byRefId_username" name="username" />
         <input type="hidden" id="byRefId_password" name="password" />
         <input type="hidden" name="action" value="get" />
-        {{ endpoint }}/warranties?rerfId=<input type="text" name="refId" placeholder="refId"/>
+        {{ endpoint }}/warranties?refId=<input type="text" name="refId" placeholder="refId"/>
         <br />
         <input type="submit" />
     </form>
@@ -65,7 +65,7 @@
                 $(function(){
                     $('#gen_add_link').click(function(){
                         var
-                            fields = ['refId', 'orderRefId', 'registrationCode', 'warrantyPlanId', 'itemId', 'customerId', 'dateOfPurchase', 'pricePaid', 'pricePaidCurrencyCode', 'taxPaid']
+                            fields = ['refId', 'orderRefId', 'registrationCode', 'warrantyPlanId', 'itemId', 'customerId', 'salesRepEmail', 'dateOfPurchase', 'pricePaid', 'pricePaidCurrencyCode', 'taxPaid']
                             ,result = []
                         ;
                         
@@ -103,6 +103,7 @@
     "<strong>warrantyPlanId</strong>":        "<input type="text" name="gen_warrantyPlanId" placeholder="warrantyPlanId"/>",   <strong>// Required</strong>
     "<strong>itemId</strong>":                "<input type="text" name="gen_itemId" placeholder="itemId"/>",   <strong>// Required</strong>
     "<strong>customerId</strong>":            "<input type="text" name="gen_customerId" placeholder="customerId"/>",   <strong>// Required</strong>
+    "<strong>salesRepEmail</strong>":         "<input type="text" name="gen_salesRepEmail" placeholder="salesRepEmail"/>",   <strong>//Optional</strong>
     "<strong>dateOfPurchase</strong>":        "<input type="text" name="gen_dateOfPurchase" placeholder="yyyy-MM-ddTHH:mm:ssZ"/>",   <strong>// Required</strong>
     "<strong>pricePaid</strong>":              <input type="text" name="gen_pricePaid" placeholder="0.00" data-quotes=false />,    <strong>// Required</strong>
     "<strong>pricePaidCurrencyCode</strong>": "<input type="text" name="gen_pricePaidCurrencyCode" placeholder="USD or CAD"/>",   <strong>// Required</strong>

@@ -10,14 +10,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
- * Controller for handling customers
+ * Controller for handling items
  */
-class CustomerController extends BaseController
+class Item201201Controller extends BaseController
 {
     /**
      * Display page that allows for interacting with the API
      * 
-     * @Route("/customers", name="apiexample_customer")
+     * @Route("/items201201", name="apiexample_item201201")
      * @Method("GET")
      * @Template()
      * 
@@ -25,14 +25,14 @@ class CustomerController extends BaseController
      */
 	public function indexAction()
 	{
-        $endpoint = $this->getApiEndpoint();
+        $endpoint = $this->getApiEndpoint(201201);
     	return array('endpoint'=>$endpoint);
     }
 
     /**
      * Perform API request
      * 
-     * @Route("/customers")
+     * @Route("/items201201")
      * @Method("POST")
      * @Template()
      * 
@@ -40,16 +40,16 @@ class CustomerController extends BaseController
      */
     public function postAction()
     {
-    	$url = 'customers';
+    	$url = 'items201201';
     	$args = array();
 
     	$action = $this->getRequest()->request->get('action', null);
 
     	switch ($action) {
     		case 'get':
-		    	$customerId = $this->getRequest()->request->get('customerId', null);
-		    	if ($customerId) {
-		    		$url .= '/'.$customerId;
+		    	$itemId = $this->getRequest()->request->get('itemId', null);
+		    	if ($itemId) {
+		    		$url .= '/'.$itemId;
 	    			break;
 		    	}
 
@@ -72,9 +72,9 @@ class CustomerController extends BaseController
     			break;
 
     		case 'put':
-		    	$customerId = $this->getRequest()->request->get('customerId', null);
-		    	if ($customerId) {
-		    		$url .= '/'.$customerId;
+		    	$itemId = $this->getRequest()->request->get('itemId', null);
+		    	if ($itemId) {
+		    		$url .= '/'.$itemId;
 	    			break;
 		    	}
     			break;

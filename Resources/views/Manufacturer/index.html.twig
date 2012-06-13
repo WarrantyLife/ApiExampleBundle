@@ -1,0 +1,89 @@
+{% extends 'WarrantyLifeApiExampleBundle::layout.html.twig' %}
+
+{% block queries %}
+<div class="section">
+    <form id="all" method="POST" target="results">
+        <input type="hidden" id="all_username" name="username"/>
+        <input type="hidden" id="all_password" name="password"/>
+        <input type="hidden" name="action" value="get"/>
+        {{ endpoint }}/manufacturers?name=<input type="text" name="name" placeholder="name"
+            />&startAt=<input type="text" name="startAt" placeholder="startsAt" maxlength="4" class="short"
+            />&limit=<input type="text" name="limit" placeholder="limit" maxlength="3" class="short"/>
+        <br/>
+        <input type="submit"/>
+    </form>
+</div>
+
+<div class="section">
+    <form id="byId" method="POST" target="results">
+        <input type="hidden" id="byId_username" name="username"/>
+        <input type="hidden" id="byId_password" name="password"/>
+        <input type="hidden" name="action" value="get"/>
+        {{ endpoint }}/manufacturers/<input type="text" name="manufacturerId" placeholder="manufacturerId"/>
+        <br/>
+        <input type="submit"/>
+    </form>
+</div>
+
+<div class="section">
+    <h4>Create New Manufacturer</h4>
+
+    <div class="submission">
+        <form id="add" method="POST" target="results">
+            <input type="hidden" id="add_username" name="username"/>
+            <input type="hidden" id="add_password" name="password"/>
+            <input type="hidden" name="action" value="post"/>
+            POST {{ endpoint }}/manufacturers <br/>
+            <textarea name="json" placeholder="{ manufacturer data here }"></textarea>
+            <br/>
+            <input type="submit"/>
+        </form>
+    </div>
+    <div class="generation">
+        <form id="gen_add" method="POST" target="results">
+            <a href="" id="gen_add_link">Generate JSON</a>
+            <script>
+                $(function () {
+                    $('#gen_add_link').click(function () {
+                        var
+                                fields = ['name']
+                                , result = []
+                                ;
+
+                        $.each(fields, function (idx, val) {
+                            var
+                                    input = $('#gen_add input[name=gen_' + val + ']')
+                                    , quotes = true
+                                    ;
+                            if (input.data('quotes') === false) {
+                                quotes = input.data('quotes');
+                            }
+
+                            if (input.val().length > 0) {
+                                var txt = '"' + val + '":';
+                                if (quotes) {
+                                    txt += '"' + $.trim(input.val()) + '"';
+                                } else {
+                                    txt += $.trim(input.val());
+                                }
+                                result.push(txt);
+                            }
+                            ;
+                        });
+
+                        $('#add textarea[name=json]').val("{" + result + "}");
+
+                        return false;
+                    });
+                });
+            </script>
+            <pre>
+{
+    "<strong>name</strong>": "<input type="text" name="gen_name" placeholder="naame"/>", <strong>// Required</strong>
+}
+            </pre>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

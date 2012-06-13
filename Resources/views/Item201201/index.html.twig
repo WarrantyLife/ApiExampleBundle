@@ -54,7 +54,7 @@
                 $(function(){
                     $('#gen_add_link').click(function(){
                         var
-                            fields = ['refId', 'orderRefId', 'customerId', 'salesRepEmail', 'dateOfPurchase', 'productSku', 'productId', 'purchasedCondition', 'pricePaid', 'pricePaidCurrencyCode', 'taxPaid', 'shippingPaid', 'serialNumber', 'isRepaired', 'hasDamage']
+                            fields = ['refId', 'orderRefId', 'customerId', 'dateOfPurchase', 'productSku', 'model', 'manufacturer', 'purchasedCondition', 'categoryId', 'pricePaid', 'pricePaidCurrencyCode', 'taxPaid', 'shippingPaid', 'serialNumber', 'isRepaired', 'hasDamage']
                             ,result = []
                         ;
                         
@@ -90,10 +90,11 @@
     "orderRefId":            "<input type="text" name="gen_orderRefId" placeholder="orderRefId"/>",
     "<strong>customerId</strong>":            "<input type="text" name="gen_customerId" placeholder="customerId"/>",   <strong>// Required</strong>
     "<strong>dateOfPurchase</strong>":        "<input type="text" name="gen_dateOfPurchase" placeholder="yyyy-MM-ddTHH:mm:ssZ"/>",   <strong>// Required</strong>
-    "<strong>productSku</strong>":            "<input type="text" name="gen_productSku" placeholder="productSku"/>",   <strong>// *</strong>
-    "<strong>productId</strong>":             "<input type="text" name="gen_productId" placeholder="productId"/>",   <strong>// *</strong>
-    "<strong>salesRepEmail</strong>":         "<input type="text" name="gen_salesRepEmail" placeholder="salesRepEmail"/>",   <strong>// Optional</strong>
+    "<strong>productSku</strong>":            "<input type="text" name="gen_productSku" placeholder="productSku"/>",   <strong>// Required</strong>
+    "<strong>model</strong>":                 "<input type="text" name="gen_model" placeholder="model"/>",   <strong>// Required</strong>
+    "<strong>manufacturer</strong>":          "<input type="text" name="gen_manufacturer" placeholder="manufacturer"/>",   <strong>// Required</strong>
     "<strong>purchasedCondition</strong>":    "<input type="text" name="gen_purchasedCondition" placeholder="NEW, USED, or REFURBISHED"/>",   <strong>// Required</strong>
+    "<strong>categoryId</strong>":            "<input type="text" name="gen_categoryId" placeholder="categoryId"/>",   <strong>// Required</strong>
     "<strong>pricePaid</strong>":              <input type="text" name="gen_pricePaid" placeholder="0.00" data-quotes=false />,    <strong>// Required</strong>
     "<strong>pricePaidCurrencyCode</strong>": "<input type="text" name="gen_pricePaidCurrencyCode" placeholder="USD or CAD"/>",   <strong>// Required</strong>
     "taxPaid":                <input type="text" name="gen_taxPaid" placeholder="0.00" data-quotes=false />,
@@ -102,7 +103,6 @@
     "<strong>isRepaired</strong>":             <input type="text" name="gen_isRepaired" placeholder="false" data-quotes=false />,    <strong>// Required</strong>
     "<strong>hasDamage</strong>":              <input type="text" name="gen_hasDamage" placeholder="false" data-quotes=false />     <strong>// Required</strong>
 }
-*Passing either or both productId and productSku is required.
             </pre>
         </form>
     </div>

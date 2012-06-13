@@ -1,0 +1,124 @@
+{% extends 'WarrantyLifeApiExampleBundle::layout.html.twig' %}
+
+{% block queries %}
+
+<div class="section">
+    <h4>Product Lookup by ProductId</h4>
+    <form id="byId" method="POST" target="results">
+        <input type="hidden" id="byId_username" name="username"/>
+        <input type="hidden" id="byId_password" name="password"/>
+        <input type="hidden" name="action" value="get"/>
+        {{ endpoint }}/products/<input type="text" name="productId" placeholder="productId"/>
+        <br/>
+        <input type="submit"/>
+    </form>
+</div>
+
+<div class="section">
+    <h4>Product Search on Specific Fields</h4>
+    <form id="search" method="POST" target="results">
+        <input type="hidden" id="all_username" name="username"/>
+        <input type="hidden" id="all_password" name="password"/>
+        <input type="hidden" name="action" value="get"/>
+        {{ endpoint }}/products?model=<input type="text" name="model" placeholder="model"/>
+            &mpn=<input type="text" name="mpn" placeholder="mpn"/>
+            &upc=<input type="text" name="upc" placeholder="upc" />
+            &categoryId=<input type="text" name="categoryId" placeholder="categoryId" />
+            &sku=<input type="text" name="sku" placeholder="sku" />
+            &manufacturerId=<input type="text" name="manufacturerId" placeholder="manufacturerId" />
+            &manufacturerName=<input type="text" name="manufacturerName" placeholder="manufacturerName" />
+            &startAt=<input type="text" name="startAt" placeholder="startsAt" maxlength="4" class="short" />
+            &limit=<input type="text" name="limit" placeholder="limit" maxlength="3" class="short"/>
+        <br/>
+        <input type="submit"/>
+    </form>
+</div>
+
+<div class="section">
+    <h4>Product Search by single Query String</h4>
+
+    <form id="query_search" method="POST" target="results">
+        <input type="hidden" id="all_username" name="username"/>
+        <input type="hidden" id="all_password" name="password"/>
+        <input type="hidden" name="action" value="get"/>
+        {{ endpoint }}/products?q=<input type="text" name="q" placeholder="q"/>
+        &startAt=<input type="text" name="startAt" placeholder="startsAt" maxlength="4" class="short"/>
+        &limit=<input type="text" name="limit" placeholder="limit" maxlength="3" class="short"/>
+        <br/>
+        <input type="submit"/>
+    </form>
+</div>
+
+
+<div class="section">
+    <h4>Create New Product</h4>
+
+    <div class="submission">
+        <form id="add" method="POST" target="results">
+            <input type="hidden" id="add_username" name="username"/>
+            <input type="hidden" id="add_password" name="password"/>
+            <input type="hidden" name="action" value="post"/>
+            POST {{ endpoint }}/products <br/>
+            <textarea name="json" placeholder="{ product data here }"></textarea>
+            <br/>
+            <input type="submit"/>
+        </form>
+    </div>
+    <div class="generation">
+        <form id="gen_add" method="POST" target="results">
+            <a href="" id="gen_add_link">Generate JSON</a>
+            <script>
+                $(function () {
+                    $('#gen_add_link').click(function () {
+                        var
+                                fields = ['sku', 'categoryId', 'manufacturerId', 'model', 'mpn', 'msrp', 'msrpCurrency', 'upc', 'ean']
+                                , result = []
+                                ;
+
+                        $.each(fields, function (idx, val) {
+                            var
+                                    input = $('#gen_add input[name=gen_' + val + ']')
+                                    , quotes = true
+                                    ;
+                            if (input.data('quotes') === false) {
+                                quotes = input.data('quotes');
+                            }
+
+                            if (input.val().length > 0) {
+                                var txt = '"' + val + '":';
+                                if (quotes) {
+                                    txt += '"' + $.trim(input.val()) + '"';
+                                } else {
+                                    txt += $.trim(input.val());
+                                }
+                                result.push(txt);
+                            }
+                            ;
+                        });
+
+                        $('#add textarea[name=json]').val("{" + result + "}");
+
+                        return false;
+                    });
+                });
+            </script>
+            <pre>
+{
+    "sku":            "<input type="text" name="gen_sku" placeholder="sku"/>",
+    "<strong>manufacturerId</strong>": "<input type="text" name="gen_manufacturerId" placeholder="manufacturerId"/>",   <strong>// Required</strong>
+    "<strong>model</strong>":          "<input type="text" name="gen_model" placeholder="model" />",   <strong>// Required</strong>
+    "<strong>categoryId</strong>":     "<input type="text" name="gen_categoryId" placeholder="categoryId"/>",   <strong>// Required</strong>
+    "mpn":            "<input type="text" name="gen_mpn" placeholder="mpn" />",
+    "upc":            "<input type="text" name="gen_upc" placeholder="upc"/>",
+    "ean":            "<input type="text" name="gen_ean" placeholder="ean"/>",
+    "msrp":            <input type="text" name="gen_msrp" placeholder="0.00" data-quotes=false/>,
+    "msrpCurrency":   "<input type="text" name="gen_msrpCurrency" placeholder="USD or CAD" />"
+}
+            </pre>
+        </form>
+    </div>
+</div>
+
+
+
+{% endblock %}
