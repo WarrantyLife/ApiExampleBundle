@@ -17,7 +17,7 @@ class WarrantyPlanController extends BaseController
     /**
      * Display page that allows for interacting with the API
      * 
-     * @Route("/warranty-plans", name="apiexample_warranty_plans")
+     * @Route("/test/warranty-plans", name="apiexample_warranty_plans")
      * @Method("GET")
      * @Template()
      * 
@@ -32,7 +32,7 @@ class WarrantyPlanController extends BaseController
     /**
      * Perform API request
      * 
-     * @Route("/warranty-plans")
+     * @Route("/test/warranty-plans")
      * @Method("POST")
      * @Template()
      * 

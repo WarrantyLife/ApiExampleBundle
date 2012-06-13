@@ -17,7 +17,7 @@ class ProductController extends BaseController
     /**
      * Display page that allows for interacting with the API
      *
-     * @Route   ("/products", name="apiexample_product")
+     * @Route   ("/test/products", name="apiexample_product")
      * @Method  ("GET")
      * @Template()
      * @return array Data used in the twig template
@@ -31,7 +31,7 @@ class ProductController extends BaseController
     /**
      * Perform API request
      *
-     * @Route   ("/products")
+     * @Route   ("/test/products")
      * @Method  ("POST")
      * @Template()
      * @return array Data used in the twig template

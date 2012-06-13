@@ -17,7 +17,7 @@ class Item201201Controller extends BaseController
     /**
      * Display page that allows for interacting with the API
      * 
-     * @Route("/items201201", name="apiexample_item201201")
+     * @Route("/test/items201201", name="apiexample_item201201")
      * @Method("GET")
      * @Template()
      * 
@@ -32,7 +32,7 @@ class Item201201Controller extends BaseController
     /**
      * Perform API request
      * 
-     * @Route("/items201201")
+     * @Route("/test/items201201")
      * @Method("POST")
      * @Template()
      * 

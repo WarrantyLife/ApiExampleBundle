@@ -1,24 +1,17 @@
 {% extends 'WarrantyLifeApiExampleBundle::layout.html.twig' %}
 
 {% block body %}
-<h1>Warranty Life API Examples</h1>
-<h2>Version 201204 (Latest)</h2>
+<h1>Warranty Life API</h1>
+
+<h3>Current Resources</h3>
 <ul>
-	<li><a href="{{ path('apiexample_category') }}">Categories</a></li>
-	<li><a href="{{ path('apiexample_warranty_plans') }}">Warranty Plans</a></li>
-	<li><a href="{{ path('apiexample_customer') }}">Customers</a></li>
-	<li><a href="{{ path('apiexample_manufacturer') }}">Manufacturers</a></li>
-	<li><a href="{{ path('apiexample_product') }}">Products</a></li>
-	<li><a href="{{ path('apiexample_item') }}">Items</a></li>
-	<li><a href="{{ path('apiexample_warranty') }}">Warranties</a></li>
+    <li><a href="{{ path('api_docs_201204') }}">Documentation (Version 201204)</a></li>
+    <li><a href="{{ path('apiexample_test_root') }}">Examples and Testing Tool</a></li>
 </ul>
 
-<h2>Version 201201 </h2>
+<h3>Outdated Resources</h3>
 <ul>
-    <li><a href="{{ path('apiexample_category') }}?v=201201">Categories</a></li>
-    <li><a href="{{ path('apiexample_warranty_plans') }}?v=201201">Warranty Plans</a></li>
-    <li><a href="{{ path('apiexample_customer') }}?v=201201">Customers</a></li>
-    <li><a href="{{ path('apiexample_item201201') }}?v=201201">Items</a></li>
-    <li><a href="{{ path('apiexample_warranty') }}?v=201201">Warranties</a></li>
+    <li><a href="{{ path('api_docs_201201') }}">Documentation (Version 201201)</a></li>
 </ul>
+
 {% endblock %}

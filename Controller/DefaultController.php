@@ -23,4 +23,16 @@ class DefaultController extends Controller
     {
         return array();
     }
+
+    /**
+     * Show list of pages the user can go to
+     *
+     * @Route   ("/test", name="apiexample_test_root")
+     * @Template()
+     * @return array Data used in the twig template
+     */
+    public function testIndexAction()
+    {
+        return array();
+    }
 }

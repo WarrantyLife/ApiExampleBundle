@@ -17,7 +17,7 @@ class CustomerController extends BaseController
     /**
      * Display page that allows for interacting with the API
      * 
-     * @Route("/customers", name="apiexample_customer")
+     * @Route("/test/customers", name="apiexample_customer")
      * @Method("GET")
      * @Template()
      * 
@@ -32,7 +32,7 @@ class CustomerController extends BaseController
     /**
      * Perform API request
      * 
-     * @Route("/customers")
+     * @Route("/test/customers")
      * @Method("POST")
      * @Template()
      * 

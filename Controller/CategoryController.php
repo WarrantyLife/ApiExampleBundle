@@ -16,8 +16,8 @@ class CategoryController extends BaseController
 {
     /**
      * Display page that allows for interacting with the API
-     * 
-     * @Route("/categories", name="apiexample_category")
+     *
+     * @Route("/test/categories", name="apiexample_category")
      * @Method("GET")
      * @Template()
      * 
@@ -32,7 +32,7 @@ class CategoryController extends BaseController
     /**
      * Perform API request
      * 
-     * @Route("/categories")
+     * @Route("/test/categories")
      * @Method("POST")
      * @Template()
      * 

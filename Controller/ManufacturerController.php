@@ -17,7 +17,7 @@ class ManufacturerController extends BaseController
     /**
      * Display page that allows for interacting with the API
      *
-     * @Route   ("/manufacturers", name="apiexample_manufacturer")
+     * @Route   ("/test/manufacturers", name="apiexample_manufacturer")
      * @Method  ("GET")
      * @Template()
      * @return array Data used in the twig template
@@ -31,7 +31,7 @@ class ManufacturerController extends BaseController
     /**
      * Perform API request
      *
-     * @Route   ("/manufacturers")
+     * @Route   ("/test/manufacturers")
      * @Method  ("POST")
      * @Template()
      * @throws \Exception
