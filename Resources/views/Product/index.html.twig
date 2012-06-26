@@ -29,6 +29,8 @@
             &manufacturerName=<input type="text" name="manufacturerName" placeholder="manufacturerName" />
             &startAt=<input type="text" name="startAt" placeholder="startsAt" maxlength="4" class="short" />
             &limit=<input type="text" name="limit" placeholder="limit" maxlength="3" class="short"/>
+            &includePlans=<input type="text" name="includePlans" placeholder="includePlans" maxlength="1" class="short"/>
+            &includePlansAtPrice=<input type="text" name="includePlansAtPrice" placeholder="includePlansAtPrice" maxlength="11" class="short"/>
         <br/>
         <input type="submit"/>
     </form>
@@ -44,6 +46,9 @@
         {{ endpoint }}/products?q=<input type="text" name="q" placeholder="q"/>
         &startAt=<input type="text" name="startAt" placeholder="startsAt" maxlength="4" class="short"/>
         &limit=<input type="text" name="limit" placeholder="limit" maxlength="3" class="short"/>
+        &includePlans=<input type="text" name="includePlans" placeholder="includePlans" maxlength="1" class="short"/>
+        &includePlansAtPrice=<input type="text" name="includePlansAtPrice" placeholder="includePlansAtPrice"
+                                    maxlength="11" class="short"/>
         <br/>
         <input type="submit"/>
     </form>
