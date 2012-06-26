@@ -423,6 +423,18 @@ Location: {{ prefix }}/manufacturers/<code>manufacturerId</code>
         <li>GET {{ prefix }}/products?model=<code {{ wildcardTags | raw }}>model</code>&mpn=<code {{ wildcardTags | raw }}>mpn</code>&upc=<code>UPC code</code>&ean=<code>EAN Barcode</code>&categoryId=<code>categoryId</code>&manufacturerId=<code>manufacturerId</code>&manufacturerName=<code
             {{ wildcardTags | raw}}>manufacturerName</code>&startAt=<code {{ pagingTags | raw }}>startAt</code>&limit=<code {{ pagingTags | raw }}>limit</code> - by specifying specific search terms to search on
         <p>All parameters here are optional, the only limitation is that you must specify at least one of the search parameters.</p>
+
+        <h5>Including Warranty Plan information in Product search results</h5>
+        <p>The three calls above also support the <code>includePlans</code> and <code>includePlansAtPrice</code> parameters.
+        Set <code>includePlans=1</code> to have warranty plans included in the results per product.</p>
+
+        <p>By default, each product will
+        include a set of all plans that are applicable to its category regardless of price.
+        To narrow the results to only include the plans only applicable for the product's price, you can specify your
+        selling price for the product you are searching for by setting <code>includePlansAtPrice=333.33</code> where
+        333.33 is your selling price.  If you do not know the selling price of the product, you may request that the
+        warranty plan list be restricted based on each product's MSRP value where known by specifying
+        <code>includePlansAtPrice=MSRP</code> instead.</p>
 <pre>&larr; 200
 [
     {
@@ -437,7 +449,12 @@ Location: {{ prefix }}/manufacturers/<code>manufacturerId</code>
         "msrp" : <strong>0.00</strong>
         "msrpCurrency": "<strong>[CAD|USD]</strong>",
         "upc": "123456789012"
-        "ean": "1234567890123"
+        "ean": "1234567890123",
+        "warrantyPlans": [
+            { &hellip; },
+            &hellip;
+        ]
+
     },
     { &hellip; }
 ]
