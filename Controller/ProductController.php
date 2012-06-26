@@ -60,6 +60,8 @@ class ProductController extends BaseController
                                  'q',
                                  'manufacturerId',
                                  'manufacturerName',
+                                 'includePlans',
+                                 'includePlansAtPrice',
                                  'startAt',
                                  'limit') as $f) {
                         if ($v = $this->getRequest()->get($f, null)) {
@@ -70,7 +72,7 @@ class ProductController extends BaseController
                         $url .= '?' . implode('&', $params);
                     }
                 }
-                $request = $client->get($url, $headers);
+                $request = $client->get($url, array('Content-Type'=> 'application/json'));
                 break;
 
             case 'post':

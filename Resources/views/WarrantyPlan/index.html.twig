@@ -3,8 +3,8 @@
 {% block queries %}
 <div class="section">
     <form id="all" method="POST" target="results">
-        <input type="hidden" id="all_username" name="username" />
-        <input type="hidden" id="all_password" name="password" />
+        <input type="hidden" class="api_auth_username" name="username" />
+        <input type="hidden" class="api_auth_password" name="password" />
         {{ endpoint }}/warranty-plans
         <br />
         <input type="submit" />
@@ -13,8 +13,8 @@
 
 <div class="section">
     <form id="byWarrantyPlanId" method="POST" target="results">
-        <input type="hidden" id="byWarrantyPlanId_username" name="username" />
-        <input type="hidden" id="byWarrantyPlanId_password" name="password" />
+        <input type="hidden" class="api_auth_username" name="username" />
+        <input type="hidden" class="api_auth_password" name="password" />
         {{ endpoint }}/warranty-plans/<input type="text" name="warrantyPlanId" placeholder="warrantyPlanId"/>
         <br />
         <input type="submit" />
@@ -23,8 +23,8 @@
 
 <div class="section">
     <form id="byCategoryId" method="POST" target="results">
-        <input type="hidden" id="byCategoryId_username" name="username" />
-        <input type="hidden" id="byCategoryId_password" name="password" />
+        <input type="hidden" class="api_auth_username" name="username" />
+        <input type="hidden" class="api_auth_password" name="password" />
         {{ endpoint }}/warranty-plans?categoryId=<input type="text" name="categoryId" placeholder="categoryId"/>
         <br />
         <input type="submit" />

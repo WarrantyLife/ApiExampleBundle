@@ -5,8 +5,8 @@
 <div class="section">
     <h4>Product Lookup by ProductId</h4>
     <form id="byId" method="POST" target="results">
-        <input type="hidden" id="byId_username" name="username"/>
-        <input type="hidden" id="byId_password" name="password"/>
+        <input type="hidden" class="api_auth_username" name="username"/>
+        <input type="hidden" class="api_auth_password" name="password"/>
         <input type="hidden" name="action" value="get"/>
         {{ endpoint }}/products/<input type="text" name="productId" placeholder="productId"/>
         <br/>
@@ -17,8 +17,8 @@
 <div class="section">
     <h4>Product Search on Specific Fields</h4>
     <form id="search" method="POST" target="results">
-        <input type="hidden" id="all_username" name="username"/>
-        <input type="hidden" id="all_password" name="password"/>
+        <input type="hidden" class="api_auth_username" name="username"/>
+        <input type="hidden" class="api_auth_password" name="password"/>
         <input type="hidden" name="action" value="get"/>
         {{ endpoint }}/products?model=<input type="text" name="model" placeholder="model"/>
             &mpn=<input type="text" name="mpn" placeholder="mpn"/>
@@ -40,8 +40,8 @@
     <h4>Product Search by single Query String</h4>
 
     <form id="query_search" method="POST" target="results">
-        <input type="hidden" id="all_username" name="username"/>
-        <input type="hidden" id="all_password" name="password"/>
+        <input type="hidden" class="api_auth_username" name="username"/>
+        <input type="hidden" class="api_auth_password" name="password"/>
         <input type="hidden" name="action" value="get"/>
         {{ endpoint }}/products?q=<input type="text" name="q" placeholder="q"/>
         &startAt=<input type="text" name="startAt" placeholder="startsAt" maxlength="4" class="short"/>
@@ -60,8 +60,8 @@
 
     <div class="submission">
         <form id="add" method="POST" target="results">
-            <input type="hidden" id="add_username" name="username"/>
-            <input type="hidden" id="add_password" name="password"/>
+            <input type="hidden" class="api_auth_username" name="username"/>
+            <input type="hidden" class="api_auth_password" name="password"/>
             <input type="hidden" name="action" value="post"/>
             POST {{ endpoint }}/products <br/>
             <textarea name="json" placeholder="{ product data here }"></textarea>

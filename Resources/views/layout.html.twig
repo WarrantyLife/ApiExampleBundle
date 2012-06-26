@@ -50,9 +50,12 @@
                 <script>
                 $(function(){
                 	$('form').submit(function(){
-                		var id = $(this).attr('id');
-                		$('#'+id+'_username').val($('#username').val());
-                		$('#'+id+'_password').val($('#password').val());
+                        $('.api_auth_username').each(function(index) {
+                            $(this).val($('#username').val());
+                        });
+                        $('.api_auth_password').each(function(index) {
+                            $(this).val($('#password').val());
+                        });
                 	});
                 });
                 </script>

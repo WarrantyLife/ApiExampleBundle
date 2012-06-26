@@ -3,8 +3,8 @@
 {% block queries %}
 <div class="section">
     <form id="all" method="POST" target="results">
-        <input type="hidden" id="all_username" name="username" />
-        <input type="hidden" id="all_password" name="password" />
+        <input type="hidden" class="api_auth_username" name="username" />
+        <input type="hidden" class="api_auth_password" name="password" />
         {{ endpoint }}/categories
         <br />
         <input type="submit" />
@@ -13,8 +13,8 @@
 
 <div class="section">
     <form id="byId" method="POST" target="results">
-        <input type="hidden" id="byId_username" name="username" />
-        <input type="hidden" id="byId_password" name="password" />
+        <input type="hidden" class="api_auth_username" name="username" />
+        <input type="hidden" class="api_auth_password" name="password" />
         {{ endpoint }}/categories/<input type="text" name="categoryId" placeholder="categoryId"/>
         <br />
         <input type="submit" />

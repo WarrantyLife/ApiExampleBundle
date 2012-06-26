@@ -3,8 +3,8 @@
 {% block queries %}
 <div class="section">
     <form id="all" method="POST" target="results">
-        <input type="hidden" id="all_username" name="username"/>
-        <input type="hidden" id="all_password" name="password"/>
+        <input type="hidden" class="api_auth_username" name="username"/>
+        <input type="hidden" class="api_auth_password" name="password"/>
         <input type="hidden" name="action" value="get"/>
         {{ endpoint }}/manufacturers?name=<input type="text" name="name" placeholder="name"
             />&startAt=<input type="text" name="startAt" placeholder="startsAt" maxlength="4" class="short"
@@ -16,8 +16,8 @@
 
 <div class="section">
     <form id="byId" method="POST" target="results">
-        <input type="hidden" id="byId_username" name="username"/>
-        <input type="hidden" id="byId_password" name="password"/>
+        <input type="hidden" class="api_auth_username" name="username"/>
+        <input type="hidden" class="api_auth_password" name="password"/>
         <input type="hidden" name="action" value="get"/>
         {{ endpoint }}/manufacturers/<input type="text" name="manufacturerId" placeholder="manufacturerId"/>
         <br/>
@@ -30,8 +30,8 @@
 
     <div class="submission">
         <form id="add" method="POST" target="results">
-            <input type="hidden" id="add_username" name="username"/>
-            <input type="hidden" id="add_password" name="password"/>
+            <input type="hidden" class="api_auth_username" name="username"/>
+            <input type="hidden" class="api_auth_password" name="password"/>
             <input type="hidden" name="action" value="post"/>
             POST {{ endpoint }}/manufacturers <br/>
             <textarea name="json" placeholder="{ manufacturer data here }"></textarea>
