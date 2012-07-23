@@ -4,6 +4,7 @@ namespace WarrantyLife\ApiExampleBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -19,6 +20,11 @@ class DocumentationController extends Controller
      */
     public function apiDoc201204Action()
     {
+        try {
+            return new RedirectResponse($this->generateUrl('developer_documentation'));
+        } catch (\Exception $e) {
+            //If developer_documentation is not in path
+        }
         $version = '201204';
         return array(
             'version' => $version,
