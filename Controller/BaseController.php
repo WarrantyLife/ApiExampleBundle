@@ -16,7 +16,7 @@ use Guzzle\Http\Message\RequestInterface;
 class BaseController extends Controller
 {
     /**
-     * Used only when no parameters.ini var is set nor is the version specified as a parameter
+     * Used only when no parameters.yml var is set nor is the version specified as a parameter
      */
     const DEFAULT_API_VERSION = '201204';
 
