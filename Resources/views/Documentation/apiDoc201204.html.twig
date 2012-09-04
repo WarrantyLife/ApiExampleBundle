@@ -218,10 +218,11 @@ pre hr {
   <h4>Fetch all categories</h4>
   <ul>
     <li>GET {{ prefix }}/categories
-      <p>Returns an array of category objects.</p>
+      <p>Returns an array of category objects.  By default, the list is returned in a flat format, with lists of
+          category IDs given to indicate what each category's sub-categories are.  If you prefer a tree format,
+          set the 'tree' parameter to 1, as in {{ prefix }}/categories?tree=1</p>
     </li>
   </ul>
-
 
 
 	<hr style="page-break-before: always; display: none;">
