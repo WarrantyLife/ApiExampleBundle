@@ -14,6 +14,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
  */
 class Item201201Controller extends BaseController
 {
+
+    public function __construct()
+    {
+        $this->setApiVersion(201201);
+    }
     /**
      * Display page that allows for interacting with the API
      * 
@@ -25,6 +30,7 @@ class Item201201Controller extends BaseController
      */
 	public function indexAction()
 	{
+
         $endpoint = $this->getApiEndpoint(201201);
     	return array('endpoint'=>$endpoint);
     }
@@ -40,7 +46,7 @@ class Item201201Controller extends BaseController
      */
     public function postAction()
     {
-    	$url = 'items201201';
+    	$url = 'items';
     	$args = array();
 
     	$action = $this->getRequest()->request->get('action', null);
