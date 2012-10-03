@@ -406,6 +406,7 @@ Location: {{ prefix }}/manufacturers/<code>manufacturerId</code>
 
     "id": "<em>productId</em>",
     "categoryId": "<em>categoryId</em>",
+    "isCategoryKnown": <strong>false</strong>,
     "manufacturer": {
         "id": "<em>manufacturerId</em>",
         "name": "<em>manufacturerName</em>"
@@ -420,6 +421,13 @@ Location: {{ prefix }}/manufacturers/<code>manufacturerId</code>
 </pre>
         </li>
     </ul>
+   <p>Notes:</p>
+    <ul>
+        <li><strong>isCategoryKnown</strong>: If false, the categoryId given should be taken as a suggestion of a
+        default setting only.  The correct categoryId for the product should be passed when items are created using
+        the POST /items call.</li>
+    </ul>
+
     <h4>Search for Products (paged array of results)</h4>
     <ul>
         <li>GET {{ prefix }}/products?sku=<code>sku</code> - by your sku code for the product</li>
@@ -445,6 +453,7 @@ Location: {{ prefix }}/manufacturers/<code>manufacturerId</code>
     {
         "id": "<em>productId</em>",
         "categoryId": "<em>categoryId</em>",
+        "isCategoryKnown": <strong>false</strong>,
         "manufacturer": {
             "id": "<em>manufacturerId</em>",
             "name": "<em>manufacturerName</em>"
@@ -517,6 +526,8 @@ Location: {{ prefix }}/products/<code>productId</code>
   "serialNumberType": "<strong>{{ sntTypesDescriptor }}</strong>",          // OPTIONAL
   "isRepaired": <strong>false</strong>,                            // <strong>REQUIRED</strong>
   "hasDamage": <strong>false</strong>                              // <strong>REQUIRED</strong>
+
+  "categoryId": "<em>Category ID for the product</em>",    // OPTIONAL *See below
 }</pre>
         <p>Notes:</p>
         <ul>
@@ -527,6 +538,12 @@ Location: {{ prefix }}/products/<code>productId</code>
             If both are given, the system will save your productSku for the given productId for use in subsequent calls.
             productSkus should be your code that is unique to the product.  If you do not have a productSku for the product, exclude this field.</li>
             <li><strong>serialNumberType</strong>: Include this field only when the serialNumber's type is known - for example when dealing with IMEI numbers from cell phones.</li>
+            <li><strong>categoryId</strong>: Unlike other fields, this one applies to the Product. In some cases, when
+                the product's isCategoryKnown field is false, the category given for a product may not be correct
+                or known. In that case, the categoryId may be specified with the POST /items call made when creating
+                an item to specify the correct product category. If a categoryId is not specified, then the default
+                categoryId for the specified product (via productId/productSku) will be used.
+            </li>
         </ul>
 
 
