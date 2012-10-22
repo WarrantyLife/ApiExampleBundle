@@ -1,5 +1,5 @@
 {
-    "name": "warrantylife/apiExampleBundle",
+    "name": "warrantylife/api-example-bundle",
     "description": "Example client for the WarrantyLife API",
     "keywords": ["warrantylife", "warranty", "api", "php", "symfony"],
     "type": "symfony-bundle",
