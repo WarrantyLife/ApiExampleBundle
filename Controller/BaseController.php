@@ -1,6 +1,6 @@
 <?php
 
-namespace WarrantyLife\ApiExampleBundle\Controller;
+namespace WarrantyLife\Bundle\ApiExampleBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 

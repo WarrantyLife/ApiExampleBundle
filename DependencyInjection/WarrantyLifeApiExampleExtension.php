@@ -1,6 +1,6 @@
 <?php
 
-namespace WarrantyLife\ApiExampleBundle\DependencyInjection;
+namespace WarrantyLife\Bundle\ApiExampleBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

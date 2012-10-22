@@ -1,6 +1,6 @@
 <?php
 
-namespace WarrantyLife\ApiExampleBundle\DependencyInjection;
+namespace WarrantyLife\Bundle\ApiExampleBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

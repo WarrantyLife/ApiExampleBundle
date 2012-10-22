@@ -6,7 +6,7 @@
 
     <!--
     <parameters>
-        <parameter key="warranty_life_api_example.example.class">WarrantyLife\ApiExampleBundle\Example</parameter>
+        <parameter key="warranty_life_api_example.example.class">WarrantyLife\Bundle\ApiExampleBundle\Example</parameter>
     </parameters>
 
     <services>

@@ -1,6 +1,6 @@
 <?php
 
-namespace WarrantyLife\ApiExampleBundle;
+namespace WarrantyLife\Bundle\ApiExampleBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

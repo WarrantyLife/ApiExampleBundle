@@ -8,6 +8,7 @@
         "php": ">=5.3"
     },
     "autoload": {
-        "psr-0": { "WarrantyLife\\ApiExampleBundle": "" }
-    }
+        "psr-0": { "WarrantyLife\\Bundle\\ApiExampleBundle": "" }
+    },
+	"target-dir": "WarrantyLife/Bundle/ApiExampleBundle"
 }

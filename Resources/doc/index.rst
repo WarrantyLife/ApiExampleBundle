@@ -20,7 +20,7 @@ Then register the bundle with your kernel::
     // in AppKernel::registerBundles()
     $bundles = array(
         // ...
-        new WarrantyLife\ApiExampleBundle\WarrantyLifeApiExampleBundle(),
+        new WarrantyLife\Bundle\ApiExampleBundle\WarrantyLifeApiExampleBundle(),
         // ...
     );
 
