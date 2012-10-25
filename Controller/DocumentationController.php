@@ -1,6 +1,6 @@
 <?php
 
-namespace WarrantyLife\Bundle\ApiExampleBundle\Controller;
+namespace WarrantyLife\ApiExampleBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

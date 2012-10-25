@@ -1,8 +1,8 @@
 <?php
 
-namespace WarrantyLife\Bundle\ApiExampleBundle\Controller;
+namespace WarrantyLife\ApiExampleBundle\Controller;
 
-use WarrantyLife\Bundle\ApiExampleBundle\Controller\BaseController;
+use WarrantyLife\ApiExampleBundle\Controller\BaseController;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
