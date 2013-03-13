@@ -13,7 +13,7 @@
         <title>{% block title 'Warranty Life API Testing' %}</title>
 		{% block stylesheets %}
 		    {# <link href="{{ asset('css/reset-3.3.0.min.css') }}" rel="stylesheet" /> #}
-		    {% stylesheets filter='cssrewrite,cssmin'
+		    {% stylesheets filter='cssrewrite'
 		        debug=false
 		        '@WarrantyLifeApiExampleBundle/Resources/public/css/style.css'
 		    %}
