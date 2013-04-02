@@ -5,9 +5,11 @@ namespace WarrantyLife\ApiExampleBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Guzzle\Http\Client;
-use Guzzle\Common\Log\ZendLogAdapter;
-use Guzzle\Http\Plugin\LogPlugin;
-use Guzzle\Http\Plugin\BasicAuthPlugin;
+use Guzzle\Log\Zf1LogAdapter;
+use Guzzle\Log\Zf2LogAdapter;
+use Guzzle\Plugin\Log\LogPlugin;
+use Guzzle\Log\MessageFormatter;
+use Guzzle\Plugin\CurlAuth\CurlAuthPlugin;
 use Guzzle\Http\Message\RequestInterface;
 
 /**
@@ -109,9 +111,13 @@ class BaseController extends Controller
      */
     protected function createClient()
     {
-        $stream    = $this->createStream();
-        $adapter   = new ZendLogAdapter(new \Zend\Log\Logger(new \Zend\Log\Writer\Stream($stream)));
-        $logPlugin = new LogPlugin($adapter, LogPlugin::LOG_VERBOSE);
+       //$stream    = $this->createStream();
+
+        $adapter = new Zf1LogAdapter(
+            new \Zend_Log(new \Zend_Log_Writer_Stream('php://output'))
+        );
+        //$adapter   = new Zf2LogAdapter(new \Zend\Log\Logger(new \Zend\Log\Writer\Stream('php://output')));
+        $logPlugin = new LogPlugin($adapter, MessageFormatter::DEBUG_FORMAT);
 
         $apiKey    = $this->getRequest()->request->get('username', null);
         $apiSecret = $this->getRequest()->request->get('password', null);
@@ -136,7 +142,7 @@ class BaseController extends Controller
         $client = new Client($endpoint);
 
         $client->getEventDispatcher()->addSubscriber($logPlugin);
-        $client->getEventDispatcher()->addSubscriber(new BasicAuthPlugin($apiKey, $apiSecret));
+        $client->getEventDispatcher()->addSubscriber(new CurlAuthPlugin($apiKey, $apiSecret));
         $client->setUserAgent('WarrantyLifeAPITesting/1.0', true);
 
         return $client;
