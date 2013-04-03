@@ -111,10 +111,10 @@ class BaseController extends Controller
      */
     protected function createClient()
     {
-       //$stream    = $this->createStream();
+        $stream    = $this->createStream();
 
         $adapter = new Zf1LogAdapter(
-            new \Zend_Log(new \Zend_Log_Writer_Stream('php://output'))
+            new \Zend_Log(new \Zend_Log_Writer_Stream($stream))
         );
         //$adapter   = new Zf2LogAdapter(new \Zend\Log\Logger(new \Zend\Log\Writer\Stream('php://output')));
         $logPlugin = new LogPlugin($adapter, MessageFormatter::DEBUG_FORMAT);
