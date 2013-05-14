@@ -10,14 +10,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
- * Controller for handling product examples
+ * Controller for handling buyback examples
  */
-class ProductController extends BaseController
+class BuybackController extends BaseController
 {
     /**
      * Display page that allows for interacting with the API
      *
-     * @Route   ("/test/products", name="apiexample_product")
+     * @Route   ("/test/buybacks", name="apiexample_buybacks")
      * @Method  ("GET")
      * @Template()
      * @return array Data used in the twig template
@@ -31,42 +31,45 @@ class ProductController extends BaseController
     /**
      * Perform API request
      *
-     * @Route   ("/test/products")
+     * @Route   ("/test/buybacks")
      * @Method  ("POST")
      * @Template()
      * @return array Data used in the twig template
      */
     public function postAction()
     {
-        $url = 'products';
         $headers = array();
         $client = $this->createClient();
         $action = $this->getRequest()->request->get('action', null);
+        $url = $this->getRequest()->request->get('target', 'buyback');
 
         switch ($action) {
             case 'get':
-                $productId = $this->getRequest()->request->get('productId', null);
-                if ($productId) {
-                    $url .= '/' . $productId;
+                $buybackId = $this->getRequest()->request->get('buybackId', null);
+
+                if ($buybackId) {
+                    $url .= '/' . $buybackId;
+                } else if ($url == 'buyback_status') {
+                    $url .= '/' . $this->getRequest()->request->get('transactionId', null);
                 } else {
                     $params = array();
                     foreach (array(
-                                 'id',
-                                 'mpn',
-                                 'model',
                                  'categoryId',
-                                 'sku',
-                                 'upc',
-                                 'q',
-                                 'manufacturerId',
-                                 'manufacturerName',
-                                 'includePlans',
-                                 'includePlansAtPrice',
-                                 'hasBuyback',
+                                 'productId',
+                                 'responses',
+                                 'transactionId',
                                  'startAt',
                                  'limit') as $f) {
                         if ($v = $this->getRequest()->get($f, null)) {
-                            $params[] = $f . '=' . $v;
+                            if($f == 'responses') {
+                                $v = json_decode($v);
+                                //{"54":3, "55":2, "56":3, "57":3}
+                                foreach($v as $key => $val) {
+                                    $params[] = $f . '['.$key.']='.$val;
+                                }
+                            } else {
+                                $params[] = $f . '=' . $v;
+                            }
                         }
                     }
                     if (count($params)) {
@@ -82,9 +85,9 @@ class ProductController extends BaseController
                 break;
 
             case 'put':
-                $productId = $this->getRequest()->request->get('productId', null);
-                if ($productId) {
-                    $url .= '/' . $productId;
+                $buybackId = $this->getRequest()->request->get('buybackId', null);
+                if ($buybackId) {
+                    $url .= '/' . $buybackId;
                     break;
                 }
                 $json    = $this->getRequest()->request->get('json', null);

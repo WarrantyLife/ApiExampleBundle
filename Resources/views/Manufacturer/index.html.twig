@@ -6,9 +6,10 @@
         <input type="hidden" class="api_auth_username" name="username"/>
         <input type="hidden" class="api_auth_password" name="password"/>
         <input type="hidden" name="action" value="get"/>
-        {{ endpoint }}/manufacturers?name=<input type="text" name="name" placeholder="name"
-            />&startAt=<input type="text" name="startAt" placeholder="startsAt" maxlength="4" class="short"
-            />&limit=<input type="text" name="limit" placeholder="limit" maxlength="3" class="short"/>
+        {{ endpoint }}/manufacturers?name=<input type="text" name="name" placeholder="name"/>
+            &hasBuyback=<input type="text" name="hasBuyback" placeholder="hasBuyback" maxlength="1" class="short"/>
+            &startAt=<input type="text" name="startAt" placeholder="startsAt" maxlength="4" class="short"/>
+            &limit=<input type="text" name="limit" placeholder="limit" maxlength="3" class="short"/>
         <br/>
         <input type="submit"/>
     </form>

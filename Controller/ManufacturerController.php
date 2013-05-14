@@ -53,6 +53,7 @@ class ManufacturerController extends BaseController
                     $params = array();
                     foreach (array(
                                  'name',
+                                 'hasBuyback',
                                  'startAt',
                                  'limit') as $f) {
                         if ($v = $this->getRequest()->get($f, null)) {
