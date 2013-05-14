@@ -49,8 +49,6 @@ class BuybackController extends BaseController
 
                 if ($buybackId) {
                     $url .= '/' . $buybackId;
-                } else if ($url == 'buyback_status') {
-                    $url .= '/' . $this->getRequest()->request->get('transactionId', null);
                 } else {
                     $params = array();
                     foreach (array(

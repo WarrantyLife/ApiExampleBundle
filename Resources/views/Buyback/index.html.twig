@@ -40,7 +40,7 @@
         <input type="hidden" name="action" value="get"/>
         <input type="hidden" name="target" value="buyback_status"/>
 
-        {{ endpoint }}/buyback_status/<input type="text" name="transactionId" placeholder="transactionId"/>
+        {{ endpoint }}/buyback_status?transactionId=<input type="text" name="transactionId" placeholder="transactionId"/>
         <br/>
         <input type="submit"/>
     </form>
@@ -68,7 +68,7 @@
                 $(function () {
                     $('#gen_add_link').click(function () {
                         var
-                            fields = ['refId', 'orderRefId', 'customerId', 'buybackPriceId', 'customerOfferPrice', 'responses', 'serialNumber', 'paymentType', 'salesRepEmail', 'isPromised']
+                            fields = ['refId', 'orderRefId', 'customerId', 'productId', 'customerOfferPrice', 'responses', 'serialNumber', 'paymentType', 'salesRepEmail', 'isPromised']
                             , result = []
                         ;
 
@@ -104,7 +104,7 @@
     "refId":              "<input type="text" name="gen_refId" placeholder="refId"/>",
     "orderRefId":         "<input type="text" name="gen_orderRefId" placeholder="orderRefId"/>",
     "<strong>customerId</strong>":         "<input type="text" name="gen_customerId" placeholder="customerId" />",   <strong>// Required</strong>
-    "<strong>buybackPriceId</strong>":     "<input type="text" name="gen_buybackPriceId" placeholder="buybackPriceId"/>",   <strong>// Required</strong>
+    "<strong>productId</strong>":          "<input type="text" name="gen_productId" placeholder="productId"/>",   <strong>// Required</strong>
     "<strong>customerOfferPrice</strong>": "<input type="text" name="gen_customerOfferPrice" placeholder="0.00"  data-quotes=false />",   <strong>// Required</strong>
     "<strong>responses</strong>":          "<input type="text" name="gen_responses" placeholder="json list: {question:answer,}"  data-quotes=false />",   <strong>// Required</strong>
     "<strong>serialNumber</strong>":       "<input type="text" name="gen_serialNumber" placeholder="Serial Number"/>",   <strong>// Required</strong>
