@@ -8,44 +8,52 @@
         <input type="hidden" class="api_auth_username" name="username"/>
         <input type="hidden" class="api_auth_password" name="password"/>
         <input type="hidden" name="action" value="get"/>
-        <input type="hidden" name="target" value="buyback_questions"/>
+        <input type="hidden" name="target" value="buyback-questions"/>
 
-        {{ endpoint }}/buyback_questions?categoryId=<input type="text" name="categoryId" placeholder="categoryId" />
+        {{ endpoint }}/buyback-questions?categoryId=<input type="text" name="categoryId" placeholder="categoryId" />
         <br/>
         <input type="submit"/>
     </form>
 </div>
+
 
 <div class="section">
-    <h4>Get Buyback Value of Product</h4>
-    <form id="value" method="POST" target="results">
-        <input type="hidden" class="api_auth_username" name="username"/>
-        <input type="hidden" class="api_auth_password" name="password"/>
-        <input type="hidden" name="action" value="get"/>
-        <input type="hidden" name="target" value="buyback_value"/>
-
-        {{ endpoint }}/buyback_value?productId=<input type="text" name="productId" placeholder="productId" />
-            &responses=<input type="text" name="responses" placeholder="responses"/>
-        <br/>
-        <input type="submit"/>
+    <h4>Get Buyback Transaction by transactionId</h4>
+    <form id="byId" method="POST" target="results">
+        <input type="hidden" class="api_auth_username" name="username" />
+        <input type="hidden" class="api_auth_password" name="password" />
+        <input type="hidden" name="action" value="get" />
+        {{ endpoint }}/buybacks/<input type="text" name="transactionId" placeholder="transactionId"/>
+        <br />
+        <input type="submit" />
     </form>
 </div>
+
 
 <div class="section">
-    <h4>Get Current Status of Buyback Transaction</h4>
-
-    <form id="status" method="POST" target="results">
-        <input type="hidden" class="api_auth_username" name="username"/>
-        <input type="hidden" class="api_auth_password" name="password"/>
-        <input type="hidden" name="action" value="get"/>
-        <input type="hidden" name="target" value="buyback_status"/>
-
-        {{ endpoint }}/buyback_status?transactionId=<input type="text" name="transactionId" placeholder="transactionId"/>
-        <br/>
-        <input type="submit"/>
+    <h4>Get Buyback Transaction by refId</h4>
+    <form id="byRefId" method="POST" target="results">
+        <input type="hidden" class="api_auth_username" name="username" />
+        <input type="hidden" class="api_auth_password" name="password" />
+        <input type="hidden" name="action" value="get" />
+        {{ endpoint }}/buybacks?refId=<input type="text" name="refId" placeholder="refId"/>
+        <br />
+        <input type="submit" />
     </form>
 </div>
 
+
+<div class="section">
+    <h4>Get Buyback Transaction by orderRefId</h4>
+    <form id="byOrderRefId" method="POST" target="results">
+        <input type="hidden" class="api_auth_username" name="username" />
+        <input type="hidden" class="api_auth_password" name="password" />
+        <input type="hidden" name="action" value="get" />
+        {{ endpoint }}/buybacks?orderRefId=<input type="text" name="orderRefId" placeholder="orderRefId"/>
+        <br />
+        <input type="submit" />
+    </form>
+</div>
 
 <div class="section">
     <h4>Create New Buyback Transaction</h4>
@@ -55,7 +63,7 @@
             <input type="hidden" class="api_auth_username" name="username"/>
             <input type="hidden" class="api_auth_password" name="password"/>
             <input type="hidden" name="action" value="post"/>
-            POST {{ endpoint }}/buyback <br/>
+            POST {{ endpoint }}/buybacks <br/>
             <textarea name="json" placeholder="{ product data here }"></textarea>
             <br/>
             <input type="submit"/>
@@ -116,7 +124,5 @@
         </form>
     </div>
 </div>
-
-
 
 {% endblock %}

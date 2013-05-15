@@ -41,11 +41,11 @@ class BuybackController extends BaseController
         $headers = array();
         $client = $this->createClient();
         $action = $this->getRequest()->request->get('action', null);
-        $url = $this->getRequest()->request->get('target', 'buyback');
+        $url = $this->getRequest()->request->get('target', 'buybacks');
 
         switch ($action) {
             case 'get':
-                $buybackId = $this->getRequest()->request->get('buybackId', null);
+                $buybackId = $this->getRequest()->request->get('transactionId', null);
 
                 if ($buybackId) {
                     $url .= '/' . $buybackId;
@@ -54,7 +54,6 @@ class BuybackController extends BaseController
                     foreach (array(
                                  'categoryId',
                                  'productId',
-                                 'responses',
                                  'transactionId',
                                  'startAt',
                                  'limit') as $f) {

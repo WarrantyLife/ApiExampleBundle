@@ -9,6 +9,7 @@
         <input type="hidden" class="api_auth_password" name="password"/>
         <input type="hidden" name="action" value="get"/>
         {{ endpoint }}/products/<input type="text" name="productId" placeholder="productId"/>
+            ?buyackDetractorAnswers=<input type="text" name="buybackDetractorAnswers" placeholder="buybackDetractorAnswers"/>
         <br/>
         <input type="submit"/>
     </form>
@@ -32,6 +33,7 @@
             &includePlans=<input type="text" name="includePlans" placeholder="includePlans" maxlength="1" class="short"/>
             &includePlansAtPrice=<input type="text" name="includePlansAtPrice" placeholder="includePlansAtPrice" maxlength="11" class="short"/>
             &hasBuyback=<input type="text" name="hasBuyback" placeholder="hasBuyback" maxlength="1" class="short"/>
+            &buyackDetractorAnswers=<input type="text" name="buybackDetractorAnswers" placeholder="buybackDetractorAnswers"/>
         <br/>
         <input type="submit"/>
     </form>
@@ -48,8 +50,9 @@
         &startAt=<input type="text" name="startAt" placeholder="startsAt" maxlength="4" class="short"/>
         &limit=<input type="text" name="limit" placeholder="limit" maxlength="3" class="short"/>
         &includePlans=<input type="text" name="includePlans" placeholder="includePlans" maxlength="1" class="short"/>
-        &includePlansAtPrice=<input type="text" name="includePlansAtPrice" placeholder="includePlansAtPrice"
-                                    maxlength="11" class="short"/>
+        &includePlansAtPrice=<input type="text" name="includePlansAtPrice" placeholder="includePlansAtPrice" maxlength="11" class="short"/>
+        &hasBuyback=<input type="text" name="hasBuyback" placeholder="hasBuyback" maxlength="1" class="short"/>
+        &buyackDetractorAnswers=<input type="text" name="buybackDetractorAnswers" placeholder="buybackDetractorAnswers"/>
         <br/>
         <input type="submit"/>
     </form>

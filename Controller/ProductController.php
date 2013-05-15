@@ -48,31 +48,41 @@ class ProductController extends BaseController
                 $productId = $this->getRequest()->request->get('productId', null);
                 if ($productId) {
                     $url .= '/' . $productId;
-                } else {
-                    $params = array();
-                    foreach (array(
-                                 'id',
-                                 'mpn',
-                                 'model',
-                                 'categoryId',
-                                 'sku',
-                                 'upc',
-                                 'q',
-                                 'manufacturerId',
-                                 'manufacturerName',
-                                 'includePlans',
-                                 'includePlansAtPrice',
-                                 'hasBuyback',
-                                 'startAt',
-                                 'limit') as $f) {
-                        if ($v = $this->getRequest()->get($f, null)) {
+                }
+
+                $params = array();
+                foreach (array(
+                             'id',
+                             'mpn',
+                             'model',
+                             'categoryId',
+                             'sku',
+                             'upc',
+                             'q',
+                             'manufacturerId',
+                             'manufacturerName',
+                             'includePlans',
+                             'includePlansAtPrice',
+                             'buybackDetractorAnswers',
+                             'hasBuyback',
+                             'startAt',
+                             'limit') as $f) {
+                    if ($v = $this->getRequest()->get($f, null)) {
+                        if($f == 'buybackDetractorAnswers') {
+                            $v = json_decode($v);
+                            //{"54":3, "55":2, "56":3, "57":3}
+                            foreach($v as $key => $val) {
+                                $params[] = $f . '['.$key.']='.$val;
+                            }
+                        } else {
                             $params[] = $f . '=' . $v;
                         }
                     }
-                    if (count($params)) {
-                        $url .= '?' . implode('&', $params);
-                    }
                 }
+                if (count($params)) {
+                    $url .= '?' . implode('&', $params);
+                }
+
                 $request = $client->get($url, array('Content-Type'=> 'application/json'));
                 break;
 
