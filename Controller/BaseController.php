@@ -20,7 +20,7 @@ class BaseController extends Controller
     /**
      * Used only when no parameters.yml var is set nor is the version specified as a parameter
      */
-    const DEFAULT_API_VERSION = '201204';
+    const DEFAULT_API_VERSION = '201308';
 
     /**
      * @var resource File stream resource for capturing Http Client output
@@ -182,6 +182,11 @@ class BaseController extends Controller
         } catch (\Guzzle\Http\Message\BadResponseException $e) {
             //print_r('Bad Response');
             //return $e->getResponse();
+        } catch (\Guzzle\Http\Exception\RequestException $e) {
+        } catch (\Guzzle\Http\Exception\BadResponseException $e) {
+        } catch (\Guzzle\Http\Exception\ClientErrorResponseException $e) {
+        } catch (\Guzzle\Http\Exception\ServerErrorResponseException $e) {
+            // Show the returned stream for these exceptions
         } catch (\Guzzle\Common\ExceptionCollection $e) {
             foreach ($e as $exception) {
                 print_r('Got Exception: ' . get_class($exception));
@@ -189,15 +194,22 @@ class BaseController extends Controller
             exit();
         } catch (\Exception $e) {
             print_r('Got Exception: ' . get_class($e));
-            exit();
         }
 //    	print_r($response);
 
         //$body = $response->getBody(true);
 
         $stream = $this->getStream();
-        rewind($stream);
-        $fullStream = stream_get_contents($stream);
+        if ($stream) {
+            try {
+                rewind($stream);
+                $fullStream = stream_get_contents($stream);
+            } catch (\Exception $e) {
+                $fullStream = '';
+            }
+        } else {
+            $fullStream = '';
+        }
 
         return $fullStream;
     }

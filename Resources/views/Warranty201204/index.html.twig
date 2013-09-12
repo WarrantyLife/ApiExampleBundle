@@ -65,52 +65,28 @@
                 $(function(){
                     $('#gen_add_link').click(function(){
                         var
-                            fields = ['refId', 'orderRefId', 'registrationCode', 'warrantyPlanId', 'itemIds_', 'customerId', 'salesRepEmail', 'dateOfPurchase', 'pricePaid', 'pricePaidCurrencyCode', 'taxPaid']
+                            fields = ['refId', 'orderRefId', 'registrationCode', 'warrantyPlanId', 'itemId', 'customerId', 'salesRepEmail', 'dateOfPurchase', 'pricePaid', 'pricePaidCurrencyCode', 'taxPaid']
                             ,result = []
                         ;
                         
                         $.each(fields, function(idx, val){
                             var
-                                input = $('#gen_add input[name^=gen_'+val+']')
+                                input = $('#gen_add input[name=gen_'+val+']')
                                 ,quotes = true
                             ;
                             if (input.data('quotes') === false) {
                                 quotes = input.data('quotes');
                             }
                             
-                            if (val.match(/_$/)) {
-                              // Array of itemIds
-                                var
-                                    txt
-                                    ,arr = []
-                                ;
-                                input.each(function(iidx, ival){
-                                    var $ival = $(ival);
-                                    if ($ival.val().length > 0) {
-                                        if (quotes) {
-                                            arr.push('"'+$.trim($ival.val())+'"');
-                                        } else {
-                                            arr.push($.trim($ival.val()));
-                                        }
-                                    };
-                                });
-                                if (arr.length) {
-                                    txt = '"'+val.replace(/_$/, '')+'":['
-                                    txt += arr.join(',');
-                                    txt += ']';
-                                    result.push(txt);
+                            if (input.val().length > 0) {
+                                var txt = '"'+val+'":';
+                                if (quotes) {
+                                    txt += '"'+$.trim(input.val())+'"';
+                                } else {
+                                    txt += $.trim(input.val());
                                 }
-                            } else {
-                                if (input.val().length > 0) {
-                                    var txt = '"'+val+'":';
-                                    if (quotes) {
-                                        txt += '"'+$.trim(input.val())+'"';
-                                    } else {
-                                        txt += $.trim(input.val());
-                                    }
-                                    result.push(txt);
-                                };
-                            }
+                                result.push(txt);
+                            };
                         });
 
                         $('#add textarea[name=json]').val("{"+result+"}");
@@ -125,16 +101,9 @@
     "orderRefId":            "<input type="text" name="gen_orderRefId" placeholder="orderRefId"/>",
     "registrationCode":      "<input type="text" name="gen_registrationCode" placeholder="registrationCode"/>",
     "<strong>warrantyPlanId</strong>":        "<input type="text" name="gen_warrantyPlanId" placeholder="warrantyPlanId"/>",   <strong>// Required</strong>
-    "<strong>itemIds</strong>":               [                              
-                             "<input type="text" name="gen_itemIds_" placeholder="itemId"/>",   <strong>// Required</strong> (minimum of one)
-                             "<input type="text" name="gen_itemIds_" placeholder="itemId"/>",   // maximum depends on what the warranty plan allows
-                             "<input type="text" name="gen_itemIds_" placeholder="itemId"/>",
-                             "<input type="text" name="gen_itemIds_" placeholder="itemId"/>",
-                             "<input type="text" name="gen_itemIds_" placeholder="itemId"/>"
-                             ],
-
+    "<strong>itemId</strong>":                "<input type="text" name="gen_itemId" placeholder="itemId"/>",   <strong>// Required</strong>
     "<strong>customerId</strong>":            "<input type="text" name="gen_customerId" placeholder="customerId"/>",   <strong>// Required</strong>
-    "salesRepEmail":         "<input type="text" name="gen_salesRepEmail" placeholder="salesRepEmail"/>",
+    "<strong>salesRepEmail</strong>":         "<input type="text" name="gen_salesRepEmail" placeholder="salesRepEmail"/>",   <strong>//Optional</strong>
     "<strong>dateOfPurchase</strong>":        "<input type="text" name="gen_dateOfPurchase" placeholder="yyyy-MM-ddTHH:mm:ssZ"/>",   <strong>// Required</strong>
     "<strong>pricePaid</strong>":              <input type="text" name="gen_pricePaid" placeholder="0.00" data-quotes=false />,    <strong>// Required</strong>
     "<strong>pricePaidCurrencyCode</strong>": "<input type="text" name="gen_pricePaidCurrencyCode" placeholder="USD or CAD"/>",   <strong>// Required</strong>

@@ -10,14 +10,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
- * Controller for handling items
+ * Controller for handling warranties
  */
-class ItemController extends BaseController
+class Warranty201204Controller extends BaseController
 {
     /**
      * Display page that allows for interacting with the API
      * 
-     * @Route("/test/items", name="apiexample_item")
+     * @Route("/test/warranties201204", name="apiexample_warranty201204")
      * @Method("GET")
      * @Template()
      * 
@@ -25,10 +25,11 @@ class ItemController extends BaseController
      */
 	public function indexAction()
 	{
-        // This controller can only be used after version 201204 of the API
-        if ($this->getApiVersion() < 201204) {
+        // This controller can only be used up to version 201204 of the API
+        if ($this->getApiVersion() > 201204) {
             $this->setApiVersion(201204);
         }
+
         $endpoint = $this->getApiEndpoint();
     	return array('endpoint'=>$endpoint);
     }
@@ -36,7 +37,7 @@ class ItemController extends BaseController
     /**
      * Perform API request
      * 
-     * @Route("/test/items")
+     * @Route("/test/warranties201204")
      * @Method("POST")
      * @Template()
      * 
@@ -44,16 +45,16 @@ class ItemController extends BaseController
      */
     public function postAction()
     {
-    	$url = 'items';
+    	$url = 'warranties';
     	$args = array();
 
     	$action = $this->getRequest()->request->get('action', null);
 
     	switch ($action) {
     		case 'get':
-		    	$itemId = $this->getRequest()->request->get('itemId', null);
-		    	if ($itemId) {
-		    		$url .= '/'.$itemId;
+		    	$warrantyId = $this->getRequest()->request->get('warrantyId', null);
+		    	if ($warrantyId) {
+		    		$url .= '/'.$warrantyId;
 	    			break;
 		    	}
 
@@ -70,15 +71,36 @@ class ItemController extends BaseController
 		    		$args['orderRefId'] = $orderRefId;
 	    			break;
 		    	}
+
+		    	$itemId = $this->getRequest()->request->get('itemId', null);
+		    	if ($itemId) {
+		    		$url = 'items/{itemId}/warranties';
+		    		$args['itemId'] = $itemId;
+	    			break;
+		    	}
     			break;
 
     		case 'post':
+		    	$itemId = $this->getRequest()->request->get('itemId', null);
+		    	if ($itemId) {
+		    		$url = 'items/{itemId}/warranties';
+		    		$args['itemId'] = $itemId;
+	    			break;
+		    	}
     			break;
 
     		case 'put':
-		    	$itemId = $this->getRequest()->request->get('itemId', null);
-		    	if ($itemId) {
-		    		$url .= '/'.$itemId;
+		    	$warrantyId = $this->getRequest()->request->get('warrantyId', null);
+		    	if ($warrantyId) {
+		    		$url .= '/'.$warrantyId;
+	    			break;
+		    	}
+    			break;
+
+    		case 'delete':
+		    	$warrantyId = $this->getRequest()->request->get('warrantyId', null);
+		    	if ($warrantyId) {
+		    		$url .= '/'.$warrantyId;
 	    			break;
 		    	}
     			break;
@@ -99,6 +121,10 @@ class ItemController extends BaseController
     		case 'put':
 		    	$json = $this->getRequest()->request->get('json', null);
 		    	$request = $client->put(array($url, $args), array('Content-Type'=>'application/json'), $json);
+    			break;
+
+    		case 'delete':
+		    	$request = $client->delete(array($url, $args));
     			break;
     	}
 

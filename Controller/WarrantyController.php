@@ -25,6 +25,11 @@ class WarrantyController extends BaseController
      */
 	public function indexAction()
 	{
+        // This controller can only be used after version 201308 of the API
+        if ($this->getApiVersion() < 201308) {
+            $this->setApiVersion(201308);
+        }
+
         $endpoint = $this->getApiEndpoint();
     	return array('endpoint'=>$endpoint);
     }
