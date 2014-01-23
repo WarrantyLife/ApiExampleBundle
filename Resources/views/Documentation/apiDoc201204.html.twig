@@ -594,6 +594,19 @@ Location: {{ prefix }}/items/<code>itemId</code>
   "pricePaid": <strong>0.00</strong>,                                      // <strong>REQUIRED</strong>
   "pricePaidCurrencyCode": "<strong>[USD|CAD]</strong>",                   // <strong>REQUIRED</strong>
   "taxPaid": <strong>0.00</strong>                                         // OPTIONAL
+  "chargeCustomer: {                                               // OPTIONAL, send value only (never returned)
+    "firstName": "<em>First name of customer</em>",                         // <strong>REQUIRED</strong>
+    "lastName": "<em>Last name of customer</em>",                         // <strong>REQUIRED</strong>
+    "email": "<em>Email address of customer</em>",                         // <strong>REQUIRED</strong>
+    "creditCardNumber": "<em>Credit card number</em>",                         // <strong>REQUIRED</strong>
+    "creditCardExpiry": "yy/mm",                // <strong>REQUIRED</strong>
+    "cvv2": "123",                // <strong>REQUIRED</strong>
+    "streetAddress": "",                                           // <strong>REQUIRED</strong>
+    "city": "",                                                    // <strong>REQUIRED</strong>
+    "state": "<em>{valid 2 letter postal abbreviation}</em>",               // <strong>REQUIRED</strong>
+    "postalCode": "",                                              // <strong>REQUIRED</strong>
+    "country": "<strong>[US|CA]</strong>",                                          // <strong>REQUIRED</strong>
+  }
 }</pre>
             <p>Notes:</p>
             <ul>
@@ -602,6 +615,7 @@ Location: {{ prefix }}/items/<code>itemId</code>
                 <li><strong>dateOfPurchase</strong>: date of purchase for the warranty.
                     Note that this may be different from the item's date of purchase.  It is the item's date of purchase that is used to determine the start
                 of a warranty's duration of coverage.</li>
+                <li><strong>chargeCustomer</strong>: Used if the customer is to be charged directly for the warranty (such as for monthly plans)</li>
             </ul>
     </li>
   </ul>
