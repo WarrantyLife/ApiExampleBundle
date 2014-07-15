@@ -1,144 +1,178 @@
-{% set wildcardTags = ' class="wildcarded" title="Wildcards may be used in this field; See Wildcards section for more info" ' %}<html>
-{% set pagingTags = ' class="paged" title="Used for paging the results; See Paging section for more info" ' %}<html>
+{% set wildcardTags = ' class="wildcarded" title="Wildcards may be used in this field; See Wildcards section for more info" ' %}
+<html>
+{% set pagingTags = ' class="paged" title="Used for paging the results; See Paging section for more info" ' %}
+<html>
 <head>
-<title>Warranty Life API Documentation - Version {{ version }}</title>
-<style type="text/css">
-body {
-	color: black;
-	background-color: white;
-	font-family: Arial
-}
+    <title>Warranty Life API Documentation - Version {{ version }}</title>
+    <style type="text/css">
+        body {
+            color: black;
+            background-color: white;
+            font-family: Arial
+        }
 
-code {
- background-color: #eeeeee;
- -moz-border-radius: 4px;
- -webkit-border-radius: 4px;
- border-radius: 4px;
- border: 1px solid #cccccc;
- font-size: 12px;
- padding: 1px 4px;
-}
+        code {
+            background-color: #eeeeee;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            border: 1px solid #cccccc;
+            font-size: 12px;
+            padding: 1px 4px;
+        }
 
-code.wildcarded {
-    border-color: #00aa00;
-    background-color: #aacd4e;
-    cursor: help;
-}
+        code.wildcarded {
+            border-color: #00aa00;
+            background-color: #aacd4e;
+            cursor: help;
+        }
 
-code.paged {
-    color: #000033;
-    background-color: #ddddff;
-    cursor: help;
-}
+        code.paged {
+            color: #000033;
+            background-color: #ddddff;
+            cursor: help;
+        }
 
-pre {
- -moz-border-radius: 4px;
- -webkit-border-radius: 4px;
- border-radius: 4px;
- border: 1px solid #cccccc;
- padding: 5px;
- margin: 0;
-}
+        pre {
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            border: 1px solid #cccccc;
+            padding: 5px;
+            margin: 0;
+        }
 
-pre code {
- border-width: 0;
-}
+        pre code {
+            border-width: 0;
+        }
 
-pre hr {
- border: 0;
- border-top: 1px dashed #aaaaaa;
- height: 3px;
- color: white;
- background-color: white;
- width: 95%;
-}
-</style>
+        pre hr {
+            border: 0;
+            border-top: 1px dashed #aaaaaa;
+            height: 3px;
+            color: white;
+            background-color: white;
+            width: 95%;
+        }
+    </style>
 </head>
 <body>
-	<h1>API Documentation</h1>
+<h1>API Documentation</h1>
 
-    <p style="color: #900">
-        Warning: This document may be out of date.  Please view current documentation at
-        <a href="https://www.warrantylife.com/developer/documentation">www.warrantylife.com/developer/documentation</a>.
-    </p>
+<p style="color: #900">
+    Warning: This document may be out of date. Please view current documentation at
+    <a href="https://www.warrantylife.com/developer/documentation">www.warrantylife.com/developer/documentation</a>.
+</p>
 
-    <h2>Version {{ version }}</h2>
+<h2>Version {{ version }}</h2>
 
-	<h3>Introduction</h3>
-	<ul>
-		<li>The Warranty Life API is a simple REST modeled API.</li>
-		<li>You will require Warranty Life API credentials for access, please contact <a href="mailto:info@warrantylife.com">info@warrantylife.com</a> if you are missing these credentials.</li>
-		<li>Any returned field that is not defined in this document should be ignored in order to ensure forward compatibility with updates to this version of the API.</li>
-		<li>This document describes the version of the API identified as {{ version }}.</li>
-		<li>All URLs shown should be prefixed with <a href="http://sandbox.warrantylife.com{{ prefix }}">{{ prefix }}</a> where the last portion is the version identifier.</li>
-		<li>The protocol and host name to use is
+<h3>Introduction</h3>
+<ul>
+    <li>The Warranty Life API is a simple REST modeled API.</li>
+    <li>You will require Warranty Life API credentials for access, please contact <a
+                href="mailto:info@warrantylife.com">info@warrantylife.com</a> if you are missing these credentials.
+    </li>
+    <li>Any returned field that is not defined in this document should be ignored in order to ensure forward
+        compatibility with updates to this version of the API.
+    </li>
+    <li>This document describes the version of the API identified as {{ version }}.</li>
+    <li>All URLs shown should be prefixed with <a href="http://sandbox.warrantylife.com{{ prefix }}">{{ prefix }}</a>
+        where the last portion is the version identifier.
+    </li>
+    <li>The protocol and host name to use is
         <ul>
-          <li><a href="http://sandbox.warrantylife.com/">http://sandbox.warrantylife.com</a> for testing purposes</li>
-          <li><a href="https://www.warrantylife.com/">https://www.warrantylife.com</a> for production deployments</li>
+            <li><a href="http://sandbox.warrantylife.com/">http://sandbox.warrantylife.com</a> for testing purposes</li>
+            <li><a href="https://www.warrantylife.com/">https://www.warrantylife.com</a> for production deployments</li>
         </ul>
     </li>
-	</ul>
+</ul>
 
 
-	<h3>Character Set</h3>
-	<p> UTF-8 is used exclusively.</p>
+<h3>Character Set</h3>
+
+<p> UTF-8 is used exclusively.</p>
 
 
-	<h3>Authentication</h3>
-	<p>
-		Authentication is done using <a href="http://en.wikipedia.org/wiki/Basic_authentication_scheme">HTTP Basic Authentication</a> using your API key and API secret as the username and password values.  Other forms of authentication may be introduced in future versions of the API.
-	</p>
+<h3>Authentication</h3>
 
-	<h4>Sub-Accounts</h4>
-	<p>
-		If you are using sub-accounts then you would append <code>/sub-account-id</code> to your API key when acting on behalf of the sub-account when authenticating.  <strong>Billing of warranties is based on the authenticated account</strong>, so you must use sub-accounts if you want to have separate billing for different stores (such as for franchises) and you are not using separate API keys and secrets for each store.  Sub-accounts can be created via the partner <a href="{{ path('partner_stores_add') }}">store add</a> page where "Remote Id" is the sub-account-id.
-	</p>
-	<p>
-		Example:  If the API key for your primary account was <code>MqUax1IGBQdL</code> and you were sending a request on behalf of the sub-account <code>43</code> then you would use <code>MqUax1IGBQdL/43</code> as the API key (used as the username) for authentication.
-	</p>
+<p>
+    Authentication is done using <a href="http://en.wikipedia.org/wiki/Basic_authentication_scheme">HTTP Basic
+        Authentication</a> using your API key and API secret as the username and password values. Other forms of
+    authentication may be introduced in future versions of the API.
+</p>
 
-	<h3>Testing</h3>
-  <p>
-    There is an example client using the API which shows the HTTP communication at <a href="http://sandbox.warrantylife.com/warrantylife-api/test">http://sandbox.warrantylife.com/warrantylife-api/test</a> and the code for that example is available at <a href="https://github.com/WarrantyLife/ApiExampleBundle">https://github.com/WarrantyLife/ApiExampleBundle</a>.
-  </p>
+<h4>Sub-Accounts</h4>
 
-	<h3>Reference IDs, "refIds"</h3>
-	<p>
-		There are a number of fields called or ending in <code>refId</code>.  The purpose of these fields is to give you the option to register your own unique identifiers
-        with those objects, allowing you to reference them later using your own identifiers rather than needing to store Warranty Life's identifiers.
-	</p>
+<p>
+    If you are using sub-accounts then you would append <code>/sub-account-id</code> to your API key when acting on
+    behalf of the sub-account when authenticating. <strong>Billing of warranties is based on the authenticated
+        account</strong>, so you must use sub-accounts if you want to have separate billing for different stores (such
+    as for franchises) and you are not using separate API keys and secrets for each store. Sub-accounts can be created
+    via the partner <a href="{{ path('partner_stores_add') }}">store add</a> page where "Remote Id" is the
+    sub-account-id.
+</p>
 
+<p>
+    Example: If the API key for your primary account was <code>MqUax1IGBQdL</code> and you were sending a request on
+    behalf of the sub-account <code>43</code> then you would use <code>MqUax1IGBQdL/43</code> as the API key (used as
+    the username) for authentication.
+</p>
 
-	<h3>Representation Formats</h3>
-	<p>
-		The API currently supports <a href="http://json.org/">JSON</a> responses, served as <code>application/json</code>, encoded as <a href="http://en.wikipedia.org/wiki/UTF-8">UTF-8</a>.  That media type should always be specified in the request&#39;s <code>Accept</code> header.
-	</p>
+<h3>Testing</h3>
 
+<p>
+    There is an example client using the API which shows the HTTP communication at <a
+            href="http://sandbox.warrantylife.com/warrantylife-api/test">http://sandbox.warrantylife.com/warrantylife-api/test</a>
+    and the code for that example is available at <a href="https://github.com/WarrantyLife/ApiExampleBundle">https://github.com/WarrantyLife/ApiExampleBundle</a>.
+</p>
 
-	<h3>Responses and Errors</h3>
-	<p>
-		<a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">Standard HTTP response codes</a>
-        are returned appropriately in the HTTP <code>Status</code> response header.   Possible status codes include:
-	</p>
-	<ul>
-		<li>200: Success (upon a successful <code>GET</code>, or <code>PUT</code> request)</li>
-		<li>201: Created (upon a successful <code>POST</code> request)</li>
-		<li>202: Accepted (request was accepted for processing, but the processing has not been completed)</li>
-		<li>204: No Content (upon a successful <code>DELETE</code> request)</li>
-		<li>400: Resource Invalid (improperly-formatted request)</li>
-		<li>401: Unauthorized (incorrect or missing authentication credentials)</li>
-		<li>403: Rejected/Forbidden (request understood but server is refusing the request)</li>
-		<li>404: Resource Not Found (requesting a non-existent resource)</li>
-		<li>405: Method Not Allowed (e.g., trying to <code>POST</code> to a URL that responds only to <code>GET</code>)</li>
-		<li>406: Not Acceptable (server can&rsquo;t satisfy the <code>Accept</code> header specified by the client)</li>
-		<li>500: Application Error</li>
-	</ul>
+<h3>Reference IDs, "refIds"</h3>
+
+<p>
+    There are a number of fields called or ending in <code>refId</code>. The purpose of these fields is to give you the
+    option to register your own unique identifiers
+    with those objects, allowing you to reference them later using your own identifiers rather than needing to store
+    Warranty Life's identifiers.
+</p>
 
 
-	<h4>Errors</h4>
-	<p>
-		In most cases, requests that return an &quot;error&quot; status code (<code>4XX</code> or <code>5XX</code>) will contain a short JSON response body explaining the nature of the error (provided the API call asked for a JSON response).
-	</p>
+<h3>Representation Formats</h3>
+
+<p>
+    The API currently supports <a href="http://json.org/">JSON</a> responses, served as <code>application/json</code>,
+    encoded as <a href="http://en.wikipedia.org/wiki/UTF-8">UTF-8</a>. That media type should always be specified in the
+    request&#39;s <code>Accept</code> header.
+</p>
+
+
+<h3>Responses and Errors</h3>
+
+<p>
+    <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">Standard HTTP response codes</a>
+    are returned appropriately in the HTTP <code>Status</code> response header. Possible status codes include:
+</p>
+<ul>
+    <li>200: Success (upon a successful <code>GET</code>, or <code>PUT</code> request)</li>
+    <li>201: Created (upon a successful <code>POST</code> request)</li>
+    <li>202: Accepted (request was accepted for processing, but the processing has not been completed)</li>
+    <li>204: No Content (upon a successful <code>DELETE</code> request)</li>
+    <li>400: Resource Invalid (improperly-formatted request)</li>
+    <li>401: Unauthorized (incorrect or missing authentication credentials)</li>
+    <li>403: Rejected/Forbidden (request understood but server is refusing the request)</li>
+    <li>404: Resource Not Found (requesting a non-existent resource)</li>
+    <li>405: Method Not Allowed (e.g., trying to <code>POST</code> to a URL that responds only to <code>GET</code>)</li>
+    <li>406: Not Acceptable (server can&rsquo;t satisfy the <code>Accept</code> header specified by the client)</li>
+    <li>500: Application Error</li>
+</ul>
+
+
+<h4>Errors</h4>
+
+<p>
+    In most cases, requests that return an &quot;error&quot; status code (<code>4XX</code> or <code>5XX</code>) will
+    contain a short JSON response body explaining the nature of the error (provided the API call asked for a JSON
+    response).
+</p>
 <pre>{
   "error_code": 0,
   "status_text": "Bad Request",
@@ -146,61 +180,81 @@ pre hr {
 }</pre>
 
 
-	<h4>Other HTTP verbs</h4>
-	<p>
-		Successful <code>POST</code> requests (e.g., to create a new record) will return a status code of <code>200</code>, <code>201</code> or <code>202</code>.
-        If the status is <code>201</code> then the response will include a <code>Location</code> header with the URI of the newly-created resource,
-        and include a JSON representation of the resource in the body of the response.
-        If the status code is <code>202</code> then the response will contain an id that will be the identifier for the object once it exists and can be used in future requests.
-	</p>
-	<p>
-		Successful <code>PUT</code> requests (e.g., to update an existing record) will return a status code of <code>200</code> or <code>202</code>, and include a JSON representation of the resource in the body of the response.
-	</p>
-	<p>
-		Successful <code>DELETE</code> requests (e.g., to delete an existing record) will return a status code of <code>204</code> and no body.
-	</p>
+<h4>Other HTTP verbs</h4>
+
+<p>
+    Successful <code>POST</code> requests (e.g., to create a new record) will return a status code of <code>200</code>,
+    <code>201</code> or <code>202</code>.
+    If the status is <code>201</code> then the response will include a <code>Location</code> header with the URI of the
+    newly-created resource,
+    and include a JSON representation of the resource in the body of the response.
+    If the status code is <code>202</code> then the response will contain an id that will be the identifier for the
+    object once it exists and can be used in future requests.
+</p>
+
+<p>
+    Successful <code>PUT</code> requests (e.g., to update an existing record) will return a status code of
+    <code>200</code> or <code>202</code>, and include a JSON representation of the resource in the body of the response.
+</p>
+
+<p>
+    Successful <code>DELETE</code> requests (e.g., to delete an existing record) will return a status code of
+    <code>204</code> and no body.
+</p>
 
 
-    <h4>Wildcards</h4>
-    <p>Certain parameters in some of the API calls allow the use of wildcards in parameters used to perform searches.
-        These parameters are marked below <code {{ wildcardTags | raw }}>like&nbsp;this</code>.  In these fields, you may use the asterisk character (*) to represent
-        "zero or more characters at this point." For example "<code>Apple*</code>" would match
-        "<code>Apple</code>", "<code>Appleton</code>", "<code>Applewood</code>", etc.  Without the wildcard character used
-        in this example, only "<code>Apple</code>" would match.</p>
+<h4>Wildcards</h4>
+
+<p>Certain parameters in some of the API calls allow the use of wildcards in parameters used to perform searches.
+    These parameters are marked below <code {{ wildcardTags | raw }}>like&nbsp;this</code>. In these fields, you may use
+    the asterisk character (*) to represent
+    "zero or more characters at this point." For example "<code>Apple*</code>" would match
+    "<code>Apple</code>", "<code>Appleton</code>", "<code>Applewood</code>", etc. Without the wildcard character used
+    in this example, only "<code>Apple</code>" would match.</p>
 
 
-    <h4>Paging</h4>
+<h4>Paging</h4>
 
-    <p>For some API calls, the results are paged, meaning only a subset of all possible results are returned.
-        For these calls, the parameters <code {{ pagingTags | raw }}>startAt</code> and <code {{ pagingTags | raw }}>limit</code> are used to specify which page of the results should be returned.
-        If these terms are not included, the default of returning the first page of results (<code {{ pagingTags | raw }}>startAt</code>=0) will be used with
-        the default number of results.</p>
-    <ul>
-        <li><code {{ pagingTags | raw }}>startAt</code> - Specifies the offset to start results</li>
-        <li><code {{ pagingTags | raw }}>limit</code> - Specifies the maximum number of results to return</li>
-    </ul>
+<p>For some API calls, the results are paged, meaning only a subset of all possible results are returned.
+    For these calls, the parameters <code {{ pagingTags | raw }}>startAt</code> and
+    <code {{ pagingTags | raw }}>limit</code> are used to specify which page of the results should be returned.
+    If these terms are not included, the default of returning the first page of results (<code {{ pagingTags | raw }}>startAt</code>=0)
+    will be used with
+    the default number of results.</p>
+<ul>
+    <li><code {{ pagingTags | raw }}>startAt</code> - Specifies the offset to start results</li>
+    <li><code {{ pagingTags | raw }}>limit</code> - Specifies the maximum number of results to return</li>
+</ul>
 
-    <h5>Example:</h5>
+<h5>Example:</h5>
 
-    <p>If you wanted pages of 50 results each, you might make the following calls to get the first three pages of results:</p>
+<p>If you wanted pages of 50 results each, you might make the following calls to get the first three pages of
+    results:</p>
 
-    <ol>
-        <li><code {{ pagingTags | raw }}>startAt</code>=0&<code {{ pagingTags | raw }}>limit</code>=50 - Returns the first page of 50 results</li>
-        <li><code {{ pagingTags | raw }}>startAt</code>=50&<code {{ pagingTags | raw }}>limit</code>=50 - Returns the second page of 50 results</li>
-        <li><code {{ pagingTags | raw }}>startAt</code>=100&<code {{ pagingTags | raw }}>limit</code>=50 - Returns the third page of 50 results</li>
-    </ol>
+<ol>
+    <li><code {{ pagingTags | raw }}>startAt</code>=0&<code {{ pagingTags | raw }}>limit</code>=50 - Returns the first
+        page of 50 results
+    </li>
+    <li><code {{ pagingTags | raw }}>startAt</code>=50&<code {{ pagingTags | raw }}>limit</code>=50 - Returns the second
+        page of 50 results
+    </li>
+    <li><code {{ pagingTags | raw }}>startAt</code>=100&<code {{ pagingTags | raw }}>limit</code>=50 - Returns the third
+        page of 50 results
+    </li>
+</ol>
 
 
-    <hr style="page-break-before: always; display: none;">
+<hr style="page-break-before: always; display: none;">
 
-	<h2>API Endpoints</h2>
+<h2>API Endpoints</h2>
 
-	<h3>Categories</h3>
+<h3>Categories</h3>
 
-  <h4>Fetch information about a single category</h4>
-  <ul>
+<h4>Fetch information about a single category</h4>
+<ul>
     <li>GET {{ prefix }}/categories/<code>categoryId</code>
-      <p>Returns a single category object.</p>
+
+        <p>Returns a single category object.</p>
 <pre>&larr; 200
 {
   "id": "<em>categoryId</em>",
@@ -208,31 +262,29 @@ pre hr {
   "subCategoryIds": ["<em>categoryId</em>", &hellip;],
   "parentCategoryId": "<em>categoryId</em>"
 }</pre>
-      <p>Notes:</p>
-      <ul>
-        <li>parentCategoryId may be null, identifying a top-level category</li>
-      </ul>
+        <p>Notes:</p>
+        <ul>
+            <li>parentCategoryId may be null, identifying a top-level category</li>
+        </ul>
     </li>
-  </ul>
+</ul>
 
-  <h4>Fetch all categories</h4>
-  <ul>
+<h4>Fetch all categories</h4>
+<ul>
     <li>GET {{ prefix }}/categories
-      <p>Returns an array of category objects.  By default, the list is returned in a flat format, with lists of
-          category IDs given to indicate what each category's sub-categories are.  If you prefer a tree format,
-          set the 'tree' parameter to 1, as in {{ prefix }}/categories?tree=1</p>
+        <p>Returns an array of category objects. By default, the list is returned in a flat format, with lists of
+            category IDs given to indicate what each category's sub-categories are. If you prefer a tree format,
+            set the 'tree' parameter to 1, as in {{ prefix }}/categories?tree=1</p>
     </li>
-  </ul>
+</ul>
 
 
-	<hr style="page-break-before: always; display: none;">
+<hr style="page-break-before: always; display: none;">
 
 
-
-
-	<h3>Warranty Plans</h3>
-  <h4>Fetch information about a single warranty plan</h4>
-  <ul>
+<h3>Warranty Plans</h3>
+<h4>Fetch information about a single warranty plan</h4>
+<ul>
     <li>GET {{ prefix }}/warranty-plans/<code>warrantyPlanId</code>
 <pre>&larr; 200
 {
@@ -267,41 +319,59 @@ pre hr {
   "termsUrl": "<strong>http://www.warrantylife.com/example_link_to_Terms_and_Conditions.pdf</strong>",
   "updatedAt": "<strong>yyyy-MM-ddTHH:mm:ssZ</strong>"
 }</pre>
-      <p>Notes:</p>
-      <ul>
-        <li><strong>isDurationFixed</strong>: if false, the duration of this warranty depends on conditions as described in the description.  If true, you can just rely on the duration and duration unit fields alone.</li>
-        <li><strong>rmaShippingCoverage</strong>: 0=No shipping covered; 1=Shipping covered one-way; 2=Shipping covered both ways to/from service location, 3=Three-way shipping which includes packing materials first send to the customer for them to use to ship their item.</li>
-        <li><strong>planAvailableFrom/To</strong>: Start and End dates for when this warranty may be purchased through Warranty Life.  These values may be null, which should be understood as &quot;currently valid&quot;.  Start dates may be in the future.</li>
-        <li><strong>countryCode</strong>: The country in which this warranty plan is effective.</li>
-        <li><strong>sellableDuration</strong>: The length of time after the purchase/repair date that this warranty may be sold to customers.  If this is 0, the plan is a "DOP Warranty Plan" and thus may be sold at the time of purchase only.</li>
-        <li><strong>srp</strong>: Suggested Retail Price from provider.</li>
-        <li><strong>retailPrice</strong>: Our record of your current retail price for customers for this warranty plan.</li>
-        <li><strong>retailerCost</strong>: The cost to the retailer for this warranty. For internal user only - not intended for display to customers.</li>
-        <li><strong>wholesaleCost</strong>: Wholesale cost of warranty payable to Warranty Life. For internal use only - not intended for display to customers.  Not shown to sub-accounts.</li>
-        <li><strong>wholesaleCost vs retailerCost</strong>: If you do not have sub-accounts, these values are the same and represent the cost payable to Warranty Life.</li>
-        <li><strong>termsUrl</strong>: An absolute URL to the terms and conditions for the plan.</li>
-      </ul>
+        <p>Notes:</p>
+        <ul>
+            <li><strong>isDurationFixed</strong>: if false, the duration of this warranty depends on conditions as
+                described in the description. If true, you can just rely on the duration and duration unit fields alone.
+            </li>
+            <li><strong>rmaShippingCoverage</strong>: 0=No shipping covered; 1=Shipping covered one-way; 2=Shipping
+                covered both ways to/from service location, 3=Three-way shipping which includes packing materials first
+                send to the customer for them to use to ship their item.
+            </li>
+            <li><strong>planAvailableFrom/To</strong>: Start and End dates for when this warranty may be purchased
+                through Warranty Life. These values may be null, which should be understood as &quot;currently valid&quot;.
+                Start dates may be in the future.
+            </li>
+            <li><strong>countryCode</strong>: The country in which this warranty plan is effective.</li>
+            <li><strong>sellableDuration</strong>: The length of time after the purchase/repair date that this warranty
+                may be sold to customers. If this is 0, the plan is a "DOP Warranty Plan" and thus may be sold at the
+                time of purchase only.
+            </li>
+            <li><strong>srp</strong>: Suggested Retail Price from provider.</li>
+            <li><strong>retailPrice</strong>: Our record of your current retail price for customers for this warranty
+                plan.
+            </li>
+            <li><strong>retailerCost</strong>: The cost to the retailer for this warranty. For internal user only - not
+                intended for display to customers.
+            </li>
+            <li><strong>wholesaleCost</strong>: Wholesale cost of warranty payable to Warranty Life. For internal use
+                only - not intended for display to customers. Not shown to sub-accounts.
+            </li>
+            <li><strong>wholesaleCost vs retailerCost</strong>: If you do not have sub-accounts, these values are the
+                same and represent the cost payable to Warranty Life.
+            </li>
+            <li><strong>termsUrl</strong>: An absolute URL to the terms and conditions for the plan.</li>
+        </ul>
     </li>
-  </ul>
+</ul>
 
-  <h4>Fetch information about all warranty plans or all that apply to a category</h4>
-  <ul>
+<h4>Fetch information about all warranty plans or all that apply to a category</h4>
+<ul>
     <li>GET {{ prefix }}/warranty-plans
-      <p>Returns an array of warranty plan objects</p>
+        <p>Returns an array of warranty plan objects</p>
     </li>
     <li>GET {{ prefix }}/warranty-plans?categoryId=<code>categoryId</code>
-      <p>Returns an array of warranty plan objects</p>
+
+        <p>Returns an array of warranty plan objects</p>
     </li>
-  </ul>
+</ul>
 
-	<hr style="page-break-before: always; display: none;">
-
-
+<hr style="page-break-before: always; display: none;">
 
 
-	<h3>Customer</h3>
-  <h4>Fetch a customer by id</h4>
-  <ul>
+<h3>Customer</h3>
+<h4>Fetch a customer by id</h4>
+<ul>
     <li>GET {{ prefix }}/customers/<code>customerId</code></li>
     <li>GET {{ prefix }}/customers?refId=<code>refId</code></li>
     <li>GET {{ prefix }}/customers?orderRefId=<code>orderRefId</code>
@@ -324,56 +394,66 @@ pre hr {
   "country": "<strong>[US|CA]</strong>",                                   // <strong>REQUIRED</strong>
   "isWalkIn": <strong>false</strong>                                       // OPTIONAL: defaults to false
 }</pre>
-            <p>Notes:</p>
-            <ul>
-                <li><strong>¹</strong> The customer name, address, and phone number is optional until a warranty is purchased; if not supplied then an attempt to purchase a warranty will fail.</li>
-                <li><strong>customerUrl</strong>URL that may be given to the customer allowing them to claim/access their account details</li>
-            </ul>
+        <p>Notes:</p>
+        <ul>
+            <li><strong>¹</strong> The customer name, address, and phone number is optional until a warranty is
+                purchased; if not supplied then an attempt to purchase a warranty will fail.
+            </li>
+            <li><strong>customerUrl</strong>URL that may be given to the customer allowing them to claim/access their
+                account details
+            </li>
+        </ul>
     </li>
-  </ul>
+</ul>
 
-  <h4>Add a customer</h4>
-  <ul>
+<h4>Add a customer</h4>
+<ul>
     <li>POST {{ prefix }}/customers
-      <p>POST fields listed above</p>
+        <p>POST fields listed above</p>
 <pre>&rarr; POST {{ prefix }}/customers
 { &hellip; }
 <hr>&larr; 201
 Location: {{ prefix }}/customers/<code>customerId</code>
 </pre>
     </li>
-  </ul>
+</ul>
 
-  <h4>Update customer information</h4>
-  <ul>
+<h4>Update customer information</h4>
+<ul>
     <li>PUT {{ prefix }}/customers/<code>customerId</code>
-      <p>PUT changed fields from list above</p>
+
+        <p>PUT changed fields from list above</p>
 <pre>&rarr; PUT {{ prefix }}/customers/<code>customerId</code>
 { &hellip; }
 <hr>&larr; 200
 { &hellip; }</pre>
     </li>
-  </ul>
+</ul>
 
 
-	<hr style="page-break-before: always; display: none;">
+<hr style="page-break-before: always; display: none;">
 
 
-    <h3>Manufacturer</h3>
-    <h4>Fetch a manufacturer by id</h4>
-    <ul>
-        <li>GET {{ prefix }}/manufacturers/<code>manufacturerId</code>
+<h3>Manufacturer</h3>
+<h4>Fetch a manufacturer by id</h4>
+<ul>
+    <li>GET {{ prefix }}/manufacturers/<code>manufacturerId</code>
 <pre>&larr; 200
 {
   "id": "<em>manufacturerId</em>",
   "name": "manufacturerName",
 }</pre>
-        </li>
-    </ul>
-    <h4>List / Search for Manufacturers (paged array of results)</h4>
-    <ul>
-        <li>GET {{ prefix }}/manufacturers/?startAt=<code {{ pagingTags | raw }}>startAt</code>&limit=<code {{ pagingTags | raw }}>limit</code> - all manufacturers</li>
-        <li>GET {{ prefix }}/manufacturers/?name=<code {{ wildcardTags | raw }}>name</code>&startAt=<code {{ pagingTags | raw }}>startAt</code>&limit=<code {{ pagingTags | raw }}>limit</code> - search on name
+    </li>
+</ul>
+<h4>List / Search for Manufacturers (paged array of results)</h4>
+<ul>
+    <li>GET {{ prefix }}
+        /manufacturers/?startAt=<code {{ pagingTags | raw }}>startAt</code>&limit=<code {{ pagingTags | raw }}>limit</code>
+        - all manufacturers
+    </li>
+    <li>GET {{ prefix }}
+        /manufacturers/?name=<code {{ wildcardTags | raw }}>name</code>&startAt=<code {{ pagingTags | raw }}>startAt</code>&limit=<code {{ pagingTags | raw }}>limit</code>
+        - search on name
 <pre>&larr; 200
 [
     {
@@ -382,27 +462,26 @@ Location: {{ prefix }}/customers/<code>customerId</code>
     },
     { &hellip; }
 ]</pre>
-        </li>
-    </ul>
+    </li>
+</ul>
 
-    <h4>Add a Manufacturer</h4>
-    <ul>
-        <li>POST {{ prefix }}/manufacturers
+<h4>Add a Manufacturer</h4>
+<ul>
+    <li>POST {{ prefix }}/manufacturers
 <pre>&rarr; POST {{ prefix }}/manufacturers
   "name": "<em>manufacturer name</em>"              // <strong>REQUIRED</strong>
 <hr>&larr; 201
 Location: {{ prefix }}/manufacturers/<code>manufacturerId</code>
 </pre>
-        </li>
-    </ul>
-    <hr style="page-break-before: always; display: none;">
+    </li>
+</ul>
+<hr style="page-break-before: always; display: none;">
 
 
-
-    <h3>Product</h3>
-    <h4>Fetch a product by id</h4>
-    <ul>
-        <li>GET {{ prefix }}/products/<code>productId</code>
+<h3>Product</h3>
+<h4>Fetch a product by id</h4>
+<ul>
+    <li>GET {{ prefix }}/products/<code>productId</code>
 <pre>&larr; 200
 {
 
@@ -421,36 +500,43 @@ Location: {{ prefix }}/manufacturers/<code>manufacturerId</code>
     "ean": "1234567890123"
 }
 </pre>
-        </li>
-    </ul>
-    <p>Notes:</p>
-    <ul>
-        <li><strong>isCategoryKnown</strong>: If false, the categoryId given should be taken as a suggestion of a
-            default setting only. The correct categoryId for the product should be passed when items are created using
-            the POST /items call.
-        </li>
-    </ul>
+    </li>
+</ul>
+<p>Notes:</p>
+<ul>
+    <li><strong>isCategoryKnown</strong>: If false, the categoryId given should be taken as a suggestion of a
+        default setting only. The correct categoryId for the product should be passed when items are created using
+        the POST /items call.
+    </li>
+</ul>
 
-    <h4>Search for Products (paged array of results)</h4>
-    <ul>
-        <li>GET {{ prefix }}/products?sku=<code>sku</code> - by your sku code for the product</li>
-        <li>GET {{ prefix }}/products?q=<code>query</code> - by general search query or barcode
-        <p>The query parameter is a string used for a general search such as "Nexus S3" or a barcode such as "123456789012".</p>
-        <li>GET {{ prefix }}/products?model=<code {{ wildcardTags | raw }}>model</code>&mpn=<code {{ wildcardTags | raw }}>mpn</code>&upc=<code>UPC code</code>&ean=<code>EAN Barcode</code>&categoryId=<code>categoryId</code>&manufacturerId=<code>manufacturerId</code>&manufacturerName=<code
-            {{ wildcardTags | raw}}>manufacturerName</code>&startAt=<code {{ pagingTags | raw }}>startAt</code>&limit=<code {{ pagingTags | raw }}>limit</code> - by specifying specific search terms to search on
-        <p>All parameters here are optional, the only limitation is that you must specify at least one of the search parameters.</p>
+<h4>Search for Products (paged array of results)</h4>
+<ul>
+    <li>GET {{ prefix }}/products?sku=<code>sku</code> - by your sku code for the product</li>
+    <li>GET {{ prefix }}/products?q=<code>query</code> - by general search query or barcode
+        <p>The query parameter is a string used for a general search such as "Nexus S3" or a barcode such as
+            "123456789012".</p>
+    <li>GET {{ prefix }}/products?model=<code {{ wildcardTags | raw }}>model</code>&mpn=<code {{ wildcardTags | raw }}>mpn</code>&upc=<code>UPC
+            code</code>&ean=<code>EAN Barcode</code>&categoryId=<code>categoryId</code>&manufacturerId=<code>manufacturerId</code>&manufacturerName=<code
+                {{ wildcardTags | raw }}>manufacturerName</code>&startAt=<code {{ pagingTags | raw }}>startAt</code>&limit=<code {{ pagingTags | raw }}>limit</code>
+        - by specifying specific search terms to search on
+        <p>All parameters here are optional, the only limitation is that you must specify at least one of the search
+            parameters.</p>
 
         <h5>Including Warranty Plan information in Product search results</h5>
-        <p>The three calls above also support the <code>includePlans</code> and <code>includePlansAtPrice</code> parameters.
-        Set <code>includePlans=1</code> to have warranty plans included in the results per product.</p>
+
+        <p>The three calls above also support the <code>includePlans</code> and <code>includePlansAtPrice</code>
+            parameters.
+            Set <code>includePlans=1</code> to have warranty plans included in the results per product.</p>
 
         <p>By default, each product will
-        include a set of all plans that are applicable to its category regardless of price.
-        To narrow the results to only include the plans only applicable for the product's price, you can specify your
-        selling price for the product you are searching for by setting <code>includePlansAtPrice=333.33</code> where
-        333.33 is your selling price.  If you do not know the selling price of the product, you may request that the
-        warranty plan list be restricted based on each product's MSRP value where known by specifying
-        <code>includePlansAtPrice=MSRP</code> instead.</p>
+            include a set of all plans that are applicable to its category regardless of price.
+            To narrow the results to only include the plans only applicable for the product's price, you can specify
+            your
+            selling price for the product you are searching for by setting <code>includePlansAtPrice=333.33</code> where
+            333.33 is your selling price. If you do not know the selling price of the product, you may request that the
+            warranty plan list be restricted based on each product's MSRP value where known by specifying
+            <code>includePlansAtPrice=MSRP</code> instead.</p>
 <pre>&larr; 200
 [
     {
@@ -469,19 +555,19 @@ Location: {{ prefix }}/manufacturers/<code>manufacturerId</code>
         "ean": "1234567890123",
         "warrantyPlans": [
             { &hellip; },
-            &hellip;
-        ]
+    &hellip;
+    ]
 
     },
     { &hellip; }
 ]
 </pre>
-        </li>
-    </ul>
+    </li>
+</ul>
 
-    <h4>Add a Product</h4>
-    <ul>
-        <li>POST {{ prefix }}/products
+<h4>Add a Product</h4>
+<ul>
+    <li>POST {{ prefix }}/products
 <pre>&larr; 200
 {
     "categoryId":  "<em>categoryId</em>",         // <strong>REQUIRED</strong>
@@ -500,15 +586,14 @@ Location: {{ prefix }}/manufacturers/<code>manufacturerId</code>
 <hr>&larr; 201
 Location: {{ prefix }}/products/<code>productId</code>
 </pre>
-        </li>
-    </ul>
-    <hr style="page-break-before: always; display: none;">
+    </li>
+</ul>
+<hr style="page-break-before: always; display: none;">
 
 
-
-    <h3>Item</h3>
-  <h4>Get item by id</h4>
-  <ul>
+<h3>Item</h3>
+<h4>Get item by id</h4>
+<ul>
     <li>GET {{ prefix }}/items/<code>itemId</code></li>
     <li>GET {{ prefix }}/items?refId=<code>refId</code></li>
     <li>GET {{ prefix }}/items?orderRefId=<code>orderRefId</code>
@@ -540,44 +625,51 @@ Location: {{ prefix }}/products/<code>productId</code>
             <li><strong>orderRefId</strong>: Your unique store reference for order</li>
             <li><strong>pricePaid</strong>: Price of the item excluding taxes.</li>
             <li><strong>contractYears</strong>: If item was purchased on a contract, as is often the case with
-            cell phones, enter the contract length in years from the given dateOfPurchase.</li>
-            <li><strong>dateOfPurchase</strong>: This is used to determine the start of duration of coverage on any associated warranties</li>
-            <li><strong>*productId / productSku</strong>: It is required that at least one of these fields is included to identify the product.
-            If both are given, the system will save your productSku for the given productId for use in subsequent calls.
-            productSkus should be your code that is unique to the product.  If you do not have a productSku for the product, exclude this field.</li>
-            <li><strong>serialNumberType</strong>: Include this field only when the serialNumber's type is known - for example when dealing with IMEI numbers from cell phones.</li>
+                cell phones, enter the contract length in years from the given dateOfPurchase.
+            </li>
+            <li><strong>dateOfPurchase</strong>: This is used to determine the start of duration of coverage on any
+                associated warranties
+            </li>
+            <li><strong>*productId / productSku</strong>: It is required that at least one of these fields is included
+                to identify the product.
+                If both are given, the system will save your productSku for the given productId for use in subsequent
+                calls.
+                productSkus should be your code that is unique to the product. If you do not have a productSku for the
+                product, exclude this field.
+            </li>
+            <li><strong>serialNumberType</strong>: Include this field only when the serialNumber's type is known - for
+                example when dealing with IMEI numbers from cell phones.
+            </li>
             <li><strong>categoryId</strong>: Unlike other fields, this one applies to the Product. In some cases, when
                 the product's isCategoryKnown field is false, the category given for a product may not be correct
                 or known. In that case, the categoryId may be specified with the POST /items call made when creating
-                an item to specify the correct product category.  If a categoryId is not specified, then the default
+                an item to specify the correct product category. If a categoryId is not specified, then the default
                 categoryId for the specified product (via productId/productSku) will be used.
             </li>
         </ul>
 
 
-
     </li>
-  </ul>
+</ul>
 
-  <h4>Add an item</h4>
-  <ul>
+<h4>Add an item</h4>
+<ul>
     <li>POST {{ prefix }}/items
-      <p>POST fields listed above</p>
+        <p>POST fields listed above</p>
 <pre>&rarr; POST {{ prefix }}/items
 { &hellip; }
 <hr>&larr; 201
 Location: {{ prefix }}/items/<code>itemId</code>
 </pre>
     </li>
-  </ul>
+</ul>
 
-	<hr style="page-break-before: always; display: none;">
+<hr style="page-break-before: always; display: none;">
 
 
-
-	<h3>Warranty</h3>
-  <h4>Get a warranty by id</h4>
-  <ul>
+<h3>Warranty</h3>
+<h4>Get a warranty by id</h4>
+<ul>
     <li>GET {{ prefix }}/warranties/<code>warrantyId</code></li>
     <li>GET {{ prefix }}/warranties?refId=<code>refId</code>
 <pre>&larr; 200
@@ -608,38 +700,46 @@ Location: {{ prefix }}/items/<code>itemId</code>
     "country": "<strong>[US|CA]</strong>",                                          // <strong>REQUIRED</strong>
   }
 }</pre>
-            <p>Notes:</p>
-            <ul>
-                <li><strong>registrationCode</strong>: This is the registration code for the warranty, which may be generated on the client side under certain circumstances.</li>
-                <li><strong>warrantyUrl</strong>: URL that may be given to the customer to allow them to directly look up information about this warranty.</li>
-                <li><strong>dateOfPurchase</strong>: date of purchase for the warranty.
-                    Note that this may be different from the item's date of purchase.  It is the item's date of purchase that is used to determine the start
-                of a warranty's duration of coverage.</li>
-                <li><strong>chargeCustomer</strong>: Used if the customer is to be charged directly for the warranty (such as for monthly plans)</li>
-            </ul>
+        <p>Notes:</p>
+        <ul>
+            <li><strong>registrationCode</strong>: This is the registration code for the warranty, which may be
+                generated on the client side under certain circumstances.
+            </li>
+            <li><strong>warrantyUrl</strong>: URL that may be given to the customer to allow them to directly look up
+                information about this warranty.
+            </li>
+            <li><strong>dateOfPurchase</strong>: date of purchase for the warranty.
+                Note that this may be different from the item's date of purchase. It is the item's date of purchase that
+                is used to determine the start
+                of a warranty's duration of coverage.
+            </li>
+            <li><strong>chargeCustomer</strong>: Used if the customer is to be charged directly for the warranty (such
+                as for monthly plans)
+            </li>
+        </ul>
     </li>
-  </ul>
+</ul>
 
-  <h4>Get a set of warranties by id</h4>
-  <ul>
+<h4>Get a set of warranties by id</h4>
+<ul>
     <li>GET {{ prefix }}/warranties?orderRefId=<code>orderRefId</code></li>
     <li>GET {{ prefix }}/items/<code>itemId</code>/warranties
 <pre>&larr; 200
 [ { &hellip; } ]</pre>
     </li>
-  </ul>
+</ul>
 
-  <h4>Add a warranty</h4>
-  <ul>
+<h4>Add a warranty</h4>
+<ul>
     <li>POST {{ prefix }}/warranties</li>
     <li>POST {{ prefix }}/items/<code>itemId</code>/warranties
-      <p>POST fields listed above</p>
+        <p>POST fields listed above</p>
 <pre>&rarr; POST {{ prefix }}/warranties
 { &hellip; }
 <hr>&larr; 202
 { "id": "<em>warrantyId</em>" }</pre>
     </li>
-  </ul>
+</ul>
 
 {#
   <h4>Update a warranty</h4>
@@ -655,18 +755,18 @@ Location: {{ prefix }}/items/<code>itemId</code>
   </ul>
 #}
 
-  <h4>Invalidate a warranty</h4>
-  <ul>
+<h4>Invalidate a warranty</h4>
+<ul>
     <li>DELETE {{ prefix }}/warranties/<code>warrantyId</code> (return/refund)
-      <p>Used when a warranty has been returned.</p>
+        <p>Used when a warranty has been returned.</p>
 <pre>&rarr; DELETE {{ prefix }}/warranties/<code>warrantyId</code>
 <hr>&larr; 204
 </pre>
     </li>
-  </ul>
+</ul>
 
 
-	<hr style="page-break-before: always; display: none;">
+<hr style="page-break-before: always; display: none;">
 
 {#
 

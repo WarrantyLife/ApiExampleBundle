@@ -2,127 +2,140 @@
 
 {% block queries %}
 
-<div class="section">
-    <h4>Get Buyback Detractor Questions</h4>
-    <form id="questions" method="POST" target="results">
-        <input type="hidden" class="api_auth_username" name="username"/>
-        <input type="hidden" class="api_auth_password" name="password"/>
-        <input type="hidden" name="action" value="get"/>
-        <input type="hidden" name="target" value="buyback-questions"/>
+    <div class="section">
+        <h4>Get Buyback Detractor Questions</h4>
 
-        {{ endpoint }}/buyback-questions?categoryId=<input type="text" name="categoryId" placeholder="categoryId" />
-        <br/>
-        <input type="submit"/>
-    </form>
-</div>
-
-
-<div class="section">
-    <h4>Get Buyback Transaction by transactionId</h4>
-    <form id="byId" method="POST" target="results">
-        <input type="hidden" class="api_auth_username" name="username" />
-        <input type="hidden" class="api_auth_password" name="password" />
-        <input type="hidden" name="action" value="get" />
-        {{ endpoint }}/buybacks/<input type="text" name="transactionId" placeholder="transactionId"/>
-        <br />
-        <input type="submit" />
-    </form>
-</div>
-
-
-<div class="section">
-    <h4>Get Buyback Transaction by refId</h4>
-    <form id="byRefId" method="POST" target="results">
-        <input type="hidden" class="api_auth_username" name="username" />
-        <input type="hidden" class="api_auth_password" name="password" />
-        <input type="hidden" name="action" value="get" />
-        {{ endpoint }}/buybacks?refId=<input type="text" name="refId" placeholder="refId"/>
-        <br />
-        <input type="submit" />
-    </form>
-</div>
-
-
-<div class="section">
-    <h4>Get Buyback Transaction by orderRefId</h4>
-    <form id="byOrderRefId" method="POST" target="results">
-        <input type="hidden" class="api_auth_username" name="username" />
-        <input type="hidden" class="api_auth_password" name="password" />
-        <input type="hidden" name="action" value="get" />
-        {{ endpoint }}/buybacks?orderRefId=<input type="text" name="orderRefId" placeholder="orderRefId"/>
-        <br />
-        <input type="submit" />
-    </form>
-</div>
-
-<div class="section">
-    <h4>Create New Buyback Transaction</h4>
-
-    <div class="submission">
-        <form id="add" method="POST" target="results">
+        <form id="questions" method="POST" target="results">
             <input type="hidden" class="api_auth_username" name="username"/>
             <input type="hidden" class="api_auth_password" name="password"/>
-            <input type="hidden" name="action" value="post"/>
-            POST {{ endpoint }}/buybacks <br/>
-            <textarea name="json" placeholder="{ product data here }"></textarea>
+            <input type="hidden" name="action" value="get"/>
+            <input type="hidden" name="target" value="buyback-questions"/>
+
+            {{ endpoint }}/buyback-questions?categoryId=<input type="text" name="categoryId" placeholder="categoryId"/>
             <br/>
             <input type="submit"/>
         </form>
     </div>
-    <div class="generation">
-        <form id="gen_add" method="POST" target="results">
-            <a href="" id="gen_add_link">Generate JSON</a>
-            <script>
-                $(function () {
-                    $('#gen_add_link').click(function () {
-                        var
-                            fields = ['refId', 'orderRefId', 'customerId', 'productId', 'customerOfferPrice', 'responses', 'serialNumber', 'paymentType', 'salesRepEmail', 'isPromised']
-                            , result = []
-                        ;
 
-                        $.each(fields, function (idx, val) {
+
+    <div class="section">
+        <h4>Get Buyback Transaction by transactionId</h4>
+
+        <form id="byId" method="POST" target="results">
+            <input type="hidden" class="api_auth_username" name="username"/>
+            <input type="hidden" class="api_auth_password" name="password"/>
+            <input type="hidden" name="action" value="get"/>
+            {{ endpoint }}/buybacks/<input type="text" name="transactionId" placeholder="transactionId"/>
+            <br/>
+            <input type="submit"/>
+        </form>
+    </div>
+
+
+    <div class="section">
+        <h4>Get Buyback Transaction by refId</h4>
+
+        <form id="byRefId" method="POST" target="results">
+            <input type="hidden" class="api_auth_username" name="username"/>
+            <input type="hidden" class="api_auth_password" name="password"/>
+            <input type="hidden" name="action" value="get"/>
+            {{ endpoint }}/buybacks?refId=<input type="text" name="refId" placeholder="refId"/>
+            <br/>
+            <input type="submit"/>
+        </form>
+    </div>
+
+
+    <div class="section">
+        <h4>Get Buyback Transaction by orderRefId</h4>
+
+        <form id="byOrderRefId" method="POST" target="results">
+            <input type="hidden" class="api_auth_username" name="username"/>
+            <input type="hidden" class="api_auth_password" name="password"/>
+            <input type="hidden" name="action" value="get"/>
+            {{ endpoint }}/buybacks?orderRefId=<input type="text" name="orderRefId" placeholder="orderRefId"/>
+            <br/>
+            <input type="submit"/>
+        </form>
+    </div>
+
+    <div class="section">
+        <h4>Create New Buyback Transaction</h4>
+
+        <div class="submission">
+            <form id="add" method="POST" target="results">
+                <input type="hidden" class="api_auth_username" name="username"/>
+                <input type="hidden" class="api_auth_password" name="password"/>
+                <input type="hidden" name="action" value="post"/>
+                POST {{ endpoint }}/buybacks <br/>
+                <textarea name="json" placeholder="{ product data here }"></textarea>
+                <br/>
+                <input type="submit"/>
+            </form>
+        </div>
+        <div class="generation">
+            <form id="gen_add" method="POST" target="results">
+                <a href="" id="gen_add_link">Generate JSON</a>
+                <script>
+                    $(function () {
+                        $('#gen_add_link').click(function () {
                             var
-                                    input = $('#gen_add input[name=gen_' + val + ']')
-                                    , quotes = true
+                                    fields = ['refId', 'orderRefId', 'customerId', 'productId', 'customerOfferPrice', 'responses', 'serialNumber', 'paymentType', 'salesRepEmail', 'isPromised']
+                                    , result = []
                                     ;
-                            if (input.data('quotes') === false) {
-                                quotes = input.data('quotes');
-                            }
 
-                            if (input.val().length > 0) {
-                                var txt = '"' + val + '":';
-                                if (quotes) {
-                                    txt += '"' + $.trim(input.val()) + '"';
-                                } else {
-                                    txt += $.trim(input.val());
+                            $.each(fields, function (idx, val) {
+                                var
+                                        input = $('#gen_add input[name=gen_' + val + ']')
+                                        , quotes = true
+                                        ;
+                                if (input.data('quotes') === false) {
+                                    quotes = input.data('quotes');
                                 }
-                                result.push(txt);
-                            }
-                            ;
+
+                                if (input.val().length > 0) {
+                                    var txt = '"' + val + '":';
+                                    if (quotes) {
+                                        txt += '"' + $.trim(input.val()) + '"';
+                                    } else {
+                                        txt += $.trim(input.val());
+                                    }
+                                    result.push(txt);
+                                }
+                                ;
+                            });
+
+                            $('#add textarea[name=json]').val("{" + result + "}");
+
+                            return false;
                         });
-
-                        $('#add textarea[name=json]').val("{" + result + "}");
-
-                        return false;
                     });
-                });
-            </script>
+                </script>
             <pre>
 {
     "refId":              "<input type="text" name="gen_refId" placeholder="refId"/>",
     "orderRefId":         "<input type="text" name="gen_orderRefId" placeholder="orderRefId"/>",
-    "<strong>customerId</strong>":         "<input type="text" name="gen_customerId" placeholder="customerId" />",   <strong>// Required</strong>
-    "<strong>productId</strong>":          "<input type="text" name="gen_productId" placeholder="productId"/>",   <strong>// Required</strong>
-    "<strong>customerOfferPrice</strong>": "<input type="text" name="gen_customerOfferPrice" placeholder="0.00"  data-quotes=false />",   <strong>// Required</strong>
-    "<strong>responses</strong>":          "<input type="text" name="gen_responses" placeholder="json list: {question:answer,}"  data-quotes=false />",   <strong>// Required</strong>
-    "<strong>serialNumber</strong>":       "<input type="text" name="gen_serialNumber" placeholder="Serial Number"/>",   <strong>// Required</strong>
-    "<strong>paymentType</strong>":        "<input type="text" name="gen_paymentType" placeholder="1:In Store, 2:Cheque, 3:Paypal"/>",   <strong>// Required</strong>
-    "salesRepEmail":      "<input type="text" name="gen_salesRepEmail" placeholder="salesRepEmail" />",
-    "<strong>isPromised</strong>":         "<input type="text" name="gen_isPromised" placeholder="True or False" />"    <strong>// Required</strong>
+    "<strong>customerId</strong>":         "<input type="text" name="gen_customerId"
+                                                   placeholder="customerId"/>",   <strong>// Required</strong>
+    "<strong>productId</strong>":          "<input type="text" name="gen_productId"
+                                                   placeholder="productId"/>",   <strong>// Required</strong>
+    "<strong>customerOfferPrice</strong>": "<input type="text" name="gen_customerOfferPrice" placeholder="0.00"
+                                                   data-quotes=false/>",   <strong>// Required</strong>
+    "<strong>responses</strong>":          "<input type="text" name="gen_responses"
+                                                   placeholder="json list: {question:answer,}"
+                                                   data-quotes=false/>",   <strong>// Required</strong>
+    "<strong>serialNumber</strong>":       "<input type="text" name="gen_serialNumber" placeholder="Serial Number"/>",   <strong>//
+                    Required</strong>
+    "<strong>paymentType</strong>":        "<input type="text" name="gen_paymentType"
+                                                   placeholder="1:In Store, 2:Cheque, 3:Paypal"/>",   <strong>//
+                    Required</strong>
+    "salesRepEmail":      "<input type="text" name="gen_salesRepEmail" placeholder="salesRepEmail"/>",
+    "<strong>isPromised</strong>":         "<input type="text" name="gen_isPromised"
+                                                   placeholder="True or False"/>"    <strong>// Required</strong>
 }
             </pre>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 
 {% endblock %}

@@ -2,6 +2,7 @@
 
 namespace WarrantyLife\ApiExampleBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use WarrantyLife\ApiExampleBundle\Controller\BaseController;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -25,7 +26,7 @@ class ManufacturerController extends BaseController
     public function indexAction()
     {
         $endpoint = $this->getApiEndpoint();
-        return array('endpoint'=> $endpoint);
+        return array('endpoint' => $endpoint);
     }
 
     /**
@@ -37,16 +38,16 @@ class ManufacturerController extends BaseController
      * @throws \Exception
      * @return array Data used in the twig template
      */
-    public function postAction()
+    public function postAction(Request $request)
     {
         $url     = 'manufacturers';
         $headers = array();
-        $client  = $this->createClient();
-        $action  = $this->getRequest()->request->get('action', null);
+        $client  = $this->createClient($request);
+        $action  = $request->request->get('action', null);
 
         switch ($action) {
             case 'get':
-                $manufacturerId = $this->getRequest()->request->get('manufacturerId', null);
+                $manufacturerId = $request->request->get('manufacturerId', null);
                 if ($manufacturerId) {
                     $url .= '/' . $manufacturerId;
                 } else {
@@ -56,7 +57,7 @@ class ManufacturerController extends BaseController
                                  'hasBuyback',
                                  'startAt',
                                  'limit') as $f) {
-                        if ($v = $this->getRequest()->get($f, null)) {
+                        if ($v = $request->get($f, null)) {
                             $params[] = $f . '=' . $v;
                         }
                     }
@@ -64,23 +65,22 @@ class ManufacturerController extends BaseController
                         $url .= '?' . implode('&', $params);
                     }
                 }
-                $request = $client->get($url, $headers);
+                $apiReq = $client->get($url, $headers);
                 break;
 
             case 'post':
-                $json    = $this->getRequest()->request->get('json', null);
-                $request = $client->post(array($url, $headers), array('Content-Type'=> 'application/json'), $json);
+                $json   = $request->request->get('json', null);
+                $apiReq = $client->post(array($url, $headers), array('Content-Type' => 'application/json'), $json);
                 break;
 
             default:
                 throw new \Exception('Error in API Test App - Unexpected or missing action input');
         }
 
-        $response = $this->getResponse($request);
+        $apiResponse = $this->getResponse($apiReq);
 
-        return array('response'=> $response);
+        return array('response' => $apiResponse);
     }
-
 
 
 }

@@ -1,89 +1,90 @@
 {% extends 'WarrantyLifeApiExampleBundle::layout.html.twig' %}
 
 {% block queries %}
-<div class="section">
-    <form id="byId" method="POST" target="results">
-        <input type="hidden" class="api_auth_username" name="username" />
-        <input type="hidden" class="api_auth_password" name="password" />
-        <input type="hidden" name="action" value="get" />
-        {{ endpoint }}/customers/<input type="text" name="customerId" placeholder="customerId"/>
-        <br />
-        <input type="submit" />
-    </form>
-</div>
-
-<div class="section">
-    <form id="byRefId" method="POST" target="results">
-        <input type="hidden" class="api_auth_username" name="username" />
-        <input type="hidden" class="api_auth_password" name="password" />
-        <input type="hidden" name="action" value="get" />
-        {{ endpoint }}/customers?refId=<input type="text" name="refId" placeholder="refId"/>
-        <br />
-        <input type="submit" />
-    </form>
-</div>
-
-<div class="section">
-    <form id="byOrderRefId" method="POST" target="results">
-        <input type="hidden" class="api_auth_username" name="username" />
-        <input type="hidden" class="api_auth_password" name="password" />
-        <input type="hidden" name="action" value="get" />
-        {{ endpoint }}/customers?orderRefId=<input type="text" name="orderRefId" placeholder="orderRefId"/>
-        <br />
-        <input type="submit" />
-    </form>
-</div>
-
-
-<div class="section">
-    <div class="submission">
-        <form id="add" method="POST" target="results">
-            <input type="hidden" class="api_auth_username" name="username" />
-            <input type="hidden" class="api_auth_password" name="password" />
-            <input type="hidden" name="action" value="post" />
-            POST {{ endpoint }}/customers <br />
-            <textarea name="json" placeholder="{ customer data here }"></textarea>
-            <br />
-            <input type="submit" />
+    <div class="section">
+        <form id="byId" method="POST" target="results">
+            <input type="hidden" class="api_auth_username" name="username"/>
+            <input type="hidden" class="api_auth_password" name="password"/>
+            <input type="hidden" name="action" value="get"/>
+            {{ endpoint }}/customers/<input type="text" name="customerId" placeholder="customerId"/>
+            <br/>
+            <input type="submit"/>
         </form>
     </div>
-    <div class="generation">
-        <form id="gen_add" method="POST" target="results">
-            <a href="" id="gen_add_link" >Generate JSON</a>
-            <script>
-                $(function(){
-                    $('#gen_add_link').click(function(){
-                        var
-                            fields = ['refId', 'orderRefId', 'emailAddress', 'firstName', 'lastName', 'companyName', 'streetAddress', 'city', 'state', 'postalCode', 'phone', 'country', 'isWalkIn']
-                            ,result = []
-                        ;
-                        
-                        $.each(fields, function(idx, val){
-                            var
-                                input = $('#gen_add input[name=gen_'+val+']')
-                                ,quotes = true
-                            ;
-                            if (input.data('quotes') === false) {
-                                quotes = input.data('quotes');
-                            }
-                            
-                            if (input.val().length > 0) {
-                                var txt = '"'+val+'":';
-                                if (quotes) {
-                                    txt += '"'+$.trim(input.val())+'"';
-                                } else {
-                                    txt += $.trim(input.val());
-                                }
-                                result.push(txt);
-                            };
-                        });
 
-                        $('#add textarea[name=json]').val("{"+result+"}");
-                        
-                        return false;
+    <div class="section">
+        <form id="byRefId" method="POST" target="results">
+            <input type="hidden" class="api_auth_username" name="username"/>
+            <input type="hidden" class="api_auth_password" name="password"/>
+            <input type="hidden" name="action" value="get"/>
+            {{ endpoint }}/customers?refId=<input type="text" name="refId" placeholder="refId"/>
+            <br/>
+            <input type="submit"/>
+        </form>
+    </div>
+
+    <div class="section">
+        <form id="byOrderRefId" method="POST" target="results">
+            <input type="hidden" class="api_auth_username" name="username"/>
+            <input type="hidden" class="api_auth_password" name="password"/>
+            <input type="hidden" name="action" value="get"/>
+            {{ endpoint }}/customers?orderRefId=<input type="text" name="orderRefId" placeholder="orderRefId"/>
+            <br/>
+            <input type="submit"/>
+        </form>
+    </div>
+
+
+    <div class="section">
+        <div class="submission">
+            <form id="add" method="POST" target="results">
+                <input type="hidden" class="api_auth_username" name="username"/>
+                <input type="hidden" class="api_auth_password" name="password"/>
+                <input type="hidden" name="action" value="post"/>
+                POST {{ endpoint }}/customers <br/>
+                <textarea name="json" placeholder="{ customer data here }"></textarea>
+                <br/>
+                <input type="submit"/>
+            </form>
+        </div>
+        <div class="generation">
+            <form id="gen_add" method="POST" target="results">
+                <a href="" id="gen_add_link">Generate JSON</a>
+                <script>
+                    $(function () {
+                        $('#gen_add_link').click(function () {
+                            var
+                                    fields = ['refId', 'orderRefId', 'emailAddress', 'firstName', 'lastName', 'companyName', 'streetAddress', 'city', 'state', 'postalCode', 'phone', 'country', 'isWalkIn']
+                                    , result = []
+                                    ;
+
+                            $.each(fields, function (idx, val) {
+                                var
+                                        input = $('#gen_add input[name=gen_' + val + ']')
+                                        , quotes = true
+                                        ;
+                                if (input.data('quotes') === false) {
+                                    quotes = input.data('quotes');
+                                }
+
+                                if (input.val().length > 0) {
+                                    var txt = '"' + val + '":';
+                                    if (quotes) {
+                                        txt += '"' + $.trim(input.val()) + '"';
+                                    } else {
+                                        txt += $.trim(input.val());
+                                    }
+                                    result.push(txt);
+                                }
+                                ;
+                            });
+
+                            $('#add textarea[name=json]').val("{" + result + "}");
+
+                            return false;
+                        });
                     });
-                });
-            </script>
+                </script>
             <pre>
 {
     "refId":         "<input type="text" name="gen_refId" placeholder="refId"/>",
@@ -92,68 +93,72 @@
     "firstName":     "<input type="text" name="gen_firstName" placeholder="firstName"/>",  <strong>// Required</strong>
     "lastName":      "<input type="text" name="gen_lastName" placeholder="lastName"/>",  <strong>// Required</strong>
     "companyName":   "<input type="text" name="gen_companyName" placeholder="companyName"/>",
-    "streetAddress": "<input type="text" name="gen_streetAddress" placeholder="streetAddress"/>",  <strong>// Required</strong>
+    "streetAddress": "<input type="text" name="gen_streetAddress" placeholder="streetAddress"/>",  <strong>//
+                    Required</strong>
     "city":          "<input type="text" name="gen_city" placeholder="city"/>",  <strong>// Required</strong>
     "state":         "<input type="text" name="gen_state" placeholder="state"/>",  <strong>// Required</strong>
-    "postalCode":    "<input type="text" name="gen_postalCode" placeholder="postalCode"/>",  <strong>// Required</strong>
+    "postalCode":    "<input type="text" name="gen_postalCode" placeholder="postalCode"/>",  <strong>//
+                    Required</strong>
     "phone":         "<input type="text" name="gen_phone" placeholder="phone"/>",  <strong>// Required</strong>
-    "<strong>country</strong>":       "<input type="text" name="gen_country" placeholder="US or CA"/>",  <strong>// Required</strong>
-    "isWalkIn":       <input type="text" name="gen_isWalkIn" value="false" data-quotes=false />   // defaults to false
+    "<strong>country</strong>":       "<input type="text" name="gen_country" placeholder="US or CA"/>",  <strong>//
+                    Required</strong>
+    "isWalkIn":       <input type="text" name="gen_isWalkIn" value="false" data-quotes=false/>   // defaults to false
 }
             </pre>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 
-<div class="section">
-    <div class="submission">
-        <form id="update" method="POST" target="results">
-            <input type="hidden" class="api_auth_username" name="username" />
-            <input type="hidden" class="api_auth_password" name="password" />
-            <input type="hidden" name="action" value="put" />
-            PUT {{ endpoint }}/customers/<input type="text" name="customerId" placeholder="customerId"/> <br />
-            <textarea name="json" placeholder="{ customer data here }"></textarea>
-            <br />
-            <input type="submit" />
-        </form>
-    </div>
-    <div class="generation">
-        <form id="gen_update" method="POST" target="results">
-            <a href="" id="gen_update_link" >Generate</a>
-            <script>
-                $(function(){
-                    $('#gen_update_link').click(function(){
-                        var
-                            fields = ['refId', 'orderRefId', 'emailAddress', 'firstName', 'lastName', 'companyName', 'streetAddress', 'city', 'state', 'postalCode', 'phone', 'country', 'isWalkIn']
-                            ,result = []
-                        ;
-                        
-                        $.each(fields, function(idx, val){
+    <div class="section">
+        <div class="submission">
+            <form id="update" method="POST" target="results">
+                <input type="hidden" class="api_auth_username" name="username"/>
+                <input type="hidden" class="api_auth_password" name="password"/>
+                <input type="hidden" name="action" value="put"/>
+                PUT {{ endpoint }}/customers/<input type="text" name="customerId" placeholder="customerId"/> <br/>
+                <textarea name="json" placeholder="{ customer data here }"></textarea>
+                <br/>
+                <input type="submit"/>
+            </form>
+        </div>
+        <div class="generation">
+            <form id="gen_update" method="POST" target="results">
+                <a href="" id="gen_update_link">Generate</a>
+                <script>
+                    $(function () {
+                        $('#gen_update_link').click(function () {
                             var
-                                input = $('#gen_update input[name=gen_'+val+']')
-                                ,quotes = true
-                            ;
-                            if (input.data('quotes') === false) {
-                                quotes = input.data('quotes');
-                            }
-                            
-                            if (input.val().length > 0) {
-                                var txt = '"'+val+'":';
-                                if (quotes) {
-                                    txt += '"'+$.trim(input.val())+'"';
-                                } else {
-                                    txt += $.trim(input.val());
-                                }
-                                result.push(txt);
-                            };
-                        });
+                                    fields = ['refId', 'orderRefId', 'emailAddress', 'firstName', 'lastName', 'companyName', 'streetAddress', 'city', 'state', 'postalCode', 'phone', 'country', 'isWalkIn']
+                                    , result = []
+                                    ;
 
-                        $('#update textarea[name=json]').val("{"+result+"}");
-                        
-                        return false;
+                            $.each(fields, function (idx, val) {
+                                var
+                                        input = $('#gen_update input[name=gen_' + val + ']')
+                                        , quotes = true
+                                        ;
+                                if (input.data('quotes') === false) {
+                                    quotes = input.data('quotes');
+                                }
+
+                                if (input.val().length > 0) {
+                                    var txt = '"' + val + '":';
+                                    if (quotes) {
+                                        txt += '"' + $.trim(input.val()) + '"';
+                                    } else {
+                                        txt += $.trim(input.val());
+                                    }
+                                    result.push(txt);
+                                }
+                                ;
+                            });
+
+                            $('#update textarea[name=json]').val("{" + result + "}");
+
+                            return false;
+                        });
                     });
-                });
-            </script>
+                </script>
             <pre>
 {
     "refId":         "<input type="text" name="gen_refId" placeholder="refId"/>",
@@ -167,11 +172,12 @@
     "state":         "<input type="text" name="gen_state" placeholder="state"/>",
     "postalCode":    "<input type="text" name="gen_postalCode" placeholder="postalCode"/>",
     "phone":         "<input type="text" name="gen_phone" placeholder="phone"/>",
-    "<strong>country</strong>":       "<input type="text" name="gen_country" placeholder="US or CA"/>",  <strong>// Required</strong>
-    "isWalkIn":       <input type="text" name="gen_isWalkIn" value="false" data-quotes=false />   // defaults to false
+    "<strong>country</strong>":       "<input type="text" name="gen_country" placeholder="US or CA"/>",  <strong>//
+                    Required</strong>
+    "isWalkIn":       <input type="text" name="gen_isWalkIn" value="false" data-quotes=false/>   // defaults to false
 }
             </pre>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 {% endblock %}

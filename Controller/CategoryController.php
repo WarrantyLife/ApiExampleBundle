@@ -2,6 +2,7 @@
 
 namespace WarrantyLife\ApiExampleBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use WarrantyLife\ApiExampleBundle\Controller\BaseController;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -20,38 +21,38 @@ class CategoryController extends BaseController
      * @Route("/test/categories", name="apiexample_category")
      * @Method("GET")
      * @Template()
-     * 
+     *
      * @return array Data used in the twig template
      */
-	public function indexAction()
-	{
-    	$endpoint = $this->getApiEndpoint();
-    	return array('endpoint'=>$endpoint);
+    public function indexAction()
+    {
+        $endpoint = $this->getApiEndpoint();
+        return array('endpoint' => $endpoint);
     }
 
     /**
      * Perform API request
-     * 
+     *
      * @Route("/test/categories")
      * @Method("POST")
      * @Template()
-     * 
+     *
      * @return array Data used in the twig template
      */
-    public function postAction()
+    public function postAction(Request $request)
     {
-    	$url = 'categories';
+        $url = 'categories';
 
-    	$categoryId = $this->getRequest()->request->get('categoryId', null);
-    	if ($categoryId) {
-    		$url .= '/'.$categoryId;
-    	}
+        $categoryId = $request->request->get('categoryId', null);
+        if ($categoryId) {
+            $url .= '/' . $categoryId;
+        }
 
-    	$client = $this->createClient();
+        $client = $this->createClient($request);
 
-    	$request = $client->get($url);
-    	$response = $this->getResponse($request);
+        $apiReq      = $client->get($url);
+        $apiResponse = $this->getResponse($apiReq);
 
-    	return array('response'=>$response);
+        return array('response' => $apiResponse);
     }
 }

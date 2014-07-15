@@ -12,8 +12,9 @@ div.section {
 }
 
 input[type=text] {
-	width: 200px;
+    width: 200px;
 }
+
 input[type=text].short {
     width: 40px;
 }
@@ -29,13 +30,13 @@ iframe {
 }
 
 div.submission {
-	vertical-align: top;
-	display: inline-block;
+    vertical-align: top;
+    display: inline-block;
 }
 
 div.generation {
-	vertical-align: top;
-	display: inline-block;
-	border-left: #000099 1px solid;
-	padding-left: 10px;
+    vertical-align: top;
+    display: inline-block;
+    border-left: #000099 1px solid;
+    padding-left: 10px;
 }

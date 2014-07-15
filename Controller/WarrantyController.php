@@ -2,6 +2,7 @@
 
 namespace WarrantyLife\ApiExampleBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use WarrantyLife\ApiExampleBundle\Controller\BaseController;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -16,120 +17,120 @@ class WarrantyController extends BaseController
 {
     /**
      * Display page that allows for interacting with the API
-     * 
+     *
      * @Route("/test/warranties", name="apiexample_warranty")
      * @Method("GET")
      * @Template()
-     * 
+     *
      * @return array Data used in the twig template
      */
-	public function indexAction()
-	{
+    public function indexAction()
+    {
         // This controller can only be used after version 201308 of the API
         if ($this->getApiVersion() < 201308) {
             $this->setApiVersion(201308);
         }
 
         $endpoint = $this->getApiEndpoint();
-    	return array('endpoint'=>$endpoint);
+        return array('endpoint' => $endpoint);
     }
 
     /**
      * Perform API request
-     * 
+     *
      * @Route("/test/warranties")
      * @Method("POST")
      * @Template()
-     * 
+     *
      * @return array Data used in the twig template
      */
-    public function postAction()
+    public function postAction(Request $request)
     {
-    	$url = 'warranties';
-    	$args = array();
+        $url  = 'warranties';
+        $args = array();
 
-    	$action = $this->getRequest()->request->get('action', null);
+        $action = $request->request->get('action', null);
 
-    	switch ($action) {
-    		case 'get':
-		    	$warrantyId = $this->getRequest()->request->get('warrantyId', null);
-		    	if ($warrantyId) {
-		    		$url .= '/'.$warrantyId;
-	    			break;
-		    	}
+        switch ($action) {
+            case 'get':
+                $warrantyId = $request->request->get('warrantyId', null);
+                if ($warrantyId) {
+                    $url .= '/' . $warrantyId;
+                    break;
+                }
 
-		    	$refId = $this->getRequest()->request->get('refId', null);
-		    	if ($refId) {
-		    		$url .= '{?refId}';
-		    		$args['refId'] = $refId;
-	    			break;
-		    	}
+                $refId = $request->request->get('refId', null);
+                if ($refId) {
+                    $url .= '{?refId}';
+                    $args['refId'] = $refId;
+                    break;
+                }
 
-		    	$orderRefId = $this->getRequest()->request->get('orderRefId', null);
-		    	if ($orderRefId) {
-		    		$url .= '{?orderRefId}';
-		    		$args['orderRefId'] = $orderRefId;
-	    			break;
-		    	}
+                $orderRefId = $request->request->get('orderRefId', null);
+                if ($orderRefId) {
+                    $url .= '{?orderRefId}';
+                    $args['orderRefId'] = $orderRefId;
+                    break;
+                }
 
-		    	$itemId = $this->getRequest()->request->get('itemId', null);
-		    	if ($itemId) {
-		    		$url = 'items/{itemId}/warranties';
-		    		$args['itemId'] = $itemId;
-	    			break;
-		    	}
-    			break;
+                $itemId = $request->request->get('itemId', null);
+                if ($itemId) {
+                    $url            = 'items/{itemId}/warranties';
+                    $args['itemId'] = $itemId;
+                    break;
+                }
+                break;
 
-    		case 'post':
-		    	$itemId = $this->getRequest()->request->get('itemId', null);
-		    	if ($itemId) {
-		    		$url = 'items/{itemId}/warranties';
-		    		$args['itemId'] = $itemId;
-	    			break;
-		    	}
-    			break;
+            case 'post':
+                $itemId = $request->request->get('itemId', null);
+                if ($itemId) {
+                    $url            = 'items/{itemId}/warranties';
+                    $args['itemId'] = $itemId;
+                    break;
+                }
+                break;
 
-    		case 'put':
-		    	$warrantyId = $this->getRequest()->request->get('warrantyId', null);
-		    	if ($warrantyId) {
-		    		$url .= '/'.$warrantyId;
-	    			break;
-		    	}
-    			break;
+            case 'put':
+                $warrantyId = $request->request->get('warrantyId', null);
+                if ($warrantyId) {
+                    $url .= '/' . $warrantyId;
+                    break;
+                }
+                break;
 
-    		case 'delete':
-		    	$warrantyId = $this->getRequest()->request->get('warrantyId', null);
-		    	if ($warrantyId) {
-		    		$url .= '/'.$warrantyId;
-	    			break;
-		    	}
-    			break;
-    	}
+            case 'delete':
+                $warrantyId = $request->request->get('warrantyId', null);
+                if ($warrantyId) {
+                    $url .= '/' . $warrantyId;
+                    break;
+                }
+                break;
+        }
 
-    	$client = $this->createClient();
+        $client = $this->createClient($request);
 
-    	switch ($action) {
-    		case 'get':
-		    	$request = $client->get(array($url, $args));
-    			break;
+        switch ($action) {
+            case 'get':
+                $apiRequest = $client->get(array($url, $args));
+                break;
 
-    		case 'post':
-		    	$json = $this->getRequest()->request->get('json', null);
-		    	$request = $client->post(array($url, $args), array('Content-Type'=>'application/json'), $json);
-    			break;
+            case 'post':
+                $json       = $request->request->get('json', null);
+                $apiRequest = $client->post(array($url, $args), array('Content-Type' => 'application/json'), $json);
+                break;
 
-    		case 'put':
-		    	$json = $this->getRequest()->request->get('json', null);
-		    	$request = $client->put(array($url, $args), array('Content-Type'=>'application/json'), $json);
-    			break;
+            case 'put':
+                $json       = $request->request->get('json', null);
+                $apiRequest = $client->put(array($url, $args), array('Content-Type' => 'application/json'), $json);
+                break;
 
-    		case 'delete':
-		    	$request = $client->delete(array($url, $args));
-    			break;
-    	}
+            case 'delete':
+                $apiRequest = $client->delete(array($url, $args));
+                break;
+        }
 
-    	$response = $this->getResponse($request);
+        $apiResponse = $this->getResponse($apiRequest);
 
-    	return array('response'=>$response);
+        return array('response' => $apiResponse);
     }
 }

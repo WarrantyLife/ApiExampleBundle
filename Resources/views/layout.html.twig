@@ -2,64 +2,69 @@
 {% set htmlLang = 'lang="en"' %}
 {% set htmlNs = 'xmlns="http://www.w3.org/1999/xhtml"' %}
 {% set info = htmlLang~' '~htmlNs %}
-<!--[if lt IE 7 ]><html class="no-js ie6" {{ info|raw }}><![endif]-->
-<!--[if IE 7 ]><html class="no-js ie7" {{ info|raw }}><![endif]-->
-<!--[if IE 8 ]><html class="no-js ie8" {{ info|raw }}><![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><html class="no-js" {{ info|raw }}><!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>{% block title 'Warranty Life API Testing' %}</title>
-		{% block stylesheets %}
-		    {# <link href="{{ asset('css/reset-3.3.0.min.css') }}" rel="stylesheet" /> #}
-		    {% stylesheets filter='cssrewrite'
-		        debug=false
-		        '@WarrantyLifeApiExampleBundle/Resources/public/css/style.css'
-		    %}
-		        <link href="{{ asset_url }}" rel="stylesheet" />
-		    {% endstylesheets %}
-		{% endblock %}
-        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
-		{% block javascripts %}
+<!--[if lt IE 7 ]>
+<html class="no-js ie6" {{ info|raw }}><![endif]-->
+<!--[if IE 7 ]>
+<html class="no-js ie7" {{ info|raw }}><![endif]-->
+<!--[if IE 8 ]>
+<html class="no-js ie8" {{ info|raw }}><![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html class="no-js" {{ info|raw }}><!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>{% block title 'Warranty Life API Testing' %}</title>
+    {% block stylesheets %}
+        {# <link href="{{ asset('css/reset-3.3.0.min.css') }}" rel="stylesheet" /> #}
+        {% stylesheets filter='cssrewrite'
+        debug=false
+        '@WarrantyLifeApiExampleBundle/Resources/public/css/style.css' %}
+        <link href="{{ asset_url }}" rel="stylesheet"/>
+        {% endstylesheets %}
+    {% endblock %}
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}"/>
+    {% block javascripts %}
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-		{% endblock %}
-    </head>
-    <body>
-		{% block body %}
-		    <div id="contentArea">
-			    {% block content %}
-					{% block auth %}
-					    <div class="section">
-    						<form id="auth">
-        						<label for="username">API Key:</label><input type="text" id="username" name="username" placeholder="API Key"/><br />
-        						<label for="password">API Secret:</label><input type="password" id="password" name="password" placeholder="API Secret"/><br />
-    						</form>
-					    </div>
-					{% endblock %}
+    {% endblock %}
+</head>
+<body>
+{% block body %}
+<div id="contentArea">
+    {% block content %}
+    {% block auth %}
+        <div class="section">
+            <form id="auth">
+                <label for="username">API Key:</label><input type="text" id="username" name="username"
+                                                             placeholder="API Key"/><br/>
+                <label for="password">API Secret:</label><input type="password" id="password" name="password"
+                                                                placeholder="API Secret"/><br/>
+            </form>
+        </div>
+    {% endblock %}
 
-					{% block queries '' %}
-				{% endblock %}
-		    </div>
-		    {% block results %}
-		        <p>Results</p>
-		        <iframe name="results"></iframe>
-		    {% endblock %}
+    {% block queries '' %}
+    {% endblock %}
+</div>
+{% block results %}
+    <p>Results</p>
+    <iframe name="results"></iframe>
+{% endblock %}
 
-            {% block endjavascripts %}
-                <script>
-                $(function(){
-                	$('form').submit(function(){
-                        $('.api_auth_username').each(function(index) {
-                            $(this).val($('#username').val());
-                        });
-                        $('.api_auth_password').each(function(index) {
-                            $(this).val($('#password').val());
-                        });
-                	});
+{% block endjavascripts %}
+    <script>
+        $(function () {
+            $('form').submit(function () {
+                $('.api_auth_username').each(function (index) {
+                    $(this).val($('#username').val());
                 });
-                </script>
-            {% endblock %}
-		{% endblock %}
-    </body>
+                $('.api_auth_password').each(function (index) {
+                    $(this).val($('#password').val());
+                });
+            });
+        });
+    </script>
+{% endblock %}
+{% endblock %}
+</body>
 </html>

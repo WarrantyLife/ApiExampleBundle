@@ -2,6 +2,7 @@
 
 namespace WarrantyLife\ApiExampleBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use WarrantyLife\ApiExampleBundle\Controller\BaseController;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -25,7 +26,7 @@ class BuybackController extends BaseController
     public function indexAction()
     {
         $endpoint = $this->getApiEndpoint();
-        return array('endpoint'=> $endpoint);
+        return array('endpoint' => $endpoint);
     }
 
     /**
@@ -36,16 +37,16 @@ class BuybackController extends BaseController
      * @Template()
      * @return array Data used in the twig template
      */
-    public function postAction()
+    public function postAction(Request $request)
     {
         $headers = array();
-        $client = $this->createClient();
-        $action = $this->getRequest()->request->get('action', null);
-        $url = $this->getRequest()->request->get('target', 'buybacks');
+        $client  = $this->createClient($request);
+        $action  = $request->request->get('action', null);
+        $url     = $request->request->get('target', 'buybacks');
 
         switch ($action) {
             case 'get':
-                $buybackId = $this->getRequest()->request->get('transactionId', null);
+                $buybackId = $request->request->get('transactionId', null);
 
                 if ($buybackId) {
                     $url .= '/' . $buybackId;
@@ -58,11 +59,11 @@ class BuybackController extends BaseController
                                  'startAt',
                                  'limit') as $f) {
                         if ($v = $this->getRequest()->get($f, null)) {
-                            if($f == 'responses') {
+                            if ($f == 'responses') {
                                 $v = json_decode($v);
                                 //{"54":3, "55":2, "56":3, "57":3}
-                                foreach($v as $key => $val) {
-                                    $params[] = $f . '['.$key.']='.$val;
+                                foreach ($v as $key => $val) {
+                                    $params[] = $f . '[' . $key . ']=' . $val;
                                 }
                             } else {
                                 $params[] = $f . '=' . $v;
@@ -73,29 +74,29 @@ class BuybackController extends BaseController
                         $url .= '?' . implode('&', $params);
                     }
                 }
-                $request = $client->get($url, array('Content-Type'=> 'application/json'));
+                $apiReq = $client->get($url, array('Content-Type' => 'application/json'));
                 break;
 
             case 'post':
-                $json    = $this->getRequest()->request->get('json', null);
-                $request = $client->post(array($url, $headers), array('Content-Type'=> 'application/json'), $json);
+                $json   = $request->request->get('json', null);
+                $apiReq = $client->post(array($url, $headers), array('Content-Type' => 'application/json'), $json);
                 break;
 
             case 'put':
-                $buybackId = $this->getRequest()->request->get('buybackId', null);
+                $buybackId = $request->request->get('buybackId', null);
                 if ($buybackId) {
                     $url .= '/' . $buybackId;
                     break;
                 }
-                $json    = $this->getRequest()->request->get('json', null);
-                $request = $client->put(array($url, $headers), array('Content-Type'=> 'application/json'), $json);
+                $json   = $request->request->get('json', null);
+                $apiReq = $client->put(array($url, $headers), array('Content-Type' => 'application/json'), $json);
                 break;
             default:
                 throw new \Exception('Error in API Test App - Unexpected or missing action input');
         }
 
-        $response = $this->getResponse($request);
+        $apiResponse = $this->getResponse($apiReq);
 
-        return array('response'=> $response);
+        return array('response' => $apiResponse);
     }
 }

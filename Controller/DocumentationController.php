@@ -27,8 +27,8 @@ class DocumentationController extends Controller
         }
         $version = '201204';
         return array(
-            'version' => $version,
-            'prefix'  => '/api/' . $version,
+            'version'            => $version,
+            'prefix'             => '/api/' . $version,
             'sntTypesDescriptor' => '[ESN|IMEI|MEID]' //$this->getItemManager()->getSerialNumberTypesDescriptor()
         );
     }
@@ -42,7 +42,7 @@ class DocumentationController extends Controller
         $version = '201201';
         return array(
             'version' => $version,
-            'prefix' => '/api/' . $version,
+            'prefix'  => '/api/' . $version,
         );
     }
 }

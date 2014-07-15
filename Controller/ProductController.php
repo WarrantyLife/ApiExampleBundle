@@ -2,9 +2,8 @@
 
 namespace WarrantyLife\ApiExampleBundle\Controller;
 
-use WarrantyLife\ApiExampleBundle\Controller\BaseController;
+use Symfony\Component\HttpFoundation\Request;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -25,7 +24,7 @@ class ProductController extends BaseController
     public function indexAction()
     {
         $endpoint = $this->getApiEndpoint();
-        return array('endpoint'=> $endpoint);
+        return array('endpoint' => $endpoint);
     }
 
     /**
@@ -36,16 +35,16 @@ class ProductController extends BaseController
      * @Template()
      * @return array Data used in the twig template
      */
-    public function postAction()
+    public function postAction(Request $request)
     {
-        $url = 'products';
+        $url     = 'products';
         $headers = array();
-        $client = $this->createClient();
-        $action = $this->getRequest()->request->get('action', null);
+        $client  = $this->createClient($request);
+        $action  = $request->request->get('action', null);
 
         switch ($action) {
             case 'get':
-                $productId = $this->getRequest()->request->get('productId', null);
+                $productId = $request->request->get('productId', null);
                 if ($productId) {
                     $url .= '/' . $productId;
                 }
@@ -68,11 +67,11 @@ class ProductController extends BaseController
                              'startAt',
                              'limit') as $f) {
                     if ($v = $this->getRequest()->get($f, null)) {
-                        if($f == 'buybackDetractorAnswers') {
+                        if ($f == 'buybackDetractorAnswers') {
                             $v = json_decode($v);
                             //{"54":3, "55":2, "56":3, "57":3}
-                            foreach($v as $key => $val) {
-                                $params[] = $f . '['.$key.']='.$val;
+                            foreach ($v as $key => $val) {
+                                $params[] = $f . '[' . $key . ']=' . $val;
                             }
                         } else {
                             $params[] = $f . '=' . $v;
@@ -83,29 +82,29 @@ class ProductController extends BaseController
                     $url .= '?' . implode('&', $params);
                 }
 
-                $request = $client->get($url, array('Content-Type'=> 'application/json'));
+                $apiReq = $client->get($url, array('Content-Type' => 'application/json'));
                 break;
 
             case 'post':
-                $json    = $this->getRequest()->request->get('json', null);
-                $request = $client->post(array($url, $headers), array('Content-Type'=> 'application/json'), $json);
+                $json   = $request->request->get('json', null);
+                $apiReq = $client->post(array($url, $headers), array('Content-Type' => 'application/json'), $json);
                 break;
 
             case 'put':
-                $productId = $this->getRequest()->request->get('productId', null);
+                $productId = $request->request->get('productId', null);
                 if ($productId) {
                     $url .= '/' . $productId;
                     break;
                 }
-                $json    = $this->getRequest()->request->get('json', null);
-                $request = $client->put(array($url, $headers), array('Content-Type'=> 'application/json'), $json);
+                $json   = $request->request->get('json', null);
+                $apiReq = $client->put(array($url, $headers), array('Content-Type' => 'application/json'), $json);
                 break;
             default:
                 throw new \Exception('Error in API Test App - Unexpected or missing action input');
         }
 
-        $response = $this->getResponse($request);
+        $apiResponse = $this->getResponse($apiReq);
 
-        return array('response'=> $response);
+        return array('response' => $apiResponse);
     }
 }

@@ -2,15 +2,24 @@
 
 namespace WarrantyLife\ApiExampleBundle\Controller;
 
+use Guzzle\Common\Exception\ExceptionCollection;
+use Guzzle\Http\Exception\BadResponseException;
+use Guzzle\Http\Exception\ClientErrorResponseException;
+use Guzzle\Http\Exception\ServerErrorResponseException;
+use Guzzle\Log\PsrLogAdapter;
+use Monolog\Handler\StreamHandler;
+use Monolog\Handler\TestHandler;
+use Monolog\Logger;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Guzzle\Http\Client;
-use Guzzle\Log\Zf1LogAdapter;
-use Guzzle\Log\Zf2LogAdapter;
 use Guzzle\Plugin\Log\LogPlugin;
 use Guzzle\Log\MessageFormatter;
 use Guzzle\Plugin\CurlAuth\CurlAuthPlugin;
 use Guzzle\Http\Message\RequestInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Guzzle\Http\Exception\RequestException;
+use Exception;
 
 /**
  * Base controller to provide commonly used methods
@@ -82,7 +91,7 @@ class BaseController extends Controller
     /**
      * Set which API version to use
      *
-     * @param string$apiVersion
+     * @param string $apiVersion
      */
     protected function setApiVersion($apiVersion)
     {
@@ -109,18 +118,16 @@ class BaseController extends Controller
      *
      * @return Client A client instance
      */
-    protected function createClient()
+    protected function createClient(Request $request)
     {
-        $stream    = $this->createStream();
-
-        $adapter = new Zf1LogAdapter(
-            new \Zend_Log(new \Zend_Log_Writer_Stream($stream))
-        );
-        //$adapter   = new Zf2LogAdapter(new \Zend\Log\Logger(new \Zend\Log\Writer\Stream('php://output')));
+        $stream = $this->createStream();
+        $logHandler = new StreamHandler($stream);
+        $logger = new Logger('WL_API', [$logHandler]);
+        $adapter = new PsrLogAdapter($logger);
         $logPlugin = new LogPlugin($adapter, MessageFormatter::DEBUG_FORMAT);
 
-        $apiKey    = $this->getRequest()->request->get('username', null);
-        $apiSecret = $this->getRequest()->request->get('password', null);
+        $apiKey    = $request->request->get('username', null);
+        $apiSecret = $request->request->get('password', null);
 
         $endpoint = $this->getApiEndpoint();
 
@@ -171,7 +178,7 @@ class BaseController extends Controller
     /**
      * Get the full response from the http client
      *
-     * @param RequestInterface The Http Client request
+     * @param RequestInterface $request The Http Client request
      *
      * @return string Full response from the Http Client
      */
@@ -179,20 +186,19 @@ class BaseController extends Controller
     {
         try {
             $response = $request->send();
-        } catch (\Guzzle\Http\Message\BadResponseException $e) {
+        } catch (ClientErrorResponseException $e) {
+        } catch (ServerErrorResponseException $e) {
+            // Show the returned stream for these exceptions
+        } catch (BadResponseException $e) {
             //print_r('Bad Response');
             //return $e->getResponse();
-        } catch (\Guzzle\Http\Exception\RequestException $e) {
-        } catch (\Guzzle\Http\Exception\BadResponseException $e) {
-        } catch (\Guzzle\Http\Exception\ClientErrorResponseException $e) {
-        } catch (\Guzzle\Http\Exception\ServerErrorResponseException $e) {
-            // Show the returned stream for these exceptions
-        } catch (\Guzzle\Common\ExceptionCollection $e) {
+        } catch (RequestException $e) {
+        } catch (ExceptionCollection $e) {
             foreach ($e as $exception) {
                 print_r('Got Exception: ' . get_class($exception));
             }
             exit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             print_r('Got Exception: ' . get_class($e));
         }
 //    	print_r($response);

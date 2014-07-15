@@ -1,23 +1,23 @@
 {% extends 'WarrantyLifeApiExampleBundle::layout.html.twig' %}
 
 {% block queries %}
-<div class="section">
-    <form id="all" method="POST" target="results">
-        <input type="hidden" class="api_auth_username" name="username" />
-        <input type="hidden" class="api_auth_password" name="password" />
-        {{ endpoint }}/categories
-        <br />
-        <input type="submit" />
-    </form>
-</div>
+    <div class="section">
+        <form id="all" method="POST" target="results">
+            <input type="hidden" class="api_auth_username" name="username"/>
+            <input type="hidden" class="api_auth_password" name="password"/>
+            {{ endpoint }}/categories
+            <br/>
+            <input type="submit"/>
+        </form>
+    </div>
 
-<div class="section">
-    <form id="byId" method="POST" target="results">
-        <input type="hidden" class="api_auth_username" name="username" />
-        <input type="hidden" class="api_auth_password" name="password" />
-        {{ endpoint }}/categories/<input type="text" name="categoryId" placeholder="categoryId"/>
-        <br />
-        <input type="submit" />
-    </form>
-</div>
+    <div class="section">
+        <form id="byId" method="POST" target="results">
+            <input type="hidden" class="api_auth_username" name="username"/>
+            <input type="hidden" class="api_auth_password" name="password"/>
+            {{ endpoint }}/categories/<input type="text" name="categoryId" placeholder="categoryId"/>
+            <br/>
+            <input type="submit"/>
+        </form>
+    </div>
 {% endblock %}

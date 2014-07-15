@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('warranty_life_api_example');
+        $rootNode    = $treeBuilder->root('warranty_life_api_example');
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for

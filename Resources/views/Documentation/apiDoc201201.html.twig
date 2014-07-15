@@ -51,7 +51,7 @@
 <ul>
     <li>The Warranty Life API is a simple REST modeled API.</li>
     <li>You will require Warranty Life API credentials for access, please contact <a
-            href="mailto:info@warrantylife.com">info@warrantylife.com</a> if you are missing these credentials.
+                href="mailto:info@warrantylife.com">info@warrantylife.com</a> if you are missing these credentials.
     </li>
     <li>Any returned field that is not defined in this document should be ignored in order to ensure forward
         compatibility with updates to this version of the API.
@@ -78,7 +78,7 @@
 
 <p>
     Authentication is done using <a href="http://en.wikipedia.org/wiki/Basic_authentication_scheme">HTTP Basic
-    Authentication</a> using your API key and API secret as the username and password values. Other forms of
+        Authentication</a> using your API key and API secret as the username and password values. Other forms of
     authentication may be introduced in future versions of the API.
 </p>
 
@@ -87,7 +87,8 @@
 <p>
     If you are using sub-accounts then you would append <code>/sub-account-id</code> to your API key when acting on
     behalf of the sub-account when authenticating. <strong>Billing of warranties is based on the authenticated
-    account</strong>, so you must use sub-accounts if you want to have separate billing for different stores (such as
+        account</strong>, so you must use sub-accounts if you want to have separate billing for different stores (such
+    as
     for franchises) and you are not using separate API keys and secrets for each store. Sub-accounts can be created via
     the partner <a href="{{ path('partner_stores_add') }}">store add</a> page where "Remote Id" is the sub-account-id.
 </p>
@@ -102,7 +103,8 @@
 
 <p>
     There is an example client using the API which shows the HTTP communication at <a
-        href="http://sandbox.warrantylife.com/warrantylife-api/test">http://sandbox.warrantylife.com/warrantylife-api/test</a> and the code for that
+            href="http://sandbox.warrantylife.com/warrantylife-api/test">http://sandbox.warrantylife.com/warrantylife-api/test</a>
+    and the code for that
     example is available at <a href="https://github.com/WarrantyLife/ApiExampleBundle">https://github.com/WarrantyLife/ApiExampleBundle</a>.
 </p>
 
@@ -483,7 +485,7 @@ Location: {{ prefix }}/items/<code>itemId</code>
   </ul>
 #}
 
-  <h4>Invalidate a warranty</h4>
+<h4>Invalidate a warranty</h4>
 <ul>
     <li>DELETE {{ prefix }}/warranties/<code>warrantyId</code> (return/refund)
         <p>Used when a warranty has been returned.</p>

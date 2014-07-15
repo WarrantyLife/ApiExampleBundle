@@ -13,10 +13,10 @@ class DefaultController extends Controller
 {
     /**
      * Show list of pages the user can go to
-     * 
+     *
      * @Route("/", name="apiexample_root")
      * @Template()
-     * 
+     *
      * @return array Data used in the twig template
      */
     public function indexAction()

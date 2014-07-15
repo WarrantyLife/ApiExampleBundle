@@ -2,6 +2,7 @@
 
 namespace WarrantyLife\ApiExampleBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use WarrantyLife\ApiExampleBundle\Controller\BaseController;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -16,95 +17,95 @@ class Item201201Controller extends BaseController
 {
     /**
      * Display page that allows for interacting with the API
-     * 
+     *
      * @Route("/test/items201201", name="apiexample_item201201")
      * @Method("GET")
      * @Template()
-     * 
+     *
      * @return array Data used in the twig template
      */
-	public function indexAction()
-	{
+    public function indexAction()
+    {
         // This controller can only be used up to version 201204 of the API
         if ($this->getApiVersion() > 201201) {
             $this->setApiVersion(201201);
         }
 
         $endpoint = $this->getApiEndpoint();
-    	return array('endpoint'=>$endpoint);
+        return array('endpoint' => $endpoint);
     }
 
     /**
      * Perform API request
-     * 
+     *
      * @Route("/test/items201201")
      * @Method("POST")
      * @Template()
-     * 
+     *
      * @return array Data used in the twig template
      */
-    public function postAction()
+    public function postAction(Request $request)
     {
-    	$url = 'items';
-    	$args = array();
+        $url  = 'items';
+        $args = array();
 
-    	$action = $this->getRequest()->request->get('action', null);
+        $action = $request->request->get('action', null);
 
-    	switch ($action) {
-    		case 'get':
-		    	$itemId = $this->getRequest()->request->get('itemId', null);
-		    	if ($itemId) {
-		    		$url .= '/'.$itemId;
-	    			break;
-		    	}
+        switch ($action) {
+            case 'get':
+                $itemId = $request->request->get('itemId', null);
+                if ($itemId) {
+                    $url .= '/' . $itemId;
+                    break;
+                }
 
-		    	$refId = $this->getRequest()->request->get('refId', null);
-		    	if ($refId) {
-		    		$url .= '{?refId}';
-		    		$args['refId'] = $refId;
-	    			break;
-		    	}
+                $refId = $request->request->get('refId', null);
+                if ($refId) {
+                    $url .= '{?refId}';
+                    $args['refId'] = $refId;
+                    break;
+                }
 
-		    	$orderRefId = $this->getRequest()->request->get('orderRefId', null);
-		    	if ($orderRefId) {
-		    		$url .= '{?orderRefId}';
-		    		$args['orderRefId'] = $orderRefId;
-	    			break;
-		    	}
-    			break;
+                $orderRefId = $request->request->get('orderRefId', null);
+                if ($orderRefId) {
+                    $url .= '{?orderRefId}';
+                    $args['orderRefId'] = $orderRefId;
+                    break;
+                }
+                break;
 
-    		case 'post':
-    			break;
+            case 'post':
+                break;
 
-    		case 'put':
-		    	$itemId = $this->getRequest()->request->get('itemId', null);
-		    	if ($itemId) {
-		    		$url .= '/'.$itemId;
-	    			break;
-		    	}
-    			break;
-    	}
+            case 'put':
+                $itemId = $request->request->get('itemId', null);
+                if ($itemId) {
+                    $url .= '/' . $itemId;
+                    break;
+                }
+                break;
+        }
 
-    	$client = $this->createClient();
+        $client = $this->createClient($request);
 
-    	switch ($action) {
-    		case 'get':
-		    	$request = $client->get(array($url, $args));
-    			break;
+        switch ($action) {
+            case 'get':
+                $apiReq = $client->get(array($url, $args));
+                break;
 
-    		case 'post':
-		    	$json = $this->getRequest()->request->get('json', null);
-		    	$request = $client->post(array($url, $args), array('Content-Type'=>'application/json'), $json);
-    			break;
+            case 'post':
+                $json   = $request->request->get('json', null);
+                $apiReq = $client->post(array($url, $args), array('Content-Type' => 'application/json'), $json);
+                break;
 
-    		case 'put':
-		    	$json = $this->getRequest()->request->get('json', null);
-		    	$request = $client->put(array($url, $args), array('Content-Type'=>'application/json'), $json);
-    			break;
-    	}
+            case 'put':
+                $json   = $request->request->get('json', null);
+                $apiReq = $client->put(array($url, $args), array('Content-Type' => 'application/json'), $json);
+                break;
+        }
 
-    	$response = $this->getResponse($request);
+        $apiResponse = $this->getResponse($apiReq);
 
-    	return array('response'=>$response);
+        return array('response' => $apiResponse);
     }
 }
