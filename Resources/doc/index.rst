@@ -20,7 +20,7 @@ First, checkout a copy of the code.  Just add the following  to the
 
 Next, install the bundle
 
-    composer require warrantylife/api-example-bundle
+    composer require warrantylife/api-example-bundle:dev-master
 
 Then register the bundle with your kernel::
 
