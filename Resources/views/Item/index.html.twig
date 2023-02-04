@@ -6,7 +6,7 @@
             <input type="hidden" class="api_auth_username" name="username"/>
             <input type="hidden" class="api_auth_password" name="password"/>
             <input type="hidden" name="action" value="get"/>
-            {{ endpoint }}/items/<input type="text" name="itemId" placeholder="itemId"/>
+            {{ endpoint }}items/<input type="text" name="itemId" placeholder="itemId"/>
             <br/>
             <input type="submit"/>
         </form>
@@ -17,7 +17,7 @@
             <input type="hidden" class="api_auth_username" name="username"/>
             <input type="hidden" class="api_auth_password" name="password"/>
             <input type="hidden" name="action" value="get"/>
-            {{ endpoint }}/items?refId=<input type="text" name="refId" placeholder="refId"/>
+            {{ endpoint }}items?refId=<input type="text" name="refId" placeholder="refId"/>
             <br/>
             <input type="submit"/>
         </form>
@@ -28,7 +28,7 @@
             <input type="hidden" class="api_auth_username" name="username"/>
             <input type="hidden" class="api_auth_password" name="password"/>
             <input type="hidden" name="action" value="get"/>
-            {{ endpoint }}/items?orderRefId=<input type="text" name="orderRefId" placeholder="orderRefId"/>
+            {{ endpoint }}items?orderRefId=<input type="text" name="orderRefId" placeholder="orderRefId"/>
             <br/>
             <input type="submit"/>
         </form>
@@ -41,7 +41,7 @@
                 <input type="hidden" class="api_auth_username" name="username"/>
                 <input type="hidden" class="api_auth_password" name="password"/>
                 <input type="hidden" name="action" value="post"/>
-                POST {{ endpoint }}/items <br/>
+                POST {{ endpoint }}items <br/>
                 <textarea name="json" placeholder="{ item data here }"></textarea>
                 <br/>
                 <input type="submit"/>

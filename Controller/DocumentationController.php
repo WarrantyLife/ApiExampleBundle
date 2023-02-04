@@ -26,11 +26,7 @@ class DocumentationController extends Controller
             //If developer_documentation is not in path
         }
         $version = '201204';
-        return array(
-            'version'            => $version,
-            'prefix'             => '/api/' . $version,
-            'sntTypesDescriptor' => '[ESN|IMEI|MEID]' //$this->getItemManager()->getSerialNumberTypesDescriptor()
-        );
+        return ['version'            => $version, 'prefix'             => '/api/' . $version, 'sntTypesDescriptor' => '[ESN|IMEI|MEID]'];
     }
 
     /**
@@ -40,10 +36,7 @@ class DocumentationController extends Controller
     public function apiDoc201201Action()
     {
         $version = '201201';
-        return array(
-            'version' => $version,
-            'prefix'  => '/api/' . $version,
-        );
+        return ['version' => $version, 'prefix'  => '/api/' . $version];
     }
 }
 

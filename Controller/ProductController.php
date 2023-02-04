@@ -2,11 +2,10 @@
 
 namespace WarrantyLife\ApiExampleBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Controller for handling product examples
@@ -24,7 +23,7 @@ class ProductController extends BaseController
     public function indexAction()
     {
         $endpoint = $this->getApiEndpoint();
-        return array('endpoint' => $endpoint);
+        return ['endpoint' => $endpoint];
     }
 
     /**
@@ -34,77 +33,53 @@ class ProductController extends BaseController
      * @Method  ("POST")
      * @Template()
      * @return array Data used in the twig template
+     * @throws \Exception
      */
     public function postAction(Request $request)
     {
         $url     = 'products';
-        $headers = array();
         $client  = $this->createClient($request);
-        $action  = $request->request->get('action', null);
+        $action  = $request->get('action');
+        $params = [];
+        $response = null;
+
 
         switch ($action) {
             case 'get':
-                $productId = $request->request->get('productId', null);
+                $productId = $request->get('productId');
                 if ($productId) {
                     $url .= '/' . $productId;
                 }
 
-                $params = array();
-                foreach (array(
-                             'id',
-                             'mpn',
-                             'model',
-                             'categoryId',
-                             'sku',
-                             'upc',
-                             'q',
-                             'manufacturerId',
-                             'manufacturerName',
-                             'includePlans',
-                             'includePlansAtPrice',
-                             'buybackDetractorAnswers',
-                             'hasBuyback',
-                             'startAt',
-                             'limit') as $f) {
-                    if ($v = $this->getRequest()->get($f, null)) {
-                        if ($f == 'buybackDetractorAnswers') {
-                            $v = json_decode($v);
-                            //{"54":3, "55":2, "56":3, "57":3}
-                            foreach ($v as $key => $val) {
-                                $params[] = $f . '[' . $key . ']=' . $val;
-                            }
-                        } else {
-                            $params[] = $f . '=' . $v;
-                        }
+                foreach (['id', 'mpn', 'model', 'categoryId', 'sku', 'upc', 'q', 'manufacturerId', 'manufacturerName', 'includePlans', 'includePlansAtPrice', 'startAt', 'limit'] as $f) {
+                    if ($v = $request->get($f)) {
+                        $params[$f] = $v;
                     }
                 }
-                if (count($params)) {
-                    $url .= '?' . implode('&', $params);
-                }
 
-                $apiReq = $client->get($url, array('Content-Type' => 'application/json'));
+                $response = $client->get($url, ['query' => $params]);
                 break;
 
             case 'post':
-                $json   = $request->request->get('json', null);
-                $apiReq = $client->post(array($url, $headers), array('Content-Type' => 'application/json'), $json);
+                $json   = $request->get('json');
+                $response = $client->post($url, ['query' => $params, 'headers' => ['Content-Type' => 'application/json'], 'body' => $json]);
                 break;
 
             case 'put':
-                $productId = $request->request->get('productId', null);
+                $productId = $request->get('productId');
                 if ($productId) {
                     $url .= '/' . $productId;
                     break;
                 }
-                $json   = $request->request->get('json', null);
-                $apiReq = $client->put(array($url, $headers), array('Content-Type' => 'application/json'), $json);
+                $json   = $request->get('json');
+                $response = $client->put($url, ['query' => $params, 'headers' => ['Content-Type' => 'application/json'], 'body' => $json]);
                 break;
             default:
                 throw new \Exception('Error in API Test App - Unexpected or missing action input');
         }
 
-        $apiResponse = $this->getResponse($apiReq);
+        $apiResponse = $response ?  $this->formatResponse($response) : '';
 
-        return array('response' => $apiResponse);
+        return ['response' => $apiResponse];
     }
 }

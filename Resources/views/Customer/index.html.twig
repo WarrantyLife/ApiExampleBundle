@@ -6,7 +6,7 @@
             <input type="hidden" class="api_auth_username" name="username"/>
             <input type="hidden" class="api_auth_password" name="password"/>
             <input type="hidden" name="action" value="get"/>
-            {{ endpoint }}/customers/<input type="text" name="customerId" placeholder="customerId"/>
+            {{ endpoint }}customers/<input type="text" name="customerId" placeholder="customerId"/>
             <br/>
             <input type="submit"/>
         </form>
@@ -17,7 +17,7 @@
             <input type="hidden" class="api_auth_username" name="username"/>
             <input type="hidden" class="api_auth_password" name="password"/>
             <input type="hidden" name="action" value="get"/>
-            {{ endpoint }}/customers?refId=<input type="text" name="refId" placeholder="refId"/>
+            {{ endpoint }}customers?refId=<input type="text" name="refId" placeholder="refId"/>
             <br/>
             <input type="submit"/>
         </form>
@@ -28,7 +28,7 @@
             <input type="hidden" class="api_auth_username" name="username"/>
             <input type="hidden" class="api_auth_password" name="password"/>
             <input type="hidden" name="action" value="get"/>
-            {{ endpoint }}/customers?orderRefId=<input type="text" name="orderRefId" placeholder="orderRefId"/>
+            {{ endpoint }}customers?orderRefId=<input type="text" name="orderRefId" placeholder="orderRefId"/>
             <br/>
             <input type="submit"/>
         </form>
@@ -41,7 +41,7 @@
                 <input type="hidden" class="api_auth_username" name="username"/>
                 <input type="hidden" class="api_auth_password" name="password"/>
                 <input type="hidden" name="action" value="post"/>
-                POST {{ endpoint }}/customers <br/>
+                POST {{ endpoint }}customers <br/>
                 <textarea name="json" placeholder="{ customer data here }"></textarea>
                 <br/>
                 <input type="submit"/>

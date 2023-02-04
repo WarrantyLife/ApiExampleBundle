@@ -21,7 +21,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -33,6 +33,6 @@ class DefaultController extends Controller
      */
     public function testIndexAction()
     {
-        return array();
+        return [];
     }
 }

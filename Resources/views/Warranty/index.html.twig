@@ -6,7 +6,7 @@
             <input type="hidden" class="api_auth_username" name="username"/>
             <input type="hidden" class="api_auth_password" name="password"/>
             <input type="hidden" name="action" value="get"/>
-            {{ endpoint }}/warranties/<input type="text" name="warrantyId" placeholder="warrantyId"/>
+            {{ endpoint }}warranties/<input type="text" name="warrantyId" placeholder="warrantyId"/>
             <br/>
             <input type="submit"/>
         </form>
@@ -17,7 +17,7 @@
             <input type="hidden" class="api_auth_username" name="username"/>
             <input type="hidden" class="api_auth_password" name="password"/>
             <input type="hidden" name="action" value="get"/>
-            {{ endpoint }}/warranties?refId=<input type="text" name="refId" placeholder="refId"/>
+            {{ endpoint }}warranties?refId=<input type="text" name="refId" placeholder="refId"/>
             <br/>
             <input type="submit"/>
         </form>
@@ -28,7 +28,7 @@
             <input type="hidden" class="api_auth_username" name="username"/>
             <input type="hidden" class="api_auth_password" name="password"/>
             <input type="hidden" name="action" value="get"/>
-            {{ endpoint }}/warranties?orderRefId=<input type="text" name="orderRefId" placeholder="orderRefId"/>
+            {{ endpoint }}warranties?orderRefId=<input type="text" name="orderRefId" placeholder="orderRefId"/>
             <br/>
             <input type="submit"/>
         </form>
@@ -39,7 +39,7 @@
             <input type="hidden" class="api_auth_username" name="username"/>
             <input type="hidden" class="api_auth_password" name="password"/>
             <input type="hidden" name="action" value="get"/>
-            {{ endpoint }}/items/<input type="text" name="itemId" placeholder="itemId"/>/warranties
+            {{ endpoint }}items/<input type="text" name="itemId" placeholder="itemId"/>/warranties
             <br/>
             <input type="submit"/>
         </form>
@@ -52,7 +52,7 @@
                 <input type="hidden" class="api_auth_username" name="username"/>
                 <input type="hidden" class="api_auth_password" name="password"/>
                 <input type="hidden" name="action" value="post"/>
-                POST {{ endpoint }}/warranties <br/>
+                POST {{ endpoint }}warranties <br/>
                 <textarea name="json" placeholder="{ warranty data here }"></textarea>
                 <br/>
                 <input type="submit"/>
@@ -160,7 +160,7 @@
                 <input type="hidden" class="api_auth_username" name="username"/>
                 <input type="hidden" class="api_auth_password" name="password"/>
                 <input type="hidden" name="action" value="post"/>
-                POST {{ endpoint }}/items/<input type="text" name="itemId" placeholder="itemId"/>/warranties <br/>
+                POST {{ endpoint }}items/<input type="text" name="itemId" placeholder="itemId"/>/warranties <br/>
                 <textarea name="json" placeholder="{ warranty data here }"></textarea>
                 <br/>
                 <input type="submit"/>

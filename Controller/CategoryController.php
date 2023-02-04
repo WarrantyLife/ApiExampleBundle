@@ -2,13 +2,10 @@
 
 namespace WarrantyLife\ApiExampleBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use WarrantyLife\ApiExampleBundle\Controller\BaseController;
-
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Controller for handling categories
@@ -27,7 +24,7 @@ class CategoryController extends BaseController
     public function indexAction()
     {
         $endpoint = $this->getApiEndpoint();
-        return array('endpoint' => $endpoint);
+        return ['endpoint' => $endpoint];
     }
 
     /**
@@ -43,16 +40,15 @@ class CategoryController extends BaseController
     {
         $url = 'categories';
 
-        $categoryId = $request->request->get('categoryId', null);
+        $categoryId = $request->get('categoryId');
         if ($categoryId) {
             $url .= '/' . $categoryId;
         }
 
-        $client = $this->createClient($request);
+        $client      = $this->createClient($request);
+        $response    = $client->get($url);
+        $apiResponse = $this->formatResponse($response);
 
-        $apiReq      = $client->get($url);
-        $apiResponse = $this->getResponse($apiReq);
-
-        return array('response' => $apiResponse);
+        return ['response' => $apiResponse];
     }
 }

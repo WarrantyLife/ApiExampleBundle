@@ -2,13 +2,10 @@
 
 namespace WarrantyLife\ApiExampleBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use WarrantyLife\ApiExampleBundle\Controller\BaseController;
-
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Controller for handling items
@@ -31,7 +28,7 @@ class ItemController extends BaseController
             $this->setApiVersion(201204);
         }
         $endpoint = $this->getApiEndpoint();
-        return array('endpoint' => $endpoint);
+        return ['endpoint' => $endpoint];
     }
 
     /**
@@ -46,38 +43,34 @@ class ItemController extends BaseController
     public function postAction(Request $request)
     {
         $url  = 'items';
-        $args = array();
-
-        $action = $request->request->get('action', null);
+        $client  = $this->createClient($request);
+        $action  = $request->get('action');
+        $params = [];
+        $response = null;
 
         switch ($action) {
             case 'get':
-                $itemId = $request->request->get('itemId', null);
+                $itemId = $request->request->get('itemId');
                 if ($itemId) {
                     $url .= '/' . $itemId;
                     break;
                 }
 
-                $refId = $request->request->get('refId', null);
+                $refId = $request->request->get('refId');
                 if ($refId) {
-                    $url .= '{?refId}';
-                    $args['refId'] = $refId;
+                    $params['refId'] = $refId;
                     break;
                 }
 
-                $orderRefId = $request->request->get('orderRefId', null);
+                $orderRefId = $request->request->get('orderRefId');
                 if ($orderRefId) {
-                    $url .= '{?orderRefId}';
-                    $args['orderRefId'] = $orderRefId;
+                    $params['orderRefId'] = $orderRefId;
                     break;
                 }
-                break;
-
-            case 'post':
                 break;
 
             case 'put':
-                $itemId = $request->request->get('itemId', null);
+                $itemId = $request->request->get('itemId');
                 if ($itemId) {
                     $url .= '/' . $itemId;
                     break;
@@ -85,26 +78,24 @@ class ItemController extends BaseController
                 break;
         }
 
-        $client = $this->createClient($request);
-
         switch ($action) {
             case 'get':
-                $apiRequest = $client->get(array($url, $args));
+                $response = $client->get($url, ['query' => $params]);
                 break;
 
             case 'post':
-                $json       = $request->request->get('json', null);
-                $apiRequest = $client->post(array($url, $args), array('Content-Type' => 'application/json'), $json);
+                $json       = $request->request->get('json');
+                $response = $client->post($url, ['query' => $params, 'headers' => ['Content-Type' => 'application/json'], 'body' => $json]);
                 break;
 
             case 'put':
-                $json       = $request->request->get('json', null);
-                $apiRequest = $client->put(array($url, $args), array('Content-Type' => 'application/json'), $json);
+                $json       = $request->request->get('json');
+                $response = $client->put($url, ['query' => $params, 'headers' => ['Content-Type' => 'application/json'], 'body' => $json]);
                 break;
         }
 
-        $apiResponse = $this->getResponse($apiRequest);
+        $apiResponse = $response ?  $this->formatResponse($response) : '';
 
-        return array('response' => $apiResponse);
+        return ['response' => $apiResponse];
     }
 }

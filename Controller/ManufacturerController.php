@@ -2,13 +2,10 @@
 
 namespace WarrantyLife\ApiExampleBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use WarrantyLife\ApiExampleBundle\Controller\BaseController;
-
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Controller for handling manufacturer examples
@@ -26,7 +23,7 @@ class ManufacturerController extends BaseController
     public function indexAction()
     {
         $endpoint = $this->getApiEndpoint();
-        return array('endpoint' => $endpoint);
+        return ['endpoint' => $endpoint];
     }
 
     /**
@@ -41,45 +38,38 @@ class ManufacturerController extends BaseController
     public function postAction(Request $request)
     {
         $url     = 'manufacturers';
-        $headers = array();
         $client  = $this->createClient($request);
-        $action  = $request->request->get('action', null);
+        $action  = $request->get('action');
+        $params = [];
+        $response = null;
 
         switch ($action) {
             case 'get':
-                $manufacturerId = $request->request->get('manufacturerId', null);
+                $manufacturerId = $request->get('manufacturerId');
                 if ($manufacturerId) {
                     $url .= '/' . $manufacturerId;
                 } else {
-                    $params = array();
-                    foreach (array(
-                                 'name',
-                                 'hasBuyback',
-                                 'startAt',
-                                 'limit') as $f) {
-                        if ($v = $request->get($f, null)) {
-                            $params[] = $f . '=' . $v;
+                    foreach (['name', 'startAt', 'limit'] as $f) {
+                        if ($v = $request->get($f)) {
+                            $params[$f] = $v;
                         }
                     }
-                    if (count($params)) {
-                        $url .= '?' . implode('&', $params);
-                    }
                 }
-                $apiReq = $client->get($url, $headers);
+                $response = $client->get($url, ['query' => $params]);
                 break;
 
             case 'post':
-                $json   = $request->request->get('json', null);
-                $apiReq = $client->post(array($url, $headers), array('Content-Type' => 'application/json'), $json);
+                $json   = $request->get('json');
+                $response = $client->post($url, ['query' => $params, 'headers' => ['Content-Type' => 'application/json'], 'body' => $json]);
                 break;
 
             default:
                 throw new \Exception('Error in API Test App - Unexpected or missing action input');
         }
 
-        $apiResponse = $this->getResponse($apiReq);
+        $apiResponse = $response ?  $this->formatResponse($response) : '';
 
-        return array('response' => $apiResponse);
+        return ['response' => $apiResponse];
     }
 
 

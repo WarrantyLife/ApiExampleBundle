@@ -13,7 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 /**
  * Controller for handling items
  */
-class Item201201Controller extends BaseController
+class Item201201Controller extends ItemController
 {
     /**
      * Display page that allows for interacting with the API
@@ -32,7 +32,7 @@ class Item201201Controller extends BaseController
         }
 
         $endpoint = $this->getApiEndpoint();
-        return array('endpoint' => $endpoint);
+        return ['endpoint' => $endpoint];
     }
 
     /**
@@ -46,66 +46,6 @@ class Item201201Controller extends BaseController
      */
     public function postAction(Request $request)
     {
-        $url  = 'items';
-        $args = array();
-
-        $action = $request->request->get('action', null);
-
-        switch ($action) {
-            case 'get':
-                $itemId = $request->request->get('itemId', null);
-                if ($itemId) {
-                    $url .= '/' . $itemId;
-                    break;
-                }
-
-                $refId = $request->request->get('refId', null);
-                if ($refId) {
-                    $url .= '{?refId}';
-                    $args['refId'] = $refId;
-                    break;
-                }
-
-                $orderRefId = $request->request->get('orderRefId', null);
-                if ($orderRefId) {
-                    $url .= '{?orderRefId}';
-                    $args['orderRefId'] = $orderRefId;
-                    break;
-                }
-                break;
-
-            case 'post':
-                break;
-
-            case 'put':
-                $itemId = $request->request->get('itemId', null);
-                if ($itemId) {
-                    $url .= '/' . $itemId;
-                    break;
-                }
-                break;
-        }
-
-        $client = $this->createClient($request);
-
-        switch ($action) {
-            case 'get':
-                $apiReq = $client->get(array($url, $args));
-                break;
-
-            case 'post':
-                $json   = $request->request->get('json', null);
-                $apiReq = $client->post(array($url, $args), array('Content-Type' => 'application/json'), $json);
-                break;
-
-            case 'put':
-                $json   = $request->request->get('json', null);
-                $apiReq = $client->put(array($url, $args), array('Content-Type' => 'application/json'), $json);
-                break;
-        }
-
-        $apiResponse = $this->getResponse($apiReq);
-
-        return array('response' => $apiResponse);
+        return parent::postAction($request);
     }
 }

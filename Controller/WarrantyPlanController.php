@@ -2,13 +2,10 @@
 
 namespace WarrantyLife\ApiExampleBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use WarrantyLife\ApiExampleBundle\Controller\BaseController;
-
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Controller for handling service plans
@@ -27,7 +24,7 @@ class WarrantyPlanController extends BaseController
     public function indexAction()
     {
         $endpoint = $this->getApiEndpoint();
-        return array('endpoint' => $endpoint);
+        return ['endpoint' => $endpoint];
     }
 
     /**
@@ -42,24 +39,22 @@ class WarrantyPlanController extends BaseController
     public function postAction(Request $request)
     {
         $url  = 'warranty-plans';
-        $args = array();
+        $args = [];
 
-        $warrantyPlanId = $request->request->get('warrantyPlanId', null);
+        $warrantyPlanId = $request->get('warrantyPlanId');
         if ($warrantyPlanId) {
             $url .= '/' . $warrantyPlanId;
         }
 
-        $categoryId = $request->request->get('categoryId', null);
+        $categoryId = $request->get('categoryId');
         if ($categoryId) {
-            $url .= '{?categoryId}';
             $args['categoryId'] = $categoryId;
         }
 
-        $client = $this->createClient($request);
+        $client      = $this->createClient($request);
+        $response    = $client->get($url, ['query' => $args]);
+        $apiResponse = $this->formatResponse($response);
 
-        $apiReq      = $client->get(array($url, $args));
-        $apiResponse = $this->getResponse($apiReq);
-
-        return array('response' => $apiResponse);
+        return ['response' => $apiResponse];
     }
 }

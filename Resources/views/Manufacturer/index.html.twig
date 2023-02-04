@@ -6,7 +6,7 @@
             <input type="hidden" class="api_auth_username" name="username"/>
             <input type="hidden" class="api_auth_password" name="password"/>
             <input type="hidden" name="action" value="get"/>
-            {{ endpoint }}/manufacturers?name=<input type="text" name="name" placeholder="name"/>
+            {{ endpoint }}manufacturers?name=<input type="text" name="name" placeholder="name"/>
             &hasBuyback=<input type="text" name="hasBuyback" placeholder="hasBuyback" maxlength="1" class="short"/>
             &startAt=<input type="text" name="startAt" placeholder="startsAt" maxlength="4" class="short"/>
             &limit=<input type="text" name="limit" placeholder="limit" maxlength="3" class="short"/>
@@ -20,7 +20,7 @@
             <input type="hidden" class="api_auth_username" name="username"/>
             <input type="hidden" class="api_auth_password" name="password"/>
             <input type="hidden" name="action" value="get"/>
-            {{ endpoint }}/manufacturers/<input type="text" name="manufacturerId" placeholder="manufacturerId"/>
+            {{ endpoint }}manufacturers/<input type="text" name="manufacturerId" placeholder="manufacturerId"/>
             <br/>
             <input type="submit"/>
         </form>
@@ -34,7 +34,7 @@
                 <input type="hidden" class="api_auth_username" name="username"/>
                 <input type="hidden" class="api_auth_password" name="password"/>
                 <input type="hidden" name="action" value="post"/>
-                POST {{ endpoint }}/manufacturers <br/>
+                POST {{ endpoint }}manufacturers <br/>
                 <textarea name="json" placeholder="{ manufacturer data here }"></textarea>
                 <br/>
                 <input type="submit"/>
@@ -80,7 +80,7 @@
                 </script>
             <pre>
 {
-    "<strong>name</strong>": "<input type="text" name="gen_name" placeholder="naame"/>", <strong>// Required</strong>
+    "<strong>name</strong>": "<input type="text" name="gen_name" placeholder="name"/>", <strong>// Required</strong>
 }
             </pre>
             </form>

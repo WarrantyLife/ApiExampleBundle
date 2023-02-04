@@ -2,13 +2,10 @@
 
 namespace WarrantyLife\ApiExampleBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use WarrantyLife\ApiExampleBundle\Controller\BaseController;
-
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Controller for handling warranties
@@ -32,7 +29,7 @@ class WarrantyController extends BaseController
         }
 
         $endpoint = $this->getApiEndpoint();
-        return array('endpoint' => $endpoint);
+        return ['endpoint' => $endpoint];
     }
 
     /**
@@ -47,90 +44,78 @@ class WarrantyController extends BaseController
     public function postAction(Request $request)
     {
         $url  = 'warranties';
-        $args = array();
-
-        $action = $request->request->get('action', null);
+        $client  = $this->createClient($request);
+        $action  = $request->get('action');
+        $params = [];
+        $response = null;
 
         switch ($action) {
             case 'get':
-                $warrantyId = $request->request->get('warrantyId', null);
+                $warrantyId = $request->get('warrantyId');
                 if ($warrantyId) {
                     $url .= '/' . $warrantyId;
                     break;
                 }
 
-                $refId = $request->request->get('refId', null);
+                $refId = $request->get('refId');
                 if ($refId) {
-                    $url .= '{?refId}';
-                    $args['refId'] = $refId;
+                    $params['refId'] = $refId;
                     break;
                 }
 
-                $orderRefId = $request->request->get('orderRefId', null);
+                $orderRefId = $request->get('orderRefId');
                 if ($orderRefId) {
-                    $url .= '{?orderRefId}';
-                    $args['orderRefId'] = $orderRefId;
+                    $params['orderRefId'] = $orderRefId;
                     break;
                 }
 
-                $itemId = $request->request->get('itemId', null);
+                $itemId = $request->get('itemId');
                 if ($itemId) {
-                    $url            = 'items/{itemId}/warranties';
-                    $args['itemId'] = $itemId;
+                    $url            = "items/$itemId/warranties";
                     break;
                 }
                 break;
 
             case 'post':
-                $itemId = $request->request->get('itemId', null);
+                $itemId = $request->get('itemId');
                 if ($itemId) {
-                    $url            = 'items/{itemId}/warranties';
-                    $args['itemId'] = $itemId;
+                    $url            = "items/$itemId/warranties";
                     break;
                 }
                 break;
 
             case 'put':
-                $warrantyId = $request->request->get('warrantyId', null);
-                if ($warrantyId) {
-                    $url .= '/' . $warrantyId;
-                    break;
-                }
-                break;
-
             case 'delete':
-                $warrantyId = $request->request->get('warrantyId', null);
+                $warrantyId = $request->get('warrantyId');
                 if ($warrantyId) {
                     $url .= '/' . $warrantyId;
                     break;
                 }
                 break;
         }
-
-        $client = $this->createClient($request);
 
         switch ($action) {
             case 'get':
-                $apiRequest = $client->get(array($url, $args));
+                $response = $client->get($url, ['query' => $params]);
                 break;
 
             case 'post':
-                $json       = $request->request->get('json', null);
-                $apiRequest = $client->post(array($url, $args), array('Content-Type' => 'application/json'), $json);
+                $json       = $request->request->get('json');
+                $response = $client->post($url, ['query' => $params, 'headers' => ['Content-Type' => 'application/json'], 'body' => $json]);
                 break;
 
             case 'put':
-                $json       = $request->request->get('json', null);
-                $apiRequest = $client->put(array($url, $args), array('Content-Type' => 'application/json'), $json);
+                $json       = $request->request->get('json');
+                $response = $client->put($url, ['query' => $params, 'headers' => ['Content-Type' => 'application/json'], 'body' => $json]);
                 break;
 
             case 'delete':
-                $apiRequest = $client->delete(array($url, $args));
+                $apiRequest = $client->delete($url, ['query' => $params, 'headers' => ['Content-Type' => 'application/json']]);
                 break;
         }
 
-        $apiResponse = $this->getResponse($apiRequest);
+        $apiResponse = $response ?  $this->formatResponse($response) : '';
 
-        return array('response' => $apiResponse);
+        return ['response' => $apiResponse];
     }
 }

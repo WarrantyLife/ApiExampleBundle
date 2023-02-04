@@ -2,24 +2,23 @@
 
 namespace WarrantyLife\ApiExampleBundle\Controller;
 
-use Guzzle\Common\Exception\ExceptionCollection;
-use Guzzle\Http\Exception\BadResponseException;
-use Guzzle\Http\Exception\ClientErrorResponseException;
-use Guzzle\Http\Exception\ServerErrorResponseException;
-use Guzzle\Log\PsrLogAdapter;
-use Monolog\Handler\StreamHandler;
-use Monolog\Handler\TestHandler;
-use Monolog\Logger;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-use Guzzle\Http\Client;
-use Guzzle\Plugin\Log\LogPlugin;
-use Guzzle\Log\MessageFormatter;
-use Guzzle\Plugin\CurlAuth\CurlAuthPlugin;
-use Guzzle\Http\Message\RequestInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Guzzle\Http\Exception\RequestException;
 use Exception;
+use Guzzle\Common\Exception\ExceptionCollection;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\BadResponseException;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ServerException;
+use GuzzleHttp\Message\RequestInterface;
+use Guzzle\Log\MessageFormatter;
+use Guzzle\Log\PsrLogAdapter;
+use Guzzle\Plugin\CurlAuth\CurlAuthPlugin;
+use Guzzle\Plugin\Log\LogPlugin;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+use Psr\Http\Message\ResponseInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Base controller to provide commonly used methods
@@ -29,7 +28,7 @@ class BaseController extends Controller
     /**
      * Used only when no parameters.yml var is set nor is the version specified as a parameter
      */
-    const DEFAULT_API_VERSION = '201308';
+    public const DEFAULT_API_VERSION = '201308';
 
     /**
      * @var resource File stream resource for capturing Http Client output
@@ -105,12 +104,12 @@ class BaseController extends Controller
      *
      * @return string
      */
-    protected function getApiEndpoint($apiVersion = null)
+    protected function getApiEndpoint($apiVersion = null): string
     {
         if (empty($apiVersion)) {
             $apiVersion = $this->getApiVersion();
         }
-        return $this->getApiBaseUrl() . $apiVersion;
+        return $this->getApiBaseUrl() . $apiVersion . '/';
     }
 
     /**
@@ -118,18 +117,11 @@ class BaseController extends Controller
      *
      * @return Client A client instance
      */
-    protected function createClient(Request $request)
+    protected function createClient(Request $request): Client
     {
-        $stream = $this->createStream();
-        $logHandler = new StreamHandler($stream);
-        $logger = new Logger('WL_API', [$logHandler]);
-        $adapter = new PsrLogAdapter($logger);
-        $logPlugin = new LogPlugin($adapter, MessageFormatter::DEBUG_FORMAT);
-
-        $apiKey    = $request->request->get('username', null);
-        $apiSecret = $request->request->get('password', null);
-
-        $endpoint = $this->getApiEndpoint();
+        $apiKey    = $request->get('username');
+        $apiSecret = $request->get('password');
+        $endpoint  = $this->getApiEndpoint();
 
         if (is_null($apiKey)) {
             if ($this->container->hasParameter('api_key')) {
@@ -146,53 +138,30 @@ class BaseController extends Controller
             }
         }
 
-        $client = new Client($endpoint);
-
-        $client->getEventDispatcher()->addSubscriber($logPlugin);
-        $client->getEventDispatcher()->addSubscriber(new CurlAuthPlugin($apiKey, $apiSecret));
-        $client->setUserAgent('WarrantyLifeAPITesting/1.0', true);
-
-        return $client;
-    }
-
-    /**
-     * Set the stream used to capture client output
-     *
-     * @return resource A file stream resource
-     */
-    protected function createStream()
-    {
-        return ($this->_stream = fopen('php://temp', 'r+'));
-    }
-
-    /**
-     * Get the stream used to capture client output
-     *
-     * @return resource A file stream resource
-     */
-    protected function getStream()
-    {
-        return $this->_stream;
+        return new Client([
+            'base_uri' => $endpoint,
+            'auth' => [$apiKey, $apiSecret, 'Basic'],
+            'headers' => ['User-Agent' => 'WarrantyLifeAPITesting/1.0']
+        ]);
     }
 
     /**
      * Get the full response from the http client
      *
-     * @param RequestInterface $request The Http Client request
+     * @param ResponseInterface $request The Http Client request
      *
      * @return string Full response from the Http Client
      */
-    protected function getResponse(RequestInterface $request)
+    protected function getResponse(ResponseInterface $request)
     {
         try {
             $response = $request->send();
-        } catch (ClientErrorResponseException $e) {
+        } catch (ClientErrorResponseException|RequestException $e) {
         } catch (ServerErrorResponseException $e) {
             // Show the returned stream for these exceptions
         } catch (BadResponseException $e) {
             //print_r('Bad Response');
             //return $e->getResponse();
-        } catch (RequestException $e) {
         } catch (ExceptionCollection $e) {
             foreach ($e as $exception) {
                 print_r('Got Exception: ' . get_class($exception));
@@ -218,5 +187,31 @@ class BaseController extends Controller
         }
 
         return $fullStream;
+    }
+
+    public function formatResponse(ResponseInterface $response)
+    {
+        $responseText = 'HTTP/' . $response->getProtocolVersion() . ' ' . $response->getStatusCode() . ' ' . $response->getReasonPhrase() . "\n";
+
+        foreach ($response->getHeaders() as $name => $values) {
+            $responseText .= $name . ': ' . implode(', ', $values) . "\n";
+        }
+
+        $responseText .= "\n\n";
+
+        $body = $response->getBody();
+
+        $responseText .= $body;
+
+        return $responseText;
+
+    }
+
+    /**
+     * @return Request
+     */
+    public function getRequest()
+    {
+        return $this->get('request_stack')->getCurrentRequest();
     }
 }

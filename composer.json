@@ -3,14 +3,14 @@
     "description": "Example client for the WarrantyLife API",
     "keywords": ["warrantylife", "warranty", "api", "php", "symfony"],
     "type": "symfony-bundle",
-    "homepage": "http://www.warrantylife.com/partner/developer-info",
+    "homepage": "https://www.warrantylife.com/partner/developer-info",
     "require": {
-        "php": ">=5.3"
+        "php": "^7.0",
+        "symfony/framework-bundle": "~3.0",
+        "guzzlehttp/guzzle": "^6.0"
     },
     "autoload": {
-        "psr-0": {
-            "WarrantyLife\\ApiExampleBundle": ""
-        }
+        "psr-4": { "WarrantyLife\\ApiExampleBundle": "" }
     },
     "target-dir": "WarrantyLife/ApiExampleBundle"
 }
